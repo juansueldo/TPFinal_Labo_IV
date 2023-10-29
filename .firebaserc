@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "tpfinal-labo-iv": {
+      "hosting": {
+        "TPFinal_Labo_IV": [
+          "tpfinal-labo-iv"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "tpfinal-labo-iv"
+  }
+}

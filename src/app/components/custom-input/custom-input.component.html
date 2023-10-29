@@ -1,0 +1,8 @@
+<ng-container [formGroup]="form">
+    <div class="form-floating mb-3">
+      <input [type]="type" class="form-control {{class}}" [formControlName]="controlName" [id]="controlName" 
+        [placeholder]="label" [readonly]="readOnly">
+      <label [for]="controlName">{{label}}</label>
+      <ng-content></ng-content>
+    </div>
+</ng-container>

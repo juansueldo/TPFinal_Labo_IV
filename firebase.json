@@ -1,0 +1,9 @@
+{
+  "hosting": [
+    {
+      "target": "TPFinal_Labo_IV",
+      "source": ".",
+      "frameworksBackend": {}
+    }
+  ]
+}

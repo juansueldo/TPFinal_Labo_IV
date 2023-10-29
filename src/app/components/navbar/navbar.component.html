@@ -1,0 +1,51 @@
+<nav class="navbar  fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><img class="logo" src="../../../assets/logo.png" alt=""></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+
+    <div class="dropdown ">
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Repartidor
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" routerLink="/alta-repartidor">Alta</a></li>
+            <li><a class="dropdown-item" routerLink="/detalle-repartidor">Detalle</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Helados
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" routerLink="/helados-abm">ABM</a></li>
+          </ul>
+        </li>
+       
+  </div>
+
+  <ng-container *ngIf="showButtons">
+    <div *ngIf="usuario" class="dropdown-center  ">
+      <button class="btn btn-lg dropdown-toggle text-light" type="button" data-bs-toggle="dropdown"
+        aria-expanded="false ">
+        {{usuario.email}}
+      </button>
+      <ul class="dropdown-menu w-100">
+        <li class="p-2">
+          <button class="btn text-light w-100 bg-danger" (click)="loguot()">Cerrar Sesión</button>
+        </li>
+      </ul>
+    </div>
+
+    <div *ngIf="!usuario">
+      <a routerLink="/login">
+        <button class="btn btn-primary">Iniciar Sesión</button>
+      </a>
+    </div>
+  </ng-container>
+  </div>
+  </div>
+</nav>

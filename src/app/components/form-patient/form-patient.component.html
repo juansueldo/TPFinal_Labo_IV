@@ -1,0 +1,44 @@
+<form (submit)="onSubmit()" [formGroup]="formPatient" *ngIf="showSignup">
+
+  <app-custom-input class="form-control {{name.errors ? 'is-invalid': ''}}" divClass="mb-3" label="Nombre"
+    controlName="name" type="text">
+    <small class="invalid-feedback">Nombre invalido (solo letras)</small>
+  </app-custom-input>
+
+  <app-custom-input class="form-control {{lastName.errors ? 'is-invalid': ''}}" divClass="mb-3" label="Apellido"
+    controlName="lastName" type="text">
+    <small class="invalid-feedback">Apellido invalido (solo letras)</small>
+  </app-custom-input>
+
+  <app-custom-input class="form-control {{age.errors ? 'is-invalid': ''}}" divClass="mb-3" label="Edad"
+    controlName="age" type="text">
+    <small class="invalid-feedback">Edad invalido (solo numeros) </small>
+  </app-custom-input>
+  
+  <app-custom-input class="form-control {{dni.errors ? 'is-invalid': ''}}" divClass="mb-3" label="DNI"
+    controlName="dni" type="text">
+    <small class="invalid-feedback">DNI invalido (solo numeros) </small>
+  </app-custom-input>
+   
+  <div class="form-floating mb-3">
+      <select formControlName="healthcare" class="form-select {{healthcare.errors ? 'is-invalid': ''}}"
+        id="floatingInputValue">
+        <option [value]="true">Si</option>
+        <option [value]="false">No</option>
+      </select>
+      <label for="floatingInputValue">Obra Social</label>
+    </div>
+    
+    <app-custom-input class="form-control {{mail.errors ? 'is-invalid': ''}}" divClass="mb-3" label="Email"
+      controlName="mail" type="mail">
+      <small class="invalid-feedback">Email invalido (solo letras)</small>
+    </app-custom-input>
+
+    <app-custom-input class="form-control {{password.errors ? 'is-invalid': ''}}" divClass="mb-3" label="Clave"
+    controlName="password" type="password">
+    <small class="invalid-feedback">Clave invalida</small>
+  </app-custom-input>
+  
+  
+    <button type="submit" class="btn btn-primary mt-2">Enviar</button>
+  </form>
