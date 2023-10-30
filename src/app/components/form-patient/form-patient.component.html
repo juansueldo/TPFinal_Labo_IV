@@ -1,14 +1,17 @@
 <form (submit)="onSubmit()" [formGroup]="formPatient" *ngIf="showSignup">
 
-  <app-custom-input class="form-control {{name.errors ? 'is-invalid': ''}}" divClass="mb-3" label="Nombre"
-    controlName="name" type="text">
-    <small class="invalid-feedback">Nombre invalido (solo letras)</small>
-  </app-custom-input>
+  <div class="container-names">
+    <app-custom-input class="form-control {{name.errors ? 'is-invalid': ''}}" divClass="mb-3" label="Nombre"
+      controlName="name" type="text">
+      <small class="invalid-feedback">Nombre invalido (solo letras)</small>
+    </app-custom-input>
 
-  <app-custom-input class="form-control {{lastName.errors ? 'is-invalid': ''}}" divClass="mb-3" label="Apellido"
-    controlName="lastName" type="text">
-    <small class="invalid-feedback">Apellido invalido (solo letras)</small>
-  </app-custom-input>
+    <app-custom-input class="form-control {{lastName.errors ? 'is-invalid': ''}}" divClass="mb-3" label="Apellido"
+      controlName="lastName" type="text">
+      <small class="invalid-feedback">Apellido invalido (solo letras)</small>
+    </app-custom-input>
+  </div>
+  
 
   <app-custom-input class="form-control {{age.errors ? 'is-invalid': ''}}" divClass="mb-3" label="Edad"
     controlName="age" type="text">
@@ -23,8 +26,7 @@
   <div class="form-floating mb-3">
       <select formControlName="healthcare" class="form-select {{healthcare.errors ? 'is-invalid': ''}}"
         id="floatingInputValue">
-        <option [value]="true">Si</option>
-        <option [value]="false">No</option>
+        <option *ngFor="let healthcare of listHealthcare" [value]="healthcare.id">{{ healthcare.name }}</option>
       </select>
       <label for="floatingInputValue">Obra Social</label>
     </div>
@@ -35,9 +37,21 @@
     </app-custom-input>
 
     <app-custom-input class="form-control {{password.errors ? 'is-invalid': ''}}" divClass="mb-3" label="Clave"
-    controlName="password" type="password">
-    <small class="invalid-feedback">Clave invalida</small>
-  </app-custom-input>
+      controlName="password" type="password">
+      <small class="invalid-feedback">Clave invalida</small>
+    </app-custom-input>
+    <div class="container-files">
+      <app-custom-input class="form-control" divClass="mb-3" label="Foto de perfil 1"
+        controlName="password" type="file" (change)="uploadPhoto_1($event)">
+        <small class="invalid-feedback">Foto Perfil</small>
+      </app-custom-input>
+  
+      <app-custom-input class="form-control" divClass="mb-3" label="Foto de perfil 2"
+        controlName="password" type="file" (change)="uploadPhoto_2($event)">
+        <small class="invalid-feedback">Clave invalida</small>
+      </app-custom-input>
+    </div>
+    
   
   
     <button type="submit" class="btn btn-primary mt-2">Enviar</button>

@@ -21,7 +21,7 @@ import {
   getDocs,
 } from '@angular/fire/firestore';
 import {AngularFirestore} from '@angular/fire/compat/firestore';
-
+import {getAuth, updateProfile} from "firebase/auth"; 
 import { Observable, Subscription } from 'rxjs';
 
 @Injectable({
@@ -33,7 +33,7 @@ export class AuthService {
   constructor(private auth: Auth, private db: AngularFirestore) {}
 
 
-  register({ email, password }: any) {
+  register(email:any, password: any) {
     return createUserWithEmailAndPassword(this.auth, email, password);
   }
 
@@ -59,6 +59,10 @@ export class AuthService {
       fecha_ingreso: fullDate
     })
 
+  }
+  updateUser(user: any){
+    const auth = getAuth();
+    return updateProfile(auth.currentUser!, user)
   }
  
 }

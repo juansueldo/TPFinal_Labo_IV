@@ -11,7 +11,14 @@ const routes: Routes = [
   },
   {
     path: "signup", component: SignUpComponent
-  }
+  },
+  {
+    path: 'login',
+    loadChildren: () =>
+      import('../app/pages/login/login.module').then(
+        (m) => m.LoginModule
+      ),
+  },
 
 ];
 
