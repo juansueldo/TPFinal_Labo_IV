@@ -5,7 +5,9 @@
 <h3>Sprint 1</h3>
 <ul>
   <li>Página de bienvenida</li>
+  <img src="https://s6.gifyu.com/images/S8nOb.png">
   <li>Registro</li>
+  <img src="https://s6.gifyu.com/images/S8nyz.png">
   <li>Login</li>
   <li>Sección usuarios</li>
 </ul>
