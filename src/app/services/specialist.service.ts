@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
 import { addDoc, collection, collectionData, Firestore, getDoc, getDocs, updateDoc  } from '@angular/fire/firestore';
-import { Patient } from '../models/patient.models';
+import { Specialist } from '../models/specialist';
 import { Observable } from 'rxjs';
 import {AngularFirestore} from '@angular/fire/compat/firestore';
 @Injectable({
   providedIn: 'root'
 })
-export class PatientService {
-  patientRef = collection(this.firestore, 'paciente')
+export class SpecialistService {
+  specialistRef = collection(this.firestore, 'especialista')
 
   constructor(private firestore : Firestore, private angularFire: AngularFirestore) { }
 
-  addPatient(patient: Patient){
-    return addDoc(this.patientRef, patient);
+  addSpecialist(specialist: Specialist){
+    return addDoc(this.specialistRef, specialist);
   }
 
-  getPatients(): Observable<Patient[]> {
-    return this.angularFire.collection<Patient>('paciente', ref => ref.orderBy('dni', 'asc')).valueChanges();
+  getSpecialist(): Observable<Specialist[]> {
+    return this.angularFire.collection<Specialist>('especialista', ref => ref.orderBy('dni', 'asc')).valueChanges();
   }
 }

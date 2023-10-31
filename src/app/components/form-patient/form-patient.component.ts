@@ -35,7 +35,7 @@ export class FormPatientComponent {
       validators: [FormValidator.onlyNumbers, Validators.maxLength(3), Validators.max(125), Validators.min(0)],
       updateOn: 'change',
     }),
-    dni: new FormControl(null,{
+    dni: new FormControl(11111111,{
       validators: [FormValidator.onlyNumbers, Validators.maxLength(8), Validators.minLength(7)],
       updateOn: 'change',
     }),

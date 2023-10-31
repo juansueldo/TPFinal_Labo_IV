@@ -20,6 +20,7 @@ import { CustomInputComponent } from './components/custom-input/custom-input.com
 import { SelectUserComponent } from './pages/select-user/select-user.component';
 import { FormSpecialistComponent } from './components/form-specialist/form-specialist.component';
 import { FormPatientComponent } from './components/form-patient/form-patient.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +33,7 @@ import { FormPatientComponent } from './components/form-patient/form-patient.com
     CustomInputComponent,
     SelectUserComponent,
     FormSpecialistComponent,
-    FormPatientComponent
+    FormPatientComponent,
   ],
   imports: [
     BrowserModule,

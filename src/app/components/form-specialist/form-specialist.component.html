@@ -1,37 +1,54 @@
-<form (submit)="onSubmit()" [formGroup]="formRepartidor" *ngIf="!showSignup">
+<form (submit)="onSubmit()" [formGroup]="formSpecialist" *ngIf="!showSignup">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="container-names">
+        <app-custom-input class="form-control {{name.errors ? 'is-invalid': ''}}" divClass="mb-4" label="Nombre"
+          controlName="name" type="text">
+          <small class="invalid-feedback">Nombre invalido (solo letras)</small>
+        </app-custom-input>
 
-    <app-custom-input class="form-control {{dni.errors ? 'is-invalid': ''}}" divClass="mb-3" label="DNI"
-      controlName="dni" type="text">
-      <small class="invalid-feedback">DNI invalido (solo numeros) </small>
+        <app-custom-input class="form-control {{lastName.errors ? 'is-invalid': ''}}" divClass="mb-4" label="Apellido"
+          controlName="lastName" type="text">
+          <small class="invalid-feedback">Apellido invalido (solo letras)</small>
+        </app-custom-input>
+      </div>
+      
+      <app-custom-input class="form-control {{age.errors ? 'is-invalid': ''}}" divClass="mb-4" label="Edad"
+        controlName="age" type="text">
+        <small class="invalid-feedback">Edad invalido (solo numeros)</small>
+      </app-custom-input>
+      
+      <app-custom-input class="form-control {{dni.errors ? 'is-invalid': ''}}" divClass="mb-4" label="DNI"
+        controlName="dni" type="text">
+        <small class="invalid-feedback">DNI invalido (solo numeros)</small>
+      </app-custom-input>
+      <app-custom-input class="form-control" divClass="mb-4" label="Foto de perfil 1"
+      controlName="password" type="file" (change)="uploadPhoto_1($event)">
+      <small class="invalid-feedback">Foto Perfil</small>
     </app-custom-input>
-  
-    <app-custom-input class="form-control {{nombre.errors ? 'is-invalid': ''}}" divClass="mb-3" label="Nombre"
-      controlName="nombre" type="text">
-      <small class="invalid-feedback">Nombre invalido (solo letras)</small>
-    </app-custom-input>
-  
-    <app-custom-input class="form-control {{edad.errors ? 'is-invalid': ''}}" divClass="mb-3" label="Edad"
-      controlName="edad" type="text">
-      <small class="invalid-feedback">Edad invalida (solo numeros)</small>
-    </app-custom-input>
-  
-    <div class="form-floating mb-3">
-      <select formControlName="unidad" class="form-select {{unidad.errors ? 'is-invalid': ''}}"
-        id="floatingInputValue">
-        <option [value]="true">Si</option>
-        <option [value]="false">No</option>
-      </select>
-      <label for="floatingInputValue">Unidad Propia</label>
     </div>
-  
-    <app-custom-input class="form-control {{capacidad.errors ? 'is-invalid': ''}}" divClass="mb-3"
-      label="Capacidad de Transporte" controlName="capacidad" type="text">
-    </app-custom-input>
-  
-    <app-custom-input class="form-control {{pais.errors ? 'is-invalid': ''}}" divClass="mb-3"
-      label="Pais" controlName="pais" type="text" [readOnly]="true">
-      <small class="invalid-feedback">Pais invalido</small>
-    </app-custom-input>
-  
-    <button type="submit" class="btn btn-primary mt-2">Enviar</button>
-  </form>
+    <div class="col-md-6">
+      <div class="form-floating mb-4">
+        <select formControlName="specialty" class="form-select {{specialty.errors ? 'is-invalid': ''}}"
+          id="floatingInputValue">
+          <option *ngFor="let specialty of listSpecialty" [value]="specialty.name" (click)="addSpecialty(specialty.name)">{{ specialty.name }}</option>
+        </select>
+        <label for="floatingInputValue">Especialidad</label>
+      </div>
+
+      <app-custom-input class="form-control {{mail.errors ? 'is-invalid': ''}}" divClass="mb-4" label="Email"
+        controlName="mail" type="mail">
+        <small class="invalid-feedback">Email invalido (solo letras)</small>
+      </app-custom-input>
+
+      <app-custom-input class="form-control {{password.errors ? 'is-invalid': ''}}" divClass="mb-4" label="Clave"
+        controlName="password" type="password">
+        <small class="invalid-feedback">Clave invalida</small>
+      </app-custom-input>
+      <div class="container-files">
+       
+      </div>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary mt-2">Enviar</button>
+</form>

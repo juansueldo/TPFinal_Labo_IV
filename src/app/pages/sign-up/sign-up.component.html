@@ -12,11 +12,14 @@
         </div>
       </div>
       
-      <div class="col-12 col-md-6 col-lg-4 ">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-8">
         <app-form-patient #form (loadingEvent)="loading = $event" [showSignup]="!signup"></app-form-patient>
         <app-form-specialist #form (loadingEvent)="loading = $event" [showSignup]="!signup"></app-form-specialist>
       </div>
-      
+    </div>
+  </div>
     </div>
   </div>
   </div>

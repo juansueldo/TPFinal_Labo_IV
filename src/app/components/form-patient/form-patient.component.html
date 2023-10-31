@@ -1,58 +1,59 @@
 <form (submit)="onSubmit()" [formGroup]="formPatient" *ngIf="showSignup">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="container-names">
+        <app-custom-input class="form-control {{name.errors ? 'is-invalid': ''}}" divClass="mb-4" label="Nombre"
+          controlName="name" type="text">
+          <small class="invalid-feedback">Nombre invalido (solo letras)</small>
+        </app-custom-input>
 
-  <div class="container-names">
-    <app-custom-input class="form-control {{name.errors ? 'is-invalid': ''}}" divClass="mb-3" label="Nombre"
-      controlName="name" type="text">
-      <small class="invalid-feedback">Nombre invalido (solo letras)</small>
-    </app-custom-input>
-
-    <app-custom-input class="form-control {{lastName.errors ? 'is-invalid': ''}}" divClass="mb-3" label="Apellido"
-      controlName="lastName" type="text">
-      <small class="invalid-feedback">Apellido invalido (solo letras)</small>
-    </app-custom-input>
-  </div>
-  
-
-  <app-custom-input class="form-control {{age.errors ? 'is-invalid': ''}}" divClass="mb-3" label="Edad"
-    controlName="age" type="text">
-    <small class="invalid-feedback">Edad invalido (solo numeros) </small>
-  </app-custom-input>
-  
-  <app-custom-input class="form-control {{dni.errors ? 'is-invalid': ''}}" divClass="mb-3" label="DNI"
-    controlName="dni" type="text">
-    <small class="invalid-feedback">DNI invalido (solo numeros) </small>
-  </app-custom-input>
-   
-  <div class="form-floating mb-3">
-      <select formControlName="healthcare" class="form-select {{healthcare.errors ? 'is-invalid': ''}}"
-        id="floatingInputValue">
-        <option *ngFor="let healthcare of listHealthcare" [value]="healthcare.id">{{ healthcare.name }}</option>
-      </select>
-      <label for="floatingInputValue">Obra Social</label>
-    </div>
-    
-    <app-custom-input class="form-control {{mail.errors ? 'is-invalid': ''}}" divClass="mb-3" label="Email"
-      controlName="mail" type="mail">
-      <small class="invalid-feedback">Email invalido (solo letras)</small>
-    </app-custom-input>
-
-    <app-custom-input class="form-control {{password.errors ? 'is-invalid': ''}}" divClass="mb-3" label="Clave"
-      controlName="password" type="password">
-      <small class="invalid-feedback">Clave invalida</small>
-    </app-custom-input>
-    <div class="container-files">
-      <app-custom-input class="form-control" divClass="mb-3" label="Foto de perfil 1"
-        controlName="password" type="file" (change)="uploadPhoto_1($event)">
-        <small class="invalid-feedback">Foto Perfil</small>
+        <app-custom-input class="form-control {{lastName.errors ? 'is-invalid': ''}}" divClass="mb-4" label="Apellido"
+          controlName="lastName" type="text">
+          <small class="invalid-feedback">Apellido invalido (solo letras)</small>
+        </app-custom-input>
+      </div>
+      
+      <app-custom-input class="form-control {{age.errors ? 'is-invalid': ''}}" divClass="mb-4" label="Edad"
+        controlName="age" type="text">
+        <small class="invalid-feedback">Edad invalido (solo numeros)</small>
       </app-custom-input>
-  
-      <app-custom-input class="form-control" divClass="mb-3" label="Foto de perfil 2"
-        controlName="password" type="file" (change)="uploadPhoto_2($event)">
+      
+      <app-custom-input class="form-control {{dni.errors ? 'is-invalid': ''}}" divClass="mb-4" label="DNI"
+        controlName="dni" type="text">
+        <small class="invalid-feedback">DNI invalido (solo numeros)</small>
+      </app-custom-input>
+      <app-custom-input class="form-control" divClass="mb-4" label="Foto de perfil 1"
+      controlName="password" type="file" (change)="uploadPhoto_1($event)">
+      <small class="invalid-feedback">Foto Perfil</small>
+    </app-custom-input>
+    </div>
+    <div class="col-md-6">
+      <div class="form-floating mb-4">
+        <select formControlName="healthcare" class="form-select {{healthcare.errors ? 'is-invalid': ''}}"
+          id="floatingInputValue">
+          <option *ngFor="let healthcare of listHealthcare" [value]="healthcare.name">{{ healthcare.name }}</option>
+        </select>
+        <label for="floatingInputValue">Obra Social</label>
+      </div>
+
+      <app-custom-input class="form-control {{mail.errors ? 'is-invalid': ''}}" divClass="mb-4" label="Email"
+        controlName="mail" type="mail">
+        <small class="invalid-feedback">Email invalido (solo letras)</small>
+      </app-custom-input>
+
+      <app-custom-input class="form-control {{password.errors ? 'is-invalid': ''}}" divClass="mb-4" label="Clave"
+        controlName="password" type="password">
         <small class="invalid-feedback">Clave invalida</small>
       </app-custom-input>
+      <div class="container-files">
+       
+
+        <app-custom-input class="form-control" divClass="mb-4" label="Foto de perfil 2"
+          controlName="password" type="file" (change)="uploadPhoto_2($event)">
+          <small class="invalid-feedback">Clave invalida</small>
+        </app-custom-input>
+      </div>
     </div>
-    
-  
-  
-    <button type="submit" class="btn btn-primary mt-2">Enviar</button>
-  </form>
+  </div>
+  <button type="submit" class="btn btn-primary mt-2">Enviar</button>
+</form>

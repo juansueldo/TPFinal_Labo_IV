@@ -1,6 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
+import { ImgService } from 'src/app/services/img.service';
+import { SpecialistService } from 'src/app/services/specialist.service';
+import { SpecialtyService } from 'src/app/services/specialty.service';
 import { FormValidator } from 'src/app/validators/form-validators';
+import { Specialist } from 'src/app/models/specialist';
 
 @Component({
   selector: 'app-form-specialist',
@@ -8,55 +13,89 @@ import { FormValidator } from 'src/app/validators/form-validators';
   styleUrls: ['./form-specialist.component.scss']
 })
 export class FormSpecialistComponent {
-  formRepartidor: FormGroup;
-  //@Input() selectedCountry!: Pais;
+  formSpecialist: FormGroup;
+  
   @Input() showSignup!: boolean;
   @Output() loadingEvent = new EventEmitter<boolean>();
-  constructor() {
-  this.formRepartidor = new FormGroup({
-    dni: new FormControl('0', {
-      validators: [FormValidator.onlyNumbers, Validators.maxLength(8)],
-      updateOn: 'change',
-    }),
-    nombre: new FormControl(null, {
+  imgUrl_1!: string;
+  listSpecialty: any[]=[];
+  selectSpecialy: any[]=[];
+  constructor(private img: ImgService, private specialistService: SpecialistService, private auth: AuthService, private specialtyService: SpecialtyService) {
+  this.formSpecialist = new FormGroup({
+    name: new FormControl(null, {
       validators: [FormValidator.onlyLetters],
       updateOn: 'change',
     }),
-    edad: new FormControl(18, {
-      validators: [FormValidator.onlyNumbers, Validators.min(18)],
+    lastName: new FormControl(null, {
+      validators: [FormValidator.onlyLetters],
       updateOn: 'change',
     }),
-    capacidad: new FormControl(1, {
-      validators: [FormValidator.onlyNumbers, Validators.min(1)],
+    age: new FormControl('0', {
+      validators: [FormValidator.onlyNumbers, Validators.maxLength(3), Validators.max(125), Validators.min(0)],
       updateOn: 'change',
     }),
-    pais: new FormControl(),
-    unidad: new FormControl(),
+    dni: new FormControl(11111111,{
+      validators: [FormValidator.onlyNumbers, Validators.maxLength(8), Validators.minLength(7)],
+      updateOn: 'change',
+    }),
+    mail: new FormControl(null,{
+      validators: [Validators.email],
+      updateOn: 'change',
+    }),
+    password: new FormControl('',{
+      validators: [Validators.minLength(6)],
+      updateOn: 'change',
+    }),
+    specialty: new FormControl(),
   });
 }
-ngOnInit(): void {}
+ngOnInit(): void {
+  this.specialtyService.getSpecialty().subscribe(posts => {
+    this.listSpecialty = posts;
+  });
+
+}
 
 onSubmit() {
   this.validateEmptyInputs();
-  if (this.formRepartidor.invalid) return;
-
-  const repartidor = {
+  if (this.formSpecialist.invalid) return;
+  const aux = this.name.value + ' ' + this.lastName.value;
+  this.auth.register(this.mail.value, this.password.value).then(async res =>{
+    await this.auth.updateUser({displayName:aux})
+    let user={
+      uid: res.user.uid,
+      name: res.user.displayName,
+      email: res.user.email,
+    }
+  const specialist = {
+    id: user.uid,
+    name: this.name.value,
+    lastName: this.lastName.value,
+    age: Number(this.age.value),
     dni: this.dni.value,
-    nombre: this.nombre.value,
-    edad: Number(this.edad.value),
-    capacidad_transporte: Number(this.capacidad.value),
-    unidad_propia: this.unidad.value,
+    mail: this.mail.value,
+    specialty: this.specialty.value,
+    img_1: this.imgUrl_1,
   };
+  this.loadingEvent.emit(true);
+  this.specialistService.addSpecialist(specialist).then((res) => {
+    this.loadingEvent.emit(false);
+    this.formSpecialist.reset();
+  });
 
-
+  });
 }
-
-setCountry(pais: any) {
-  this.pais.setValue(pais.nombre);
+uploadPhoto_1(event: any) {
+  const file: File = event.target.files[0];
+  if (file) {
+    this.img.uploadImage(file, 'images/' + file.name).subscribe(url => {
+      console.log('URL de la imagen:', url);
+      this.imgUrl_1 = url;
+    });
+  }
 }
-
 validateEmptyInputs() {
-  const arrayControls = Object.values(this.formRepartidor.controls).map(
+  const arrayControls = Object.values(this.formSpecialist.controls).map(
     (obj) => obj
   );
   arrayControls.forEach((control) => {
@@ -65,26 +104,32 @@ validateEmptyInputs() {
     }
   });
 }
-
+addSpecialty(item: any){
+  this.selectSpecialy.push(item);
+  console.log(this.selectSpecialy);
+}
+  get name() {
+    return this.formSpecialist.controls['name'];
+  }
+  get lastName() {
+    return this.formSpecialist.controls['lastName'];
+  }
+  get age() {
+    return this.formSpecialist.controls['age'];
+  }
   get dni() {
-    return this.formRepartidor.controls['dni'];
+    return this.formSpecialist.controls['dni'];
   }
-  get nombre() {
-    return this.formRepartidor.controls['nombre'];
+  get mail() {
+    return this.formSpecialist.controls['mail'];
   }
-  get edad() {
-    return this.formRepartidor.controls['edad'];
+  get password() {
+    return this.formSpecialist.controls['password'];
   }
-  get capacidad() {
-    return this.formRepartidor.controls['capacidad'];
+  get specialty() {
+    return this.formSpecialist.controls['specialty'];
   }
-  get unidad() {
-    return this.formRepartidor.controls['unidad'];
-  }
-  get pais() {
-    return this.formRepartidor.controls['pais'];  
-  }
+ 
   
 }
-
 
