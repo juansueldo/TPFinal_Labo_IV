@@ -1,4 +1,4 @@
-<form (submit)="onSubmit()" [formGroup]="formEspecialista" *ngIf="!showSignup">
+<form  (submit)="onSubmit()" [formGroup]="formEspecialista" *ngIf="!showSignup">
     <div class="row">
       <div class="col-md-6">
         <div class="container-names">
@@ -23,19 +23,13 @@
           <small class="invalid-feedback">DNI invalido (solo numeros)</small>
         </app-custom-input>
         <app-custom-input class="form-control" divClass="mb-4" label="Foto de perfil 1"
-        controlName="password" type="file" (change)="subirFoto($event)">
+        type="file" (change)="subirFoto($event)">
         <small class="invalid-feedback">Foto Perfil</small>
       </app-custom-input>
       </div>
       <div class="col-md-6">
-        <div class="form-floating mb-4">
-          <select formControlName="especialidades" class="form-select {{especialidades.errors ? 'is-invalid': ''}}"
-            id="floatingInputValue">
-            <option *ngFor="let especialidad of listaEspecialidades" [value]="especialidad.nombre">{{ especialidad.nombre }}</option>
-          </select>
-          <label for="floatingInputValue">Especialidad</label>
-        </div>
-  
+        
+        <app-select-especialidad [selectedItems]="espcialidadSeleccionada" (itemSelected)="handleItemSelected($event)"></app-select-especialidad>
         <app-custom-input class="form-control {{email.errors ? 'is-invalid': ''}}" divClass="mb-4" label="Email"
           controlName="email" type="mail">
           <small class="invalid-feedback">Email invalido (solo letras)</small>

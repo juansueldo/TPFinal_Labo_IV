@@ -5,7 +5,7 @@ export class Especialista{
     edad: number;
     dni: string;
     email: string;
-    especialidades!: string[];
+    especialidades!: any[];
     img_1: string | undefined;
 
   

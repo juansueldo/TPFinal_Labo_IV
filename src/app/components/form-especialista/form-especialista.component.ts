@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Especialista } from 'src/app/models/especialista.models';
 import { AuthService } from 'src/app/services/auth.service';
-import { EspecialidadesService } from 'src/app/services/especialidades.service';
 import { EspecialistasService } from 'src/app/services/especialistas.service';
 import { ImgService } from 'src/app/services/img.service';
 import { FormValidator } from 'src/app/validators/form-validators';
@@ -18,9 +17,8 @@ export class FormEspecialistaComponent {
   @Input() showSignup!: boolean;
   @Output() loadingEvent = new EventEmitter<boolean>();
   imgUrl_1!: string;
-  listaEspecialidades: any[]=[];
   espcialidadSeleccionada: any[]=[];
-  constructor(private img: ImgService, private especialistasService: EspecialistasService, private auth: AuthService, private especialidadesService: EspecialidadesService) {
+  constructor(private img: ImgService, private especialistasService: EspecialistasService, private auth: AuthService) {
   this.formEspecialista = new FormGroup({
     nombre: new FormControl(null, {
       validators: [FormValidator.onlyLetters],
@@ -50,17 +48,19 @@ export class FormEspecialistaComponent {
   });
 }
 ngOnInit(): void {
-  this.especialidadesService.obtenerEspecialidades().subscribe(posts => {
-    this.listaEspecialidades = posts;
-  });
+  
 
 }
-
+handleItemSelected(selectedItems: any[]) {
+  this.espcialidadSeleccionada = selectedItems;
+  console.log(this.espcialidadSeleccionada);
+}
 onSubmit() {
   this.validateEmptyInputs();
-  if (this.formEspecialista.invalid) return;
+  //if (this.formEspecialista.invalid) return;
   const aux = this.nombre.value + ' ' + this.apellido.value;
   this.auth.register(this.email.value, this.clave.value).then(async res =>{
+    console.log(res);
     await this.auth.updateUser({displayName:aux})
     let user={
       uid: res.user.uid,
@@ -74,9 +74,10 @@ onSubmit() {
     edad: Number(this.edad.value),
     dni: this.dni.value,
     email: this.email.value,
-    especialidades: this.especialidades.value,
+    especialidades: this.espcialidadSeleccionada,
     img_1: this.imgUrl_1,
   };
+  console.log(especialista);
   this.loadingEvent.emit(true);
   this.especialistasService.agregarEspecialista(especialista).then((res) => {
     this.loadingEvent.emit(false);
@@ -104,10 +105,7 @@ validateEmptyInputs() {
     }
   });
 }
-addSpecialty(item: any){
-  this.espcialidadSeleccionada.push(item);
-  console.log(this.espcialidadSeleccionada);
-}
+
   get nombre() {
     return this.formEspecialista.controls['nombre'];
   }

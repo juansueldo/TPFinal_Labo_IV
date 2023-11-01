@@ -1,0 +1,19 @@
+
+        <label for="items">Selecciona o Agrega un Elemento:</label>
+        <select id="items" [(ngModel)]="newItem" class="form-control">
+          <option value="" disabled>Selecciona una especialidad</option>
+          <option *ngFor="let especialidad of especialidades" [value]="especialidad">{{ especialidad }}</option>
+        </select>
+        <div class="input-group mt-3">
+          <input type="text" class="form-control" [(ngModel)]="newItem" (keyup.enter)="addItem()" placeholder="Nueva Especialidad">
+          <div class="input-group-append">
+            <button class="btn btn-primary" (click)="addItem()">Agregar</button>
+          </div>
+        </div>
+        <div class="mt-3">
+          <label>Especialidades seleccionadas:</label>
+          <ul>
+            <li *ngFor="let item of selectedItems">{{ item }}</li>
+          </ul>
+        </div>
+  

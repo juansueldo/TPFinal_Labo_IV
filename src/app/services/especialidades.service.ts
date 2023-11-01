@@ -6,8 +6,11 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 export class EspecialidadesService {
   constructor( private angularFire: AngularFirestore) { }
 
+  agregarEspecialidad(nombre: string) {
+    return this.angularFire.collection('especialidades').add({ nombre });
+  }
   obtenerEspecialidades() {
-    return this.angularFire.collection('especialidad').valueChanges();
+    return this.angularFire.collection('especialidades').valueChanges();
   }
 }
 

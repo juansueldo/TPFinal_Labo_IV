@@ -7,7 +7,7 @@ import {AngularFirestore} from '@angular/fire/compat/firestore';
   providedIn: 'root'
 })
 export class EspecialistasService {
-  especialisteRef = collection(this.firestore, 'especialista')
+  especialisteRef = collection(this.firestore, 'especialistas')
 
   constructor(private firestore : Firestore, private angularFire: AngularFirestore) { }
 
@@ -16,6 +16,6 @@ export class EspecialistasService {
   }
 
   obtenerEspecialistas(): Observable<Especialista[]> {
-    return this.angularFire.collection<Especialista>('especialista', ref => ref.orderBy('dni', 'asc')).valueChanges();
+    return this.angularFire.collection<Especialista>('especialistas', ref => ref.orderBy('dni', 'asc')).valueChanges();
   }
 }

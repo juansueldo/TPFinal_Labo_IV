@@ -34,12 +34,8 @@ export class LoginPacienteComponent {
       const date = new Date();
       const fullDate = date.toLocaleDateString() + '-' + date.toLocaleTimeString();
       this.auth.login(this.email, this.clave).then(async res =>{
-        let user: Paciente={
-          uid: res.user.uid,
-          name: res.user.displayName,
-          email: res.user.email
-        }
-        this.alerta = `Bienvenido ${user.email}`;
+        
+        this.alerta = `Bienvenido ${this.email}`;
         //this.auth.saveLog(this.email);
         let sb = this.snackBar.open(this.alerta, 'cerrar', {
           duration: 3000,
@@ -47,7 +43,7 @@ export class LoginPacienteComponent {
         sb.onAction().subscribe(() => {
           sb.dismiss();
         });
-        this.router.navigate(['bienvenido'], { queryParams: user });
+        this.router.navigate(['bienvenido']);
         
 
         this.formLogin.reset();
