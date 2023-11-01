@@ -1,0 +1,22 @@
+<p>login-paciente works!</p>
+<form (submit)="onSubmit()" [formGroup]="formLogin">
+    <div class="row">
+      <div class="col-md-6">
+  
+        <app-custom-input class="form-control {{email.errors ? 'is-invalid': ''}}" divClass="mb-4" label="Email"
+          controlName="email" type="mail">
+          <small class="invalid-feedback">Email invalido (solo letras)</small>
+        </app-custom-input>
+  
+        <app-custom-input class="form-control {{clave.errors ? 'is-invalid': ''}}" divClass="mb-4" label="Clave"
+          controlName="clave" type="password">
+          <small class="invalid-feedback">Clave invalida</small>
+        </app-custom-input>
+        <div class="container-files">
+         
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Enviar</button>
+  </form>
+  

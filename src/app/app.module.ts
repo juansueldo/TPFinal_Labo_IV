@@ -4,9 +4,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { WelcomeComponent } from './pages/welcome/welcome.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { ThemeComponent } from './components/theme/theme.component';
+
 import { SpinnerComponent } from './components/spinner/spinner.component';
 
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
@@ -15,25 +14,25 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { environment } from './environments/environments';
 import { LoginComponent } from './pages/login/login.component';
-import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { CustomInputComponent } from './components/custom-input/custom-input.component';
-import { SelectUserComponent } from './pages/select-user/select-user.component';
-import { FormSpecialistComponent } from './components/form-specialist/form-specialist.component';
-import { FormPatientComponent } from './components/form-patient/form-patient.component';
 
+
+import { FormPacienteComponent } from './components/form-paciente/form-paciente.component';
+import { BienvenidaComponent } from './pages/bienvenida/bienvenida.component';
+import { RegistroComponent } from './pages/registro/registro.component';
+import { FormEspecialistaComponent } from './components/form-especialista/form-especialista.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [
     AppComponent,
-    WelcomeComponent,
     NavbarComponent,
-    ThemeComponent,
     SpinnerComponent,
     LoginComponent,
-    SignUpComponent,
     CustomInputComponent,
-    SelectUserComponent,
-    FormSpecialistComponent,
-    FormPatientComponent,
+    FormPacienteComponent,
+    BienvenidaComponent,
+    RegistroComponent,
+    FormEspecialistaComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +40,8 @@ import { FormPatientComponent } from './components/form-patient/form-patient.com
     ReactiveFormsModule,
     provideFirebaseApp(() => initializeApp(environment)),
     provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore())
+    provideFirestore(() => getFirestore()),
+    BrowserAnimationsModule
   ],
   providers: [{ provide: FIREBASE_OPTIONS, useValue: environment }],
   bootstrap: [AppComponent]

@@ -1,0 +1,25 @@
+<div class="vh-100">
+    <app-navbar [showButtons]="true" [usuario]="user" (loadingEvent)="loading=$event"></app-navbar>
+    <app-spinner [showSpinner]="loading"></app-spinner>
+    <div class="container-fluid contenedor w-100 mt-2 position-relative">
+      
+      <div class="row justify-content-center align-items-center gap-5 gap-md-0 ">
+        <div class="col-10 text-center mb-md-5 mt-1">
+          <h1 class="mt-5">Registro</h1>
+          <div class="form-floating mb-3">
+            <button class="btn  {{activoPaciente}} left" (click)="esPaciente()">Paciente</button>
+            <button class="btn  {{activoEspecialista}}" (click)="esEspecialista()">Especialista</button>
+          </div>
+        </div>
+        
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-md-8">
+          <app-form-paciente #form (loadingEvent)="loading = $event" [showSignup]="!signup"></app-form-paciente>
+          <app-form-especialista #form (loadingEvent)="loading = $event" [showSignup]="!signup"></app-form-especialista>
+        </div>
+      </div>
+    </div>
+      </div>
+    </div>
+    </div>

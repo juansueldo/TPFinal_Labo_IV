@@ -1,16 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { WelcomeComponent } from './pages/welcome/welcome.component';
-import { SignUpComponent } from './pages/sign-up/sign-up.component';
+
+
+import { BienvenidaComponent } from './pages/bienvenida/bienvenida.component';
+import { RegistroComponent } from './pages/registro/registro.component';
 
 const routes: Routes = [
   { 
-    path: "", component:WelcomeComponent, 
+    path: "", component:BienvenidaComponent, 
   },
-  { path: "home", component:WelcomeComponent, 
+  { path: "bienvenida", component:BienvenidaComponent, 
   },
   {
-    path: "signup", component: SignUpComponent
+    path: "registro", component: RegistroComponent,
   },
   {
     path: 'login',

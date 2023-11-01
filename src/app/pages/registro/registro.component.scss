@@ -1,0 +1,13 @@
+.form-floating{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
+}
+.left{
+    margin-right: 10px;
+}
+.activo:hover{
+    background-color: #fff;
+    color: #007bff;
+}
