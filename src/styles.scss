@@ -35,3 +35,9 @@ $TPFinal_Labo_IV-theme: mat.define-light-theme((
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-mdc-snack-bar-container {
+  --mdc-snackbar-container-color: #49a22b !important;
+  --mdc-snackbar-supporting-text-color: rgba(214, 214, 214, 0.87);
+  --mat-snack-bar-button-color: rgba(0, 0, 0, 0.87);
+}

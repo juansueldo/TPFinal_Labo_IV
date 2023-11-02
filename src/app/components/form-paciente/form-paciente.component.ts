@@ -62,6 +62,13 @@ onSubmit() {
   if (this.formPaciente.invalid) return;
   const aux = this.nombre.value + ' ' + this.apellido.value;
   this.auth.register(this.email.value, this.clave.value).then(async res =>{
+    this.auth.confirmarMail(res)
+    .then(responseMail => {
+        console.log(responseMail);
+    })
+    .catch(errorMail =>{
+      console.log(errorMail);
+    });
     await this.auth.updateUser({displayName:aux})
     let user={
       uid: res.user.uid,

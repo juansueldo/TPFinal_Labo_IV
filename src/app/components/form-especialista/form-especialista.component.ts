@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Especialista } from 'src/app/models/especialista.models';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { Especialista, Registro } from 'src/app/models/especialista.models';
 import { AuthService } from 'src/app/services/auth.service';
 import { EspecialistasService } from 'src/app/services/especialistas.service';
 import { ImgService } from 'src/app/services/img.service';
@@ -18,7 +20,14 @@ export class FormEspecialistaComponent {
   @Output() loadingEvent = new EventEmitter<boolean>();
   imgUrl_1!: string;
   espcialidadSeleccionada: any[]=[];
-  constructor(private img: ImgService, private especialistasService: EspecialistasService, private auth: AuthService) {
+  alerta: string = '';
+  constructor(
+    private img: ImgService, 
+    private especialistasService: EspecialistasService,
+    private auth: AuthService,
+    private snackBar: MatSnackBar,
+    private router: Router,
+    ) {
   this.formEspecialista = new FormGroup({
     nombre: new FormControl(null, {
       validators: [FormValidator.onlyLetters],
@@ -44,7 +53,6 @@ export class FormEspecialistaComponent {
       validators: [Validators.minLength(6)],
       updateOn: 'change',
     }),
-    especialidades: new FormControl(),
   });
 }
 ngOnInit(): void {
@@ -57,16 +65,24 @@ handleItemSelected(selectedItems: any[]) {
 }
 onSubmit() {
   this.validateEmptyInputs();
-  //if (this.formEspecialista.invalid) return;
+  if (this.formEspecialista.invalid) return;
   const aux = this.nombre.value + ' ' + this.apellido.value;
   this.auth.register(this.email.value, this.clave.value).then(async res =>{
-    console.log(res);
+    this.auth.confirmarMail(res)
+    .then(responseMail => {
+        console.log(responseMail);
+    })
+    .catch(errorMail =>{
+      console.log(errorMail);
+    });
     await this.auth.updateUser({displayName:aux})
     let user={
       uid: res.user.uid,
       name: res.user.displayName,
       email: res.user.email,
     }
+   
+  
   const especialista: Especialista = {
     id: user.uid,
     nombre: this.nombre.value,
@@ -76,13 +92,27 @@ onSubmit() {
     email: this.email.value,
     especialidades: this.espcialidadSeleccionada,
     img_1: this.imgUrl_1,
+    estados:{
+      registro: Registro.pendiente
+    }
   };
-  console.log(especialista);
   this.loadingEvent.emit(true);
   this.especialistasService.agregarEspecialista(especialista).then((res) => {
     this.loadingEvent.emit(false);
+    
+    this.alerta = `Bienvenido ${especialista.email}! Su cuenta esta pendiente de apobacion`;
+        //this.auth.saveLog(this.email);
+        let sb = this.snackBar.open(this.alerta, 'cerrar', {
+          duration: 3000,
+          panelClass:'error-alert-snackbar'
+        });
+        sb.onAction().subscribe(() => {
+          sb.dismiss();
+        });
+        this.router.navigate(['/bienvenida']);
     this.formEspecialista.reset();
-  });
+    this.espcialidadSeleccionada =[];
+    });
 
   });
 }
@@ -124,7 +154,5 @@ validateEmptyInputs() {
   get clave() {
     return this.formEspecialista.controls['clave'];
   }
-  get especialidades() {
-    return this.formEspecialista.controls['especialidades'];
-  }
+  
 }

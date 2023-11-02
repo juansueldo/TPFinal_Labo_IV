@@ -4,22 +4,12 @@ import { Firestore } from '@angular/fire/firestore';
 import {
   Auth,
   createUserWithEmailAndPassword,
+  sendEmailVerification,
+  sendSignInLinkToEmail,
   signInWithEmailAndPassword,
   signOut,
   User
 } from '@angular/fire/auth';
-import {
-  collection,
-  addDoc,
-  collectionData,
-  query,
-  where,
-  getDoc,
-  doc,
-  setDoc,
-  updateDoc,
-  getDocs,
-} from '@angular/fire/firestore';
 import {AngularFirestore} from '@angular/fire/compat/firestore';
 import {getAuth, updateProfile} from "firebase/auth"; 
 import { Observable, Subscription } from 'rxjs';
@@ -40,7 +30,9 @@ export class AuthService {
   login( email: any, password : any) {
     return signInWithEmailAndPassword(this.auth, email, password);
   }
-
+  confirmarMail(userCredential: any){
+    return sendEmailVerification(userCredential.user);
+  }
   logout() {
     return signOut(this.auth);
   }

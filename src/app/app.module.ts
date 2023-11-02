@@ -23,6 +23,11 @@ import { RegistroComponent } from './pages/registro/registro.component';
 import { FormEspecialistaComponent } from './components/form-especialista/form-especialista.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SelectEspecialidadComponent } from './components/select-especialidad/select-especialidad.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';;
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +45,11 @@ import { SelectEspecialidadComponent } from './components/select-especialidad/se
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    MatSnackBarModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
     provideFirebaseApp(() => initializeApp(environment)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
