@@ -28,6 +28,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { AltaPacienteComponent } from './pages/registro/alta-paciente/alta-paciente.component';
 import { AltaEspecialistaComponent } from './pages/registro/alta-especialista/alta-especialista.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+
 
 
 @NgModule({
@@ -41,7 +43,9 @@ import { AltaEspecialistaComponent } from './pages/registro/alta-especialista/al
     FormEspecialistaComponent,
     SelectEspecialidadComponent,
     AltaPacienteComponent,
-    AltaEspecialistaComponent
+    AltaEspecialistaComponent,
+    DashboardComponent,
+
   ],
   imports: [
     BrowserModule,

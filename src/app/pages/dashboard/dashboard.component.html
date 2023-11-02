@@ -1,0 +1,14 @@
+<div *ngFor="let paciente of listaEspecialistas">
+    <div class="card">
+      <img [src]="paciente.img_1" alt="Foto de {{ paciente.nombre }} {{ paciente.apellido }}">
+      <div class="card-body">
+        <h5 class="card-title">{{ paciente.nombre }} {{ paciente.apellido }}</h5>
+        <p class="card-text">DNI: {{ paciente.dni }}</p>
+        <p class="card-text">Edad: {{ paciente.edad }}</p>
+        <p class="card-text">Especialidades: {{ paciente.especialidades.join(', ') }}</p>
+        <p class="card-text">Email: {{ paciente.email }}</p>
+        <p class="card-text">Estado de Registro: {{ paciente.estados.registro === 0 ? 'Pendiente' : 'Completado' }}</p>
+      </div>
+    </div>
+  </div>
+  
