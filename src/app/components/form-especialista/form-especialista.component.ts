@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 import { Router } from '@angular/router';
 import { Especialista, Registro } from 'src/app/models/especialista.models';
 import { AuthService } from 'src/app/services/auth.service';
@@ -25,8 +26,8 @@ export class FormEspecialistaComponent {
     private img: ImgService, 
     private especialistasService: EspecialistasService,
     private auth: AuthService,
-    private snackBar: MatSnackBar,
-    private router: Router,
+    private snackBar: SnackbarService,
+    private router: Router, 
     ) {
   this.formEspecialista = new FormGroup({
     nombre: new FormControl(null, {
@@ -101,20 +102,19 @@ onSubmit() {
     this.loadingEvent.emit(false);
     
     this.alerta = `Bienvenido ${especialista.email}! Su cuenta esta pendiente de apobacion`;
-        //this.auth.saveLog(this.email);
-        let sb = this.snackBar.open(this.alerta, 'cerrar', {
-          duration: 3000,
-          panelClass:'error-alert-snackbar'
-        });
-        sb.onAction().subscribe(() => {
-          sb.dismiss();
-        });
+        this.auth.saveLog(especialista.email);
+        this.snackBar.showSnackBar(this.alerta, 'cerrar', 3500);
+        
         this.router.navigate(['/bienvenida']);
     this.formEspecialista.reset();
     this.espcialidadSeleccionada =[];
-    });
-
+    })
+    
+  })
+  .catch(err => {
+    this.snackBar.showSnackBar(err, 'cerrar', 3500);
   });
+  
 }
 subirFoto(event: any) {
   const file: File = event.target.files[0];
