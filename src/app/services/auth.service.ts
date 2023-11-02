@@ -1,18 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Component, inject } from '@angular/core';
-import { Firestore } from '@angular/fire/firestore';
 import {
   Auth,
   createUserWithEmailAndPassword,
   sendEmailVerification,
-  sendSignInLinkToEmail,
   signInWithEmailAndPassword,
   signOut,
   User
 } from '@angular/fire/auth';
 import {AngularFirestore} from '@angular/fire/compat/firestore';
 import {getAuth, updateProfile} from "firebase/auth"; 
-import { Observable, Subscription } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root',

@@ -1,21 +1,38 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Paciente } from 'src/app/models/paciente.models';
 import { AuthService } from 'src/app/services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { SnackbarService } from 'src/app/services/snackbar.service';
+import { PacienteService } from 'src/app/services/paciente.service';
+import { EspecialistasService } from 'src/app/services/especialistas.service';
+import { Especialista } from 'src/app/models/especialista.models';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-login-paciente',
   templateUrl: './login-paciente.component.html',
   styleUrls: ['./login-paciente.component.scss']
 })
-export class LoginPacienteComponent {
+export class LoginPacienteComponent implements OnInit{
   formLogin: FormGroup;
   alerta: string = '';
   hide = true;
   loading = false;
-  constructor(private auth: AuthService, private snackBar: MatSnackBar, public router: Router){
+  listaPacientes;
+  listaEspecialistas;
+  pacientes:Paciente[];
+  especialistas$ : Subject<Especialista[]>;
+  pacientes$ : Subject<Paciente[]>;
+  especialistas:Especialista[];
+  constructor(
+    private auth: AuthService,
+    private snackBar: SnackbarService,
+    private router: Router,
+    private pacientesService: PacienteService,
+    private especialistaService: EspecialistasService
+    ){
     this.formLogin = new FormGroup({
    
       email: new FormControl(null,{
@@ -28,21 +45,29 @@ export class LoginPacienteComponent {
       }),
     });
   }
+  ngOnInit(): void {
+    this.pacientesService.obtenerPacientes().subscribe(posts => {
+      this.listaPacientes = posts;
+      console.log(this.listaPacientes);
+    });
+    this.especialistaService.obtenerEspecialistas().subscribe(posts => {
+      this.listaEspecialistas = posts;
+      console.log(this.listaEspecialistas);
+    });
+ 
+  }
   onSubmit(){
-    if (this.formLogin.valid) {
+    if (this.formLogin.invalid){
+      return;
+    }
       this.loading = true;
       const date = new Date();
       const fullDate = date.toLocaleDateString() + '-' + date.toLocaleTimeString();
       this.auth.login(this.email, this.clave).then(async res =>{
-        
+        this.buscarUsuarioPorMailPassword(this.email);
         this.alerta = `Bienvenido ${this.email}`;
         //this.auth.saveLog(this.email);
-        let sb = this.snackBar.open(this.alerta, 'cerrar', {
-          duration: 3000,
-        });
-        sb.onAction().subscribe(() => {
-          sb.dismiss();
-        });
+        this.snackBar.showSnackBar(this.alerta, 'cerrar', 5000);
         this.router.navigate(['bienvenido']);
         
 
@@ -59,20 +84,38 @@ export class LoginPacienteComponent {
         if(error.message === "Firebase: Error (auth/invalid-login-credentials)."){
           this.alerta = "Usuario invalido";
         }
-        let sb = this.snackBar.open(this.alerta, 'cerrar', {
-          duration: 5000,
-        });
-        sb.onAction().subscribe(() => {
-          sb.dismiss();
-        });
+        if(error.message === "Firebase: Error (auth/network-request-failed)."){
+          this.alerta = "Debe validar su cuenta";
+        }
+        this.snackBar.showSnackBar(this.alerta, 'cerrar', 5000);
       })
-    }
   }
-   get email() {
+  get email() {
     return this.formLogin.controls['email'];
   }
   get clave() {
     return this.formLogin.controls['clave'];
+  }
+  buscarUsuarioPorMailPassword(email:any){
+    let usuario = null;    
+    this.pacientes.forEach(paciente => {
+      if(paciente.email == email ){
+        usuario = paciente as Paciente;
+        console.log(usuario);
+      }
+    });
+    this.especialistas.forEach(especialista => {
+      if(especialista.email == email){
+        usuario = especialista as Especialista;
+        console.log(usuario);
+      }
+    });
+    /*this.admins.forEach(admin => {
+      if(admin.mail == mail && admin.password == password){
+        usuario = admin as Admin;
+      }
+    });*/
+    return usuario;
   }
 
 }
