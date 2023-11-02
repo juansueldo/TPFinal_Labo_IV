@@ -22,8 +22,6 @@ export class LoginPacienteComponent implements OnInit{
   listaPacientes;
   listaEspecialistas;
   pacientes:Paciente[];
-  especialistas$ : Subject<Especialista[]>;
-  pacientes$ : Subject<Paciente[]>;
   especialistas:Especialista[];
   constructor(
     private auth: AuthService,
