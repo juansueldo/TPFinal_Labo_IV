@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { EspecialistasService } from 'src/app/services/especialistas.service';
 import { ImgService } from 'src/app/services/img.service';
 import { FormValidator } from 'src/app/validators/form-validators';
-
+import { Especialidad } from 'src/app/models/interfaces.models';
 @Component({
   selector: 'app-form-especialista',
   templateUrl: './form-especialista.component.html',
@@ -20,7 +20,7 @@ export class FormEspecialistaComponent {
   @Input() showSignup!: boolean;
   @Output() loadingEvent = new EventEmitter<boolean>();
   imgUrl_1!: string;
-  espcialidadSeleccionada: any[]=[];
+  espcialidadSeleccionada: Especialidad[]=[];
   alerta: string = '';
   constructor(
     private img: ImgService, 
@@ -60,67 +60,75 @@ ngOnInit(): void {
   
 
 }
-handleItemSelected(selectedItems: any[]) {
+handleItemSelected(selectedItems: Especialidad[]) {
   this.espcialidadSeleccionada = selectedItems;
-  console.log(this.espcialidadSeleccionada);
 }
 onSubmit() {
   this.validateEmptyInputs();
-  if (this.formEspecialista.invalid) return;
-  const aux = this.nombre.value + ' ' + this.apellido.value;
-  this.auth.register(this.email.value, this.clave.value).then(async res =>{
-    this.auth.confirmarMail(res)
-    .then(responseMail => {
-        console.log(responseMail);
-    })
-    .catch(errorMail =>{
-      console.log(errorMail);
-    });
-    await this.auth.updateUser({displayName:aux})
-    let user={
-      uid: res.user.uid,
-      name: res.user.displayName,
-      email: res.user.email,
-    }
-   
-  
-  const especialista: Especialista = {
-    id: user.uid,
-    nombre: this.nombre.value,
-    apellido: this.apellido.value,
-    edad: Number(this.edad.value),
-    dni: this.dni.value,
-    email: this.email.value,
-    especialidades: this.espcialidadSeleccionada,
-    img_1: this.imgUrl_1,
-    estados:{
-      registro: Registro.pendiente
-    }
-  };
   this.loadingEvent.emit(true);
-  this.especialistasService.agregarEspecialista(especialista).then((res) => {
+  if (this.formEspecialista.invalid) {
     this.loadingEvent.emit(false);
-    
-    this.alerta = `Bienvenido ${especialista.email}! Su cuenta esta pendiente de apobacion`;
-        this.auth.saveLog(especialista.email);
-        this.snackBar.showSnackBar(this.alerta, 'cerrar', 3500);
-        
-        this.router.navigate(['/bienvenida']);
-    this.formEspecialista.reset();
-    this.espcialidadSeleccionada =[];
+    return;
+  }
+
+  const aux = this.nombre.value + ' ' + this.apellido.value;
+  let user: any;
+
+  this.auth
+    .register(this.email.value, this.clave.value)
+    .then(async (res) => {
+      user = {
+        uid: res.user.uid,
+        name: res.user.displayName,
+        email: res.user.email,
+      };
+
+      return this.auth.confirmarMail(res);
     })
-    
-  })
-  .catch(err => {
-    this.snackBar.showSnackBar(err, 'cerrar', 3500);
-  });
-  
+    .then(() => {
+      const especialista: Especialista = {
+        id: user.uid,
+        nombre: this.nombre.value,
+        apellido: this.apellido.value,
+        edad: Number(this.edad.value),
+        dni: this.dni.value,
+        email: this.email.value,
+        especialidades: this.espcialidadSeleccionada,
+        img_1: this.imgUrl_1,
+        estados: {
+          registro: Registro.pendiente,
+        },
+      };
+
+      return this.especialistasService.agregarEspecialista(especialista);
+    })
+    .then(() => {
+      this.alerta = `¡Bienvenido ${user.email}! Su cuenta está pendiente de aprobación`;
+      this.auth.saveLog(user.email);
+      this.snackBar.showSnackBar(this.alerta, 'cerrar', 3500);
+      this.router.navigate(['/bienvenida']);
+      this.formEspecialista.reset();
+      this.espcialidadSeleccionada = [];
+    })
+    .catch((error) => {
+      console.log(error.message);
+      if (error.message === 'Firebase: Error (auth/email-already-in-use).') {
+        this.alerta = 'El correo electrónico ya está en uso.';
+      } else {
+        this.alerta = 'Ocurrió un error al registrar la cuenta.';
+      }
+
+      this.snackBar.showSnackBar(this.alerta, 'cerrar', 3500);
+    })
+    .finally(() => {
+      this.loadingEvent.emit(false);
+    });
 }
+
 subirFoto(event: any) {
   const file: File = event.target.files[0];
   if (file) {
     this.img.uploadImage(file, 'imagenes/' + file.name).subscribe(url => {
-      console.log('URL de la imagen:', url);
       this.imgUrl_1 = url;
     });
   }

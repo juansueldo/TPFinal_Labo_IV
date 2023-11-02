@@ -4,8 +4,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { NavbarComponent } from './components/navbar/navbar.component';
-
 import { SpinnerComponent } from './components/spinner/spinner.component';
 
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
@@ -14,7 +12,7 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { environment } from './environments/environments';
 import { LoginComponent } from './pages/login/login.component';
-import { CustomInputComponent } from './components/custom-input/custom-input.component';
+import { SharedModule } from './shared/shared.module';
 
 import { FormsModule } from '@angular/forms'; 
 import { FormPacienteComponent } from './components/form-paciente/form-paciente.component';
@@ -28,13 +26,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';;
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+
+
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
     SpinnerComponent,
     LoginComponent,
-    CustomInputComponent,
     FormPacienteComponent,
     BienvenidaComponent,
     RegistroComponent,
@@ -50,6 +48,7 @@ import { MatInputModule } from '@angular/material/input';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    SharedModule,
     provideFirebaseApp(() => initializeApp(environment)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),

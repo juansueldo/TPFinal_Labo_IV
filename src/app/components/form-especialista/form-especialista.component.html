@@ -29,18 +29,17 @@
       </div>
       <div class="col-md-6">
         
-        <app-select-especialidad [selectedItems]="espcialidadSeleccionada" (itemSelected)="handleItemSelected($event)"></app-select-especialidad>
         <app-custom-input class="form-control {{email.errors ? 'is-invalid': ''}}" divClass="mb-4" label="Email"
-          controlName="email" type="mail">
-          <small class="invalid-feedback">Email invalido (solo letras)</small>
-        </app-custom-input>
-  
-        <app-custom-input class="form-control {{clave.errors ? 'is-invalid': ''}}" divClass="mb-4" label="Clave"
-          controlName="clave" type="password">
-          <small class="invalid-feedback">Clave invalida</small>
-        </app-custom-input>
-        <div class="container-files">
-         
+        controlName="email" type="mail">
+        <small class="invalid-feedback">Email invalido (solo letras)</small>
+      </app-custom-input>
+      
+      <app-custom-input class="form-control {{clave.errors ? 'is-invalid': ''}}" divClass="mb-4" label="Clave"
+      controlName="clave" type="password">
+      <small class="invalid-feedback">Clave invalida</small>
+    </app-custom-input>
+    <div class="container-files">
+          <app-select-especialidad [selectedItems]="espcialidadSeleccionada" (itemSelected)="handleItemSelected($event)"></app-select-especialidad> 
         </div>
       </div>
     </div>

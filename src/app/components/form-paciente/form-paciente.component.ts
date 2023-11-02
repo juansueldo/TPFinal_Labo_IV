@@ -3,9 +3,12 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Paciente } from 'src/app/models/paciente.models';
 import { AuthService } from 'src/app/services/auth.service';
 import { ImgService } from 'src/app/services/img.service';
-import { ObrasocialService } from 'src/app/services/obrasocial.service';
+import { ObraSocial } from 'src/app/models/interfaces.models';
 import { PacienteService } from 'src/app/services/paciente.service';
 import { FormValidator } from 'src/app/validators/form-validators';
+import { ObrasocialService } from 'src/app/services/obrasocial.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-form-paciente',
@@ -20,8 +23,15 @@ export class FormPacienteComponent {
   imgUrl_1!: string;
   imgUrl_2!: string;
   listadoObraSocial: any[]=[];
-
-  constructor(private img: ImgService, private pacienteService: PacienteService, private auth: AuthService, private obraSocialService: ObrasocialService) {
+  alerta: string = "";
+  constructor(
+    private img: ImgService,
+    private pacienteService: PacienteService,
+    private auth: AuthService,
+    private obraSocialService: ObrasocialService,
+    private snackBar: SnackbarService,
+    private router: Router, 
+    ) {
   this.formPaciente = new FormGroup({
     nombre: new FormControl(null, {
       validators: [FormValidator.onlyLetters],
@@ -59,7 +69,11 @@ ngOnInit(): void {
 
 onSubmit() {
   this.validateEmptyInputs();
-  if (this.formPaciente.invalid) return;
+  this.loadingEvent.emit(true);
+  if (this.formPaciente.invalid){
+    this.loadingEvent.emit(false);
+    return;
+  } 
   const aux = this.nombre.value + ' ' + this.apellido.value;
   this.auth.register(this.email.value, this.clave.value).then(async res =>{
     this.auth.confirmarMail(res)
@@ -86,12 +100,28 @@ onSubmit() {
     img_1: this.imgUrl_1,
     img_2: this.imgUrl_2,
   };
-  this.loadingEvent.emit(true);
+
   this.pacienteService.agregarPaciente(paciente).then((res) => {
+    this.alerta = `¡Bienvenido ${user.email}! Su cuenta está pendiente de aprobación`;
+    this.snackBar.showSnackBar(this.alerta, 'cerrar', 3500);
+    this.router.navigate(['/bienvenida']);
     this.loadingEvent.emit(false);
     this.formPaciente.reset();
   });
 
+  })
+  .catch((error) => {
+    console.log(error.message);
+    if (error.message === 'Firebase: Error (auth/email-already-in-use).') {
+      this.alerta = 'El correo electrónico ya está en uso.';
+    } else {
+      this.alerta = 'Ocurrió un error al registrar la cuenta.';
+    }
+
+    this.snackBar.showSnackBar(this.alerta, 'cerrar', 3500);
+  })
+  .finally(() => {
+    this.loadingEvent.emit(false);
   });
 }
 subirFoto_1(event: any) {
@@ -107,7 +137,6 @@ subirFoto_2(event: any) {
   const file: File = event.target.files[0];
   if (file) {
     this.img.uploadImage(file, 'imagenes/' + file.name).subscribe(url => {
-      console.log('URL de la imagen:', url);
       this.imgUrl_2 = url;
     });
   }

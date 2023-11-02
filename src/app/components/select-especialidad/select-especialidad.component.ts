@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { EspecialidadesService } from 'src/app/services/especialidades.service';
-
+import { Especialidad } from 'src/app/models/interfaces.models';
 @Component({
   selector: 'app-select-especialidad',
   templateUrl: './select-especialidad.component.html',
@@ -10,7 +10,7 @@ export class SelectEspecialidadComponent {
   @Input() selectedItems: any[] = [];
   @Output() itemSelected = new EventEmitter<any[]>();
 
-  especialidades: any[] = [];
+  especialidades: Especialidad[] = [];
   newItem: any = '';
 
   constructor(private especialidadService: EspecialidadesService) {
@@ -37,5 +37,8 @@ export class SelectEspecialidadComponent {
       this.newItem = '';
       this.itemSelected.emit(this.selectedItems);
     }
+  }
+  removeItem(index: number) {
+    this.selectedItems.splice(index, 1);
   }
 }

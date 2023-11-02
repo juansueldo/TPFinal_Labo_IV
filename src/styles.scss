@@ -41,3 +41,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   --mdc-snackbar-supporting-text-color: rgba(214, 214, 214, 0.87);
   --mat-snack-bar-button-color: rgba(0, 0, 0, 0.87);
 }
+.header__navbar__logo, a {
+  text-transform: uppercase;
+  font-size: 3.5rem;
+  font-weight: 800;
+  text-decoration: none;
+  color: #0097e6;
+  text-shadow: 4px 4px 4px rgba(0,0,0,0.75);
+}
+
+.header__navbar__logo__span--green {
+  color: #B4F00A;
+}

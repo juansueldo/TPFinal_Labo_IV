@@ -1,19 +1,24 @@
-
-        <label for="items">Selecciona o Agrega un Elemento:</label>
-        <select id="items" [(ngModel)]="newItem" class="form-control">
-          <option value="" disabled>Selecciona una especialidad</option>
-          <option *ngFor="let especialidad of especialidades" [value]="especialidad">{{ especialidad }}</option>
-        </select>
-        <div class="input-group mt-3">
-          <input type="text" class="form-control" [(ngModel)]="newItem" (keyup.enter)="addItem()" placeholder="Nueva Especialidad">
-          <div class="input-group-append">
-            <button class="btn btn-primary" (click)="addItem()">Agregar</button>
-          </div>
-        </div>
-        <div class="mt-3">
-          <label>Especialidades seleccionadas:</label>
-          <ul>
-            <li *ngFor="let item of selectedItems">{{ item }}</li>
-          </ul>
-        </div>
-  
+<label for="items">Selecciona o Agrega una Especialidad:</label>
+<select id="items" [ngModel]="newItem" (ngModelChange)="newItem = $event" class="form-control">
+  <option value="" disabled>Selecciona una especialidad</option>
+  <option *ngFor="let especialidad of especialidades" [value]="especialidad">{{ especialidad }}</option>
+</select>
+<div class="input-group mt-3">
+  <input type="text" [(ngModel)]="newItem" class="form-control" (keyup.enter)="addItem()" placeholder="Nueva Especialidad">
+  <div class="input-group-append">
+    <a class="btn btn-primary" (click)="addItem()">Agregar</a>
+  </div>
+</div>
+<div class="mt-3">
+  <label>Especialidades seleccionadas:</label>
+  <div class="especialidades-container">
+    <ng-container *ngFor="let item of selectedItems; let i = index">
+      <div class="column">
+        {{ item }}
+        <span class="btn btn-danger btn-sm rounded-circle" (click)="removeItem(i)">
+          <i class="fa-solid fa-trash-can"></i>
+        </span>
+      </div>
+    </ng-container>
+  </div>
+</div>
