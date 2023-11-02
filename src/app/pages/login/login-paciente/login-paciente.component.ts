@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Paciente } from 'src/app/models/paciente.models';
 import { AuthService } from 'src/app/services/auth.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { PacienteService } from 'src/app/services/paciente.service';
@@ -48,11 +47,9 @@ export class LoginPacienteComponent implements OnInit{
   ngOnInit(): void {
     this.pacientesService.obtenerPacientes().subscribe(posts => {
       this.listaPacientes = posts;
-      console.log(this.listaPacientes);
     });
     this.especialistaService.obtenerEspecialistas().subscribe(posts => {
       this.listaEspecialistas = posts;
-      console.log(this.listaEspecialistas);
     });
  
   }
@@ -61,14 +58,15 @@ export class LoginPacienteComponent implements OnInit{
       return;
     }
       this.loading = true;
-      const date = new Date();
-      const fullDate = date.toLocaleDateString() + '-' + date.toLocaleTimeString();
-      this.auth.login(this.email, this.clave).then(async res =>{
-        this.buscarUsuarioPorMailPassword(this.email);
-        this.alerta = `Bienvenido ${this.email}`;
+      //const date = new Date();
+      //const fullDate = date.toLocaleDateString() + '-' + date.toLocaleTimeString();
+      this.auth.login(this.email.value, this.clave.value).then(res =>{
+      
+      console.log( this.buscarUsuarioPorMailPassword(this.email.value));
+        this.alerta = `Bienvenido ${this.email.value}`;
         //this.auth.saveLog(this.email);
         this.snackBar.showSnackBar(this.alerta, 'cerrar', 5000);
-        this.router.navigate(['bienvenido']);
+        this.router.navigate(['/bienvenida']);
         
 
         this.formLogin.reset();
@@ -98,16 +96,14 @@ export class LoginPacienteComponent implements OnInit{
   }
   buscarUsuarioPorMailPassword(email:any){
     let usuario = null;    
-    this.pacientes.forEach(paciente => {
+    this.listaPacientes.forEach(paciente => {
       if(paciente.email == email ){
         usuario = paciente as Paciente;
-        console.log(usuario);
       }
     });
-    this.especialistas.forEach(especialista => {
+    this.listaEspecialistas.forEach(especialista => {
       if(especialista.email == email){
         usuario = especialista as Especialista;
-        console.log(usuario);
       }
     });
     /*this.admins.forEach(admin => {

@@ -76,7 +76,7 @@ onSubmit() {
   } 
   const aux = this.nombre.value + ' ' + this.apellido.value;
   this.auth.register(this.email.value, this.clave.value).then(async res =>{
-    this.auth.confirmarMail(res)
+    this.auth.confirmarMail(this.email.value)
     .then(responseMail => {
         console.log(responseMail);
     })
