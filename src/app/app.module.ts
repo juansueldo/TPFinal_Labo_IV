@@ -26,6 +26,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';;
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { AltaPacienteComponent } from './pages/registro/alta-paciente/alta-paciente.component';
+import { AltaEspecialistaComponent } from './pages/registro/alta-especialista/alta-especialista.component';
 
 
 @NgModule({
@@ -37,7 +39,9 @@ import { MatInputModule } from '@angular/material/input';
     BienvenidaComponent,
     RegistroComponent,
     FormEspecialistaComponent,
-    SelectEspecialidadComponent
+    SelectEspecialidadComponent,
+    AltaPacienteComponent,
+    AltaEspecialistaComponent
   ],
   imports: [
     BrowserModule,

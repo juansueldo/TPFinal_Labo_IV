@@ -99,6 +99,7 @@ onSubmit() {
     obraSocial: this.obraSocial.value,
     img_1: this.imgUrl_1,
     img_2: this.imgUrl_2,
+    tipo: 'paciente'
   };
 
   this.pacienteService.agregarPaciente(paciente).then((res) => {

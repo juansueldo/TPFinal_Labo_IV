@@ -17,7 +17,7 @@ import { Especialidad } from 'src/app/models/interfaces.models';
 export class FormEspecialistaComponent {
   formEspecialista: FormGroup;
   
-  @Input() showSignup!: boolean;
+  @Input() showSignup: boolean;
   @Output() loadingEvent = new EventEmitter<boolean>();
   imgUrl_1!: string;
   espcialidadSeleccionada: Especialidad[]=[];
@@ -98,6 +98,7 @@ onSubmit() {
         estados: {
           registro: Registro.pendiente,
         },
+        tipo: 'especialista'
       };
 
       return this.especialistasService.agregarEspecialista(especialista);

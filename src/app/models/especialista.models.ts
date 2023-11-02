@@ -1,12 +1,15 @@
-export class Especialista{
+import { User } from "./user.models";
+
+export class Especialista implements User{
     id? : string;
     nombre: string;
     apellido: string;
     edad: number;
     dni: string;
     email: string;
-    especialidades!: any[];
     img_1: string | undefined;
+    tipo = "especialista";
+    especialidades!: any[];
     estados:{
       registro: Registro;
     } | undefined

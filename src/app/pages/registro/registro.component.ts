@@ -9,7 +9,7 @@ import { FormPacienteComponent } from 'src/app/components/form-paciente/form-pac
 export class RegistroComponent {
   public loading = false;
   public user!: any;
-  public signup: boolean = false;
+  public signup: boolean = true;
   public activoPaciente: string = 'btn-outline-primary activo';
   public activoEspecialista = 'btn-primary';
   @ViewChild('form') form!: FormPacienteComponent;

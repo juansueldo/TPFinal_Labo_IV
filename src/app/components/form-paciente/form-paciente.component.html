@@ -1,8 +1,8 @@
-<form (submit)="onSubmit()" [formGroup]="formPaciente" *ngIf="showSignup">
+<form (submit)="onSubmit()" [formGroup]="formPaciente">
     <div class="row">
       <div class="col-md-6">
         <div class="container-names">
-          <app-custom-input class="form-control {{nombre.errors ? 'is-invalid': ''}}" divClass="mb-4" label="Nombre"
+          <app-custom-input class="form-control {{nombre.errors ? 'is-invalid': ''}} left" divClass="mb-4" label="Nombre"
             controlName="nombre" type="text">
             <small class="invalid-feedback">Nombre invalido (solo letras)</small>
           </app-custom-input>
