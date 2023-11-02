@@ -1,26 +1,29 @@
-.row{
-    width: 100vw;
-    height: 100vh;
+.container{
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 }
-img{
-    height: 350px;
-}
-.title{
+.center-content {
+    margin-top: 70px;
+    width: 50%;
     text-align: center;
 }
-.container-sections{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
+app-custom-input{
+    padding: 70px;
 }
-.btn{
-    width: 150px;
+img{
+    height: 100px;
+    margin-bottom: 20px;
 }
-.col-md-12{
-    cursor: pointer;
+.invalid-feedback{
+    padding: 0;
+    margin: 0;
 }
+.position{
+    position: relative;
+    width: 100%;
+}
+span{
+    margin: 10px;
+}
+  

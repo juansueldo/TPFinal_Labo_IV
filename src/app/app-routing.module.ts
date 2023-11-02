@@ -1,11 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-
 import { BienvenidaComponent } from './pages/bienvenida/bienvenida.component';
-import { RegistroComponent } from './pages/registro/registro.component';
-import { AltaEspecialistaComponent } from './pages/registro/alta-especialista/alta-especialista.component';
-import { AltaPacienteComponent } from './pages/registro/alta-paciente/alta-paciente.component';
+
 
 const routes: Routes = [
   { 
@@ -14,7 +11,10 @@ const routes: Routes = [
   { path: "bienvenida", component:BienvenidaComponent, 
   },
   {
-    path: "registro", component: RegistroComponent,
+    path: "registro", loadChildren: () =>
+    import('../app/pages/registro/registro.module').then(
+      (m) => m.RegistroModule
+    ),
   },
   {
     path: 'login',
@@ -23,12 +23,7 @@ const routes: Routes = [
         (m) => m.LoginModule
       ),
   },
-  {
-    path:'alta-especialista', component: AltaEspecialistaComponent
-  },
-  {
-    path:'alta-paciente', component: AltaPacienteComponent
-  }
+  
 
 ];
 
