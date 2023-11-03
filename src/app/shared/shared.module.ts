@@ -6,9 +6,11 @@ import { CustomInputComponent } from '../components/custom-input/custom-input.co
 import { ReactiveFormsModule } from '@angular/forms';
 import { NavbarComponent } from '../components/navbar/navbar.component';
 import { DashboardAdminComponent } from '../components/dashboard-admin/dashboard-admin.component';
+import { ListadoEspecialistasComponent } from '../components/listado-especialistas/listado-especialistas.component';
+import { ListadoPacientesComponent } from '../components/listado-pacientes/listado-pacientes.component';
 @NgModule({
-  declarations: [CustomInputComponent,NavbarComponent,DashboardAdminComponent],
-  exports: [CustomInputComponent,NavbarComponent,DashboardAdminComponent],
+  declarations: [CustomInputComponent,NavbarComponent,DashboardAdminComponent,ListadoEspecialistasComponent,ListadoPacientesComponent],
+  exports: [CustomInputComponent,NavbarComponent,DashboardAdminComponent,ListadoEspecialistasComponent,ListadoPacientesComponent],
   imports: [ReactiveFormsModule,CommonModule,FormsModule],
 })
 export class SharedModule { }

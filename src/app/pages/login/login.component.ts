@@ -46,6 +46,7 @@ export class LoginComponent {
     });
   }
   ngOnInit(): void {
+
     this.pacientesService.obtenerPacientes().subscribe(posts => {
       this.listaPacientes = posts;
     });
@@ -55,13 +56,16 @@ export class LoginComponent {
     this.adminService.obtenerAdmins().subscribe(posts => {
       this.listaAdmins = posts;
     });
+    setTimeout(()=>{
+      this.hide = false;
+    },2500);
  
   }
   onSubmit(){
     if (this.formLogin.invalid){
       return;
     }
-      this.loading = true;
+      this.hide = true;
       //const date = new Date();
       //const fullDate = date.toLocaleDateString() + '-' + date.toLocaleTimeString();
       this.auth.login(this.email.value, this.clave.value).then(res =>{
@@ -84,10 +88,10 @@ export class LoginComponent {
           this.snackBar.showSnackBar('error', 'cerrar', 5000);
         }
         
-
+        this.hide = false;
         this.formLogin.reset();
       }, error =>{
-        this.loading = false;
+        this.hide = false;
         if(error.message === "Firebase: The password is invalid or the user does not have a password. (auth/wrong-password)."){
           this.alerta = "Contraseña incorrecta vuelva a intentar";
         }

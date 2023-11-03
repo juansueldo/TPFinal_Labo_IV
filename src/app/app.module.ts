@@ -34,6 +34,7 @@ import { FormAdminComponent } from './components/form-admin/form-admin.component
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +49,7 @@ import { FormAdminComponent } from './components/form-admin/form-admin.component
     AltaEspecialistaComponent,
     DashboardComponent,
     FormAdminComponent,
-    AltaAdminComponent
+    AltaAdminComponent,
 
   ],
   imports: [
