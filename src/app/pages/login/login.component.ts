@@ -71,7 +71,7 @@ export class LoginComponent {
         this.alerta = `Bienvenido ${this.email.value}`;
         //this.auth.saveLog(this.email);
         this.snackBar.showSnackBar(this.alerta, 'cerrar', 5000);
-        if(user.tipo === 'especialista' && user.estado.registro === Registro.aceptado){
+        if(user.tipo === 'especialista' && user.estados.registro === Registro.aceptado){
           this.router.navigate(['/bienvenida']);
         }
         else if(user.tipo === 'paciente'){
