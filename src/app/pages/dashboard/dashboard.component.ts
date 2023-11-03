@@ -8,13 +8,9 @@ import { EspecialistasService } from 'src/app/services/especialistas.service';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
-  listaEspecialistas: Especialista[] = [];
-  constructor(private especialistaService: EspecialistasService){}
-  ngOnInit(): void {
 
-    this.especialistaService.obtenerEspecialistas().subscribe((data: Especialista[]) => {
-      this.listaEspecialistas = data;
-      console.log(this.listaEspecialistas);
-    });
+  constructor(){}
+  ngOnInit() {
+
   }
 }

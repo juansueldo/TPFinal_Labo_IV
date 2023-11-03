@@ -28,7 +28,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { AltaPacienteComponent } from './pages/registro/alta-paciente/alta-paciente.component';
 import { AltaEspecialistaComponent } from './pages/registro/alta-especialista/alta-especialista.component';
+import { AltaAdminComponent } from './pages/registro/alta-admin/alta-admin.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { FormAdminComponent } from './components/form-admin/form-admin.component';
 
 
 
@@ -45,6 +47,8 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
     AltaPacienteComponent,
     AltaEspecialistaComponent,
     DashboardComponent,
+    FormAdminComponent,
+    AltaAdminComponent
 
   ],
   imports: [

@@ -7,7 +7,7 @@ import {AngularFirestore} from '@angular/fire/compat/firestore';
   providedIn: 'root'
 })
 export class PacienteService {
-  pacienteRef = collection(this.firestore, 'paciente')
+  pacienteRef = collection(this.firestore, 'pacientes')
 
   constructor(private firestore : Firestore, private angularFire: AngularFirestore) { }
 
@@ -16,6 +16,6 @@ export class PacienteService {
   }
 
   obtenerPacientes(): Observable<Paciente[]> {
-    return this.angularFire.collection<Paciente>('paciente', ref => ref.orderBy('dni', 'asc')).valueChanges();
+    return this.angularFire.collection<Paciente>('pacientes', ref => ref.orderBy('dni', 'asc')).valueChanges();
   }
 }

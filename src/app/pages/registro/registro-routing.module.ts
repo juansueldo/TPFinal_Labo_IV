@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AltaEspecialistaComponent } from './alta-especialista/alta-especialista.component';
 import { AltaPacienteComponent } from './alta-paciente/alta-paciente.component';
 import { RegistroComponent } from './registro.component';
+import { AltaAdminComponent } from './alta-admin/alta-admin.component';
 
 const routes: Routes = [
   { path: '', component: RegistroComponent },
@@ -11,6 +12,9 @@ const routes: Routes = [
   },
   {
     path:'alta-paciente', component: AltaPacienteComponent
+  },
+  {
+    path:'alta-admin', component: AltaAdminComponent
   }
 ];
 

@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Especialista } from 'src/app/models/especialista.models';
+import { Admin } from 'src/app/models/admin.models';
+import { Especialista, Registro } from 'src/app/models/especialista.models';
 import { Paciente } from 'src/app/models/paciente.models';
+import { AdminService } from 'src/app/services/admin.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { EspecialistasService } from 'src/app/services/especialistas.service';
 import { PacienteService } from 'src/app/services/paciente.service';
@@ -20,6 +22,7 @@ export class LoginComponent {
   loading = false;
   listaPacientes;
   listaEspecialistas;
+  listaAdmins;
   pacientes:Paciente[];
   especialistas:Especialista[];
   constructor(
@@ -27,7 +30,8 @@ export class LoginComponent {
     private snackBar: SnackbarService,
     private router: Router,
     private pacientesService: PacienteService,
-    private especialistaService: EspecialistasService
+    private especialistaService: EspecialistasService,
+    private adminService: AdminService
     ){
     this.formLogin = new FormGroup({
    
@@ -48,6 +52,9 @@ export class LoginComponent {
     this.especialistaService.obtenerEspecialistas().subscribe(posts => {
       this.listaEspecialistas = posts;
     });
+    this.adminService.obtenerAdmins().subscribe(posts => {
+      this.listaAdmins = posts;
+    });
  
   }
   onSubmit(){
@@ -59,17 +66,28 @@ export class LoginComponent {
       //const fullDate = date.toLocaleDateString() + '-' + date.toLocaleTimeString();
       this.auth.login(this.email.value, this.clave.value).then(res =>{
       
-      console.log( this.buscarUsuarioPorMailPassword(this.email.value));
+      let user =  this.buscarUsuarioPorMailPassword(this.email.value);
+      console.log(user);
         this.alerta = `Bienvenido ${this.email.value}`;
         //this.auth.saveLog(this.email);
         this.snackBar.showSnackBar(this.alerta, 'cerrar', 5000);
-        this.router.navigate(['/bienvenida']);
+        if(user.tipo === 'especialista' && user.estado.registro === Registro.aceptado){
+          this.router.navigate(['/bienvenida']);
+        }
+        else if(user.tipo === 'paciente'){
+          this.router.navigate(['/bienvenida']);
+        }
+        else if(user.tipo === 'admin'){
+          this.router.navigate(['/dashboard']);
+        }
+        else{
+          this.snackBar.showSnackBar('error', 'cerrar', 5000);
+        }
         
 
         this.formLogin.reset();
       }, error =>{
         this.loading = false;
-        console.log(error.message);
         if(error.message === "Firebase: The password is invalid or the user does not have a password. (auth/wrong-password)."){
           this.alerta = "Contraseña incorrecta vuelva a intentar";
         }
@@ -91,29 +109,30 @@ export class LoginComponent {
   get clave() {
     return this.formLogin.controls['clave'];
   }
-  buscarUsuarioPorMailPassword(email:any){
-    let usuario = null;    
-    this.listaPacientes.forEach(paciente => {
-      if(paciente.email == email ){
-        usuario = paciente as Paciente;
-      }
-    });
-    this.listaEspecialistas.forEach(especialista => {
-      if(especialista.email == email){
-        usuario = especialista as Especialista;
-      }
-    });
-    /*this.admins.forEach(admin => {
-      if(admin.mail == mail && admin.password == password){
-        usuario = admin as Admin;
-      }
-    });*/
-    return usuario;
+  buscarUsuarioPorMailPassword(email: any) {
+    const paciente = this.listaPacientes.find(objeto => objeto.email === email);
+    if (paciente) {
+      return paciente;
+    }
+  
+    const especialista = this.listaEspecialistas.find(objeto => objeto.email === email);
+    if (especialista) {
+      return especialista;
+    }
+  
+    const admin = this.listaAdmins.find(objeto => objeto.email === email);
+    if (admin) {
+      return admin;
+    }
+  
+    return null;
   }
+  
   autoComplete(email:any, clave:any){
     this.formLogin.setValue({
       email: email,
       clave: clave
     });
   }
+
 }

@@ -1,35 +1,34 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { SnackbarService } from 'src/app/services/snackbar.service';
 import { Router } from '@angular/router';
-import { Especialista, Registro } from 'src/app/models/especialista.models';
+import { Admin } from 'src/app/models/admin.models';
+import { AdminService } from 'src/app/services/admin.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { EspecialistasService } from 'src/app/services/especialistas.service';
 import { ImgService } from 'src/app/services/img.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 import { FormValidator } from 'src/app/validators/form-validators';
-import { Especialidad } from 'src/app/models/interfaces.models';
+
 @Component({
-  selector: 'app-form-especialista',
-  templateUrl: './form-especialista.component.html',
-  styleUrls: ['./form-especialista.component.scss']
+  selector: 'app-form-admin',
+  templateUrl: './form-admin.component.html',
+  styleUrls: ['./form-admin.component.scss']
 })
-export class FormEspecialistaComponent {
-  formEspecialista: FormGroup;
+export class FormAdminComponent {
+  formAdmin: FormGroup;
   
   @Input() showSignup: boolean;
   @Output() loadingEvent = new EventEmitter<boolean>();
   imgUrl_1!: string;
-  espcialidadSeleccionada: Especialidad[]=[];
+  espcialidadSeleccionada: Admin[]=[];
   alerta: string = '';
   constructor(
     private img: ImgService, 
-    private especialistasService: EspecialistasService,
+    private especialistasService: AdminService,
     private auth: AuthService,
     private snackBar: SnackbarService,
     private router: Router, 
     ) {
-  this.formEspecialista = new FormGroup({
+  this.formAdmin = new FormGroup({
     nombre: new FormControl(null, {
       validators: [FormValidator.onlyLetters],
       updateOn: 'change',
@@ -60,13 +59,11 @@ ngOnInit(): void {
   
 
 }
-handleItemSelected(selectedItems: Especialidad[]) {
-  this.espcialidadSeleccionada = selectedItems;
-}
+
 onSubmit() {
   this.validateEmptyInputs();
   this.loadingEvent.emit(true);
-  if (this.formEspecialista.invalid) {
+  if (this.formAdmin.invalid) {
     this.loadingEvent.emit(false);
     return;
   }
@@ -95,29 +92,25 @@ onSubmit() {
       this.snackBar.showSnackBar(this.alerta, 'cerrar', 3500);
     })
     .then(() => {
-      const especialista: Especialista = {
+      const admin: Admin = {
         id: user.uid,
         nombre: this.nombre.value,
         apellido: this.apellido.value,
         edad: Number(this.edad.value),
         dni: this.dni.value,
         email: this.email.value,
-        especialidades: this.espcialidadSeleccionada,
         img_1: this.imgUrl_1,
-        estados: {
-          registro: Registro.pendiente,
-        },
-        tipo: 'especialista'
+        tipo: 'admin'
       };
 
-      return this.especialistasService.agregarEspecialista(especialista);
+      return this.especialistasService.agregarAdmin(admin);
     })
     .then(() => {
       this.alerta = `¡Bienvenido ${user.email}! Su cuenta está pendiente de aprobación`;
       this.auth.saveLog(user.email);
       this.snackBar.showSnackBar(this.alerta, 'cerrar', 3500);
       this.router.navigate(['/bienvenida']);
-      this.formEspecialista.reset();
+      this.formAdmin.reset();
       this.espcialidadSeleccionada = [];
     })
     .catch((error) => {
@@ -144,7 +137,7 @@ subirFoto(event: any) {
   }
 }
 validateEmptyInputs() {
-  const arrayControls = Object.values(this.formEspecialista.controls).map(
+  const arrayControls = Object.values(this.formAdmin.controls).map(
     (obj) => obj
   );
   arrayControls.forEach((control) => {
@@ -155,22 +148,23 @@ validateEmptyInputs() {
 }
 
   get nombre() {
-    return this.formEspecialista.controls['nombre'];
+    return this.formAdmin.controls['nombre'];
   }
   get apellido() {
-    return this.formEspecialista.controls['apellido'];
+    return this.formAdmin.controls['apellido'];
   }
   get edad() {
-    return this.formEspecialista.controls['edad'];
+    return this.formAdmin.controls['edad'];
   }
   get dni() {
-    return this.formEspecialista.controls['dni'];
+    return this.formAdmin.controls['dni'];
   }
   get email() {
-    return this.formEspecialista.controls['email'];
+    return this.formAdmin.controls['email'];
   }
   get clave() {
-    return this.formEspecialista.controls['clave'];
+    return this.formAdmin.controls['clave'];
   }
   
 }
+

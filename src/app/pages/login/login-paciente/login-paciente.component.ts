@@ -6,8 +6,10 @@ import { Router } from '@angular/router';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { PacienteService } from 'src/app/services/paciente.service';
 import { EspecialistasService } from 'src/app/services/especialistas.service';
-import { Especialista } from 'src/app/models/especialista.models';
+import { Especialista, Registro } from 'src/app/models/especialista.models';
 import { Subject } from 'rxjs';
+import { AdminService } from 'src/app/services/admin.service';
+import { Admin } from 'src/app/models/admin.models';
 
 @Component({
   selector: 'app-login-paciente',
@@ -21,6 +23,7 @@ export class LoginPacienteComponent implements OnInit{
   loading = false;
   listaPacientes;
   listaEspecialistas;
+  listaAdmins;
   pacientes:Paciente[];
   especialistas:Especialista[];
   constructor(
@@ -28,7 +31,8 @@ export class LoginPacienteComponent implements OnInit{
     private snackBar: SnackbarService,
     private router: Router,
     private pacientesService: PacienteService,
-    private especialistaService: EspecialistasService
+    private especialistaService: EspecialistasService,
+    private adminService: AdminService
     ){
     this.formLogin = new FormGroup({
    
@@ -49,6 +53,9 @@ export class LoginPacienteComponent implements OnInit{
     this.especialistaService.obtenerEspecialistas().subscribe(posts => {
       this.listaEspecialistas = posts;
     });
+    this.adminService.obtenerAdmins().subscribe(posts => {
+      this.listaAdmins = posts;
+    });
  
   }
   onSubmit(){
@@ -60,11 +67,22 @@ export class LoginPacienteComponent implements OnInit{
       //const fullDate = date.toLocaleDateString() + '-' + date.toLocaleTimeString();
       this.auth.login(this.email.value, this.clave.value).then(res =>{
       
-      console.log( this.buscarUsuarioPorMailPassword(this.email.value));
+      let user =  this.buscarUsuarioPorMailPassword(this.email.value);
         this.alerta = `Bienvenido ${this.email.value}`;
         //this.auth.saveLog(this.email);
         this.snackBar.showSnackBar(this.alerta, 'cerrar', 5000);
-        this.router.navigate(['/bienvenida']);
+        if(user.tipo === 'especialista' && user.estado.registro === Registro.aceptado){
+         //this.router.navigate(['/bienvenida']);
+        }
+        else if(user.tipo === 'paciente'){
+          //this.router.navigate(['/bienvenida']);
+        }
+        else if(user.tipo === 'admin'){
+         // this.router.navigate(['/dashboard']);
+        }
+        else{
+          this.snackBar.showSnackBar('error', 'cerrar', 5000);
+        }
         
 
         this.formLogin.reset();
@@ -97,6 +115,7 @@ export class LoginPacienteComponent implements OnInit{
     this.listaPacientes.forEach(paciente => {
       if(paciente.email == email ){
         usuario = paciente as Paciente;
+       
       }
     });
     this.listaEspecialistas.forEach(especialista => {
@@ -104,11 +123,12 @@ export class LoginPacienteComponent implements OnInit{
         usuario = especialista as Especialista;
       }
     });
-    /*this.admins.forEach(admin => {
-      if(admin.mail == mail && admin.password == password){
+    this.listaAdmins.forEach(admin => {
+      if(admin.mail == email){
         usuario = admin as Admin;
       }
-    });*/
+    });
+    console.log(usuario);
     return usuario;
   }
 
