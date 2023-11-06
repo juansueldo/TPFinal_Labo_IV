@@ -40,10 +40,10 @@ export class CaptchaComponent {
   }
 
   generateOptions(correctName: string) {
-    const correctOptionIndex = Math.floor(Math.random() * 4);
+    const correctOptionIndex = Math.floor(Math.random() * 3);
 
     this.options = [];
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i <= 2; i++) {
       if (i === correctOptionIndex) {
         this.options.push(correctName.toUpperCase());
       } else {
