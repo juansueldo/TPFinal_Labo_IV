@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Especialista } from 'src/app/models/especialista.models';
 
 
 @Component({
@@ -7,9 +8,20 @@ import { Component } from '@angular/core';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
-
+  selected!: Especialista | null;
+  loading = false;
   constructor(){}
-  ngOnInit() {
 
+  ngOnInit(): void {
+    this.cargarUsuario();
+  }
+
+  cargarUsuario() {
+    //this.user = this.authService.getCurrentUser();
+  }
+
+  selectedEspecialista(event: Especialista) {
+    console.log(event);
+    this.selected = event;
   }
 }

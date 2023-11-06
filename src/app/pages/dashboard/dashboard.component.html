@@ -1,8 +1,18 @@
-<div class="container">
-  <app-navbar></app-navbar>
-  <h1 class="title">Plantilla de Especialistas</h1>
-  <app-listado-especialistas></app-listado-especialistas>
-  <app-listado-pacientes></app-listado-pacientes>
-</div>
+<div class="container-fluid contenedor p-4 h-100">
+  <div class="row row-table pt-5 overflow-y-auto h-100">
+    <div class="col-lg-6 col-md-12">
+      <!-- Listado de Especialistas -->
+      <h1>Lista de Especialistas</h1>
+      <div class="table-container">
+        <app-listado-especialistas (selectedEspecialistaEvent)="selectedEspecialista($event)">
+        </app-listado-especialistas>
+      </div>
+    </div>
 
+    <div class="col-lg-6 col-md-12">
+      <!-- Detalle de Especialista -->
+      <app-detalle-especialista [especialista]="selected" (cleanEspecialistaEvent)="selected = $event"></app-detalle-especialista>
+    </div>
+  </div>
+</div>
   

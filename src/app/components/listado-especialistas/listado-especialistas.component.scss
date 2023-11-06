@@ -1,33 +1,16 @@
-img{
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    border:2px solid #004373;
-    text-align: center;
-}
-.card{
+.table-container{
     background-color: #49a22b;
-    margin: 10px;
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
--webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-}
-.container-img{
-    text-align: center;
-    margin-top: 10px;
-}
-.card-title{
-    text-align: center;
-}
-.card-text{
-    font-weight: 200;
-    color: #fff;
-}
-span{
-    font-weight: 600;
-    color: #000;
-}
-.select{
+    color: aliceblue;
+  }
+  .flags-container > div{
+    cursor: pointer;
+  }
+  
+  .purple{
+  
     background-color: #004373;
-    color: #fff;
-}
+    cursor: pointer;
+  }
+  .btn:hover{
+    background-color: #004373;
+  }
