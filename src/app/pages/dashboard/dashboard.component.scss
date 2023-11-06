@@ -1,4 +1,40 @@
+/*.form-floating{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
+}
+.left{
+    margin-right: 10px;
+}
+.activo:hover{
+    background-color: #fff;
+    color: #007bff;
+}*/
+
+.row{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+img{
+    height: 200px;
+}
 .title{
     text-align: center;
-    padding-top: 70px;
+}
+.container-sections{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+.btn{
+    width: 150px;
+}
+.col-md-12{
+    cursor: pointer;
 }

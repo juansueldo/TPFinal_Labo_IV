@@ -16,6 +16,10 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
+  links = [
+    { label: 'Home', link: '/bienvenida' },
+    { label: 'Registro', link: '/registro' },
+]
   formLogin: FormGroup;
   alerta: string = '';
   hide = true;
@@ -70,7 +74,7 @@ export class LoginComponent {
       //const fullDate = date.toLocaleDateString() + '-' + date.toLocaleTimeString();
       this.auth.login(this.email.value, this.clave.value).then(res =>{
       
-      let user =  this.buscarUsuarioPorMailPassword(this.email.value);
+      let user =  this.buscarUsuarioPorMail(this.email.value);
       console.log(user);
         this.alerta = `Bienvenido ${this.email.value}`;
         //this.auth.saveLog(this.email);
@@ -113,7 +117,7 @@ export class LoginComponent {
   get clave() {
     return this.formLogin.controls['clave'];
   }
-  buscarUsuarioPorMailPassword(email: any) {
+  buscarUsuarioPorMail(email: any) {
     const paciente = this.listaPacientes.find(objeto => objeto.email === email);
     if (paciente) {
       return paciente;

@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
+  @Input() items: { label: string, link: string }[] = [];
   @Input() usuario : any | null = null;
   @Input() showButtons : boolean = false;
   @Output() loadingEvent = new EventEmitter<boolean>();

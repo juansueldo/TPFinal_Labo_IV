@@ -1,0 +1,21 @@
+<div class="row">
+    <div  *ngIf="paciente">
+        <div class="card">
+          <div class="container-img">
+            <img [src]="paciente.img_1" alt="Foto de {{ paciente.nombre }} {{ paciente.apellido }}">
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{ paciente.nombre }} {{ paciente.apellido }}</h5>
+            <p class="card-text"><span>DNI:</span> {{ paciente.dni }}</p>
+            <p class="card-text"><span>Edad:</span> {{ paciente.edad }}</p>
+            <p class="card-text"><span>Especialidades:</span> {{ paciente.obrasocial.join(', ') }}</p>
+            <p class="card-text"><span>Email:</span> {{ paciente.email }}</p>
+          </div>
+        </div>
+        <button type="button" class="btn btn-secondary mt-2" (click)="cleanPaciente()" [disabled]="paciente? false : true">Limpiar</button>
+      </div>
+    </div>
+      
+      
+      
+      

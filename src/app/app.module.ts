@@ -31,6 +31,10 @@ import { AltaEspecialistaComponent } from './pages/registro/alta-especialista/al
 import { AltaAdminComponent } from './pages/registro/alta-admin/alta-admin.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { FormAdminComponent } from './components/form-admin/form-admin.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { PacientesDetalleComponent } from './pages/pacientes-detalle/pacientes-detalle.component';
+import { EspecialistasDetalleComponent } from './pages/especialistas-detalle/especialistas-detalle.component';
 
 
 
@@ -49,6 +53,10 @@ import { FormAdminComponent } from './components/form-admin/form-admin.component
     DashboardComponent,
     FormAdminComponent,
     AltaAdminComponent,
+    NavbarComponent,
+    NotFoundComponent,
+    PacientesDetalleComponent,
+    EspecialistasDetalleComponent,
 
   ],
   imports: [

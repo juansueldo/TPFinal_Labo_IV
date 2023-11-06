@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./registro.component.scss']
 })
 export class RegistroComponent {
- 
+  links = [
+    { label: 'Home', link: '/bienvenida' },
+    { label: 'Login', link: '/login' },
+]
 }

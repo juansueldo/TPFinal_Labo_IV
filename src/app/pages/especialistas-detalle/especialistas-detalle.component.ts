@@ -1,18 +1,17 @@
 import { Component } from '@angular/core';
 import { Especialista } from 'src/app/models/especialista.models';
 
-
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  selector: 'app-especialistas-detalle',
+  templateUrl: './especialistas-detalle.component.html',
+  styleUrls: ['./especialistas-detalle.component.scss']
 })
-export class DashboardComponent {
+export class EspecialistasDetalleComponent {
   selected!: Especialista | null;
   loading = false;
   links = [
     { label: 'Inicio', link: "/bienvenida" },
-    { label: 'Especialistas', link: '/especialistas' },
+    { label: 'Dashboard', link: '/dashboard' },
     { label: 'Pacientes', link: '/pacientes'},
     { label: 'Inicio', link: '/bienvenida' },
 ]

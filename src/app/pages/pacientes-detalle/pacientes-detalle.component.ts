@@ -1,19 +1,18 @@
 import { Component } from '@angular/core';
-import { Especialista } from 'src/app/models/especialista.models';
-
+import { Paciente } from 'src/app/models/paciente.models';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  selector: 'app-pacientes-detalle',
+  templateUrl: './pacientes-detalle.component.html',
+  styleUrls: ['./pacientes-detalle.component.scss']
 })
-export class DashboardComponent {
-  selected!: Especialista | null;
+export class PacientesDetalleComponent {
+  selected!: Paciente | null;
   loading = false;
   links = [
     { label: 'Inicio', link: "/bienvenida" },
     { label: 'Especialistas', link: '/especialistas' },
-    { label: 'Pacientes', link: '/pacientes'},
+    { label: 'Dahsboard', link: 'dashboard' },
     { label: 'Inicio', link: '/bienvenida' },
 ]
   constructor(){}
@@ -26,7 +25,7 @@ export class DashboardComponent {
     //this.user = this.authService.getCurrentUser();
   }
 
-  selectedEspecialista(event: Especialista) {
+  selectedPaciente(event: Paciente) {
     console.log(event);
     this.selected = event;
   }

@@ -8,6 +8,10 @@ import { Component, OnInit } from '@angular/core';
 export class BienvenidaComponent implements OnInit {
   public loading = true;
   public user!: any;
+  links = [
+    { label: 'Login', link: '/login' },
+    { label: 'Registro', link: '/registro' },
+]
   ngOnInit(): void {
       setTimeout(()=>{
         this.loading = false;
