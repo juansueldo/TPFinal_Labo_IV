@@ -1,0 +1,7 @@
+<div class="captcha">
+    <div class="container-img form-control">
+        <img id="pokemon-image" class="img" [src]="pokemonImage" alt="Pokemon Image">
+    </div>
+    <br>
+    <a class="btn btn-success" *ngFor="let option of options" (click)="checkAnswer(option, pokemonNameCorrect)">{{ option }}</a>
+</div>

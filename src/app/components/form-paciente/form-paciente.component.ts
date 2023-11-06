@@ -24,8 +24,7 @@ export class FormPacienteComponent {
   imgUrl_2!: string;
   listadoObraSocial: any[]=[];
   alerta: string = "";
-  siteKey = "6Le3n_4oAAAAAEozPISTi3Q3j3INt2opcWvlfW7-";
-  captachaAceptado = false;
+  buttonDisabled: boolean = true;
 
   constructor(
     private img: ImgService,
@@ -177,7 +176,16 @@ validateEmptyInputs() {
   get obraSocial() {
     return this.formPaciente.controls['obraSocial'];
   }
-  resultadoCaptcha(resultado:any){
-    this.captachaAceptado = true;
+ 
+  handleCaptchaSuccess(captchaResult: boolean) {
+    if (captchaResult) {
+      this.buttonDisabled = false;
+      console.log('Captcha correcto');
+      // Agrega aquí la lógica que deseas ejecutar cuando el captcha es correcto.
+    } else {
+      this.buttonDisabled =true;
+      console.log('Captcha incorrecto');
+      // Agrega aquí la lógica que deseas ejecutar cuando el captcha es incorrecto.
+    }
   }
 }

@@ -54,13 +54,8 @@
           </app-custom-input>
         </div>
       </div>
+      <app-captcha (captchaSuccess)="handleCaptchaSuccess($event)"></app-captcha>
     </div>
-    <div class="form-floating mb-3">
-      <ngx-recaptcha2 #captchaElem
-      [siteKey]="siteKey"
-      (success)="resultadoCaptcha($event)">
-      </ngx-recaptcha2>
-    </div>
-    <button type="submit" class="btn btn-primary mt-2">Enviar</button>
+    <button type="submit" class="btn btn-primary mt-2" [disabled]="buttonDisabled">Enviar</button>
   </form>
   
