@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { EspecialistasService } from 'src/app/services/especialistas.service';
 import { PacienteService } from 'src/app/services/paciente.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
+import { UsuariosService } from 'src/app/services/usuarios.service';
 
 @Component({
   selector: 'app-login',
@@ -35,7 +36,8 @@ export class LoginComponent {
     private router: Router,
     private pacientesService: PacienteService,
     private especialistaService: EspecialistasService,
-    private adminService: AdminService
+    private adminService: AdminService,
+    private usuariosService: UsuariosService
     ){
     this.formLogin = new FormGroup({
    
@@ -74,7 +76,7 @@ export class LoginComponent {
       //const fullDate = date.toLocaleDateString() + '-' + date.toLocaleTimeString();
       this.auth.login(this.email.value, this.clave.value).then(res =>{
       
-      let user =  this.buscarUsuarioPorMail(this.email.value);
+      let user =  this.usuariosService.buscarUsuarioPorMail(this.email.value);
       console.log(user);
         this.alerta = `Bienvenido ${this.email.value}`;
         //this.auth.saveLog(this.email);
@@ -117,25 +119,6 @@ export class LoginComponent {
   get clave() {
     return this.formLogin.controls['clave'];
   }
-  buscarUsuarioPorMail(email: any) {
-    const paciente = this.listaPacientes.find(objeto => objeto.email === email);
-    if (paciente) {
-      return paciente;
-    }
-  
-    const especialista = this.listaEspecialistas.find(objeto => objeto.email === email);
-    if (especialista) {
-      return especialista;
-    }
-  
-    const admin = this.listaAdmins.find(objeto => objeto.email === email);
-    if (admin) {
-      return admin;
-    }
-  
-    return null;
-  }
-  
   autoComplete(email:any, clave:any){
     this.formLogin.setValue({
       email: email,

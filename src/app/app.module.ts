@@ -35,9 +35,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { PacientesDetalleComponent } from './pages/pacientes-detalle/pacientes-detalle.component';
 import { EspecialistasDetalleComponent } from './pages/especialistas-detalle/especialistas-detalle.component';
+import { TurnosPacienteComponent } from './pages/turnos-paciente/turnos-paciente.component';
 
-
-
+import { NgxCaptchaModule } from 'ngx-captcha';
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,6 +57,7 @@ import { EspecialistasDetalleComponent } from './pages/especialistas-detalle/esp
     NotFoundComponent,
     PacientesDetalleComponent,
     EspecialistasDetalleComponent,
+    TurnosPacienteComponent,
 
   ],
   imports: [
@@ -73,7 +74,8 @@ import { EspecialistasDetalleComponent } from './pages/especialistas-detalle/esp
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     BrowserAnimationsModule,
-    FormsModule
+    FormsModule,
+    NgxCaptchaModule
   ],
   providers: [{ provide: FIREBASE_OPTIONS, useValue: environment }],
   bootstrap: [AppComponent]

@@ -24,6 +24,9 @@ export class FormPacienteComponent {
   imgUrl_2!: string;
   listadoObraSocial: any[]=[];
   alerta: string = "";
+  siteKey = "6Le3n_4oAAAAAEozPISTi3Q3j3INt2opcWvlfW7-";
+  captachaAceptado = false;
+
   constructor(
     private img: ImgService,
     private pacienteService: PacienteService,
@@ -76,7 +79,7 @@ onSubmit() {
   } 
   const aux = this.nombre.value + ' ' + this.apellido.value;
   this.auth.register(this.email.value, this.clave.value).then(async res =>{
-    this.auth.confirmarMail(this.email.value)
+    this.auth.confirmarMail(res.user.uid)
     .then(responseMail => {
         console.log(responseMail);
     })
@@ -103,7 +106,7 @@ onSubmit() {
   };
 
   this.pacienteService.agregarPaciente(paciente).then((res) => {
-    this.alerta = `¡Bienvenido ${user.email}! Su cuenta está pendiente de aprobación`;
+    this.alerta = `¡Bienvenido ${user.email}! Revise su casilla para válidar su cuenta.`;
     this.snackBar.showSnackBar(this.alerta, 'cerrar', 3500);
     this.router.navigate(['/bienvenida']);
     this.loadingEvent.emit(false);
@@ -173,5 +176,8 @@ validateEmptyInputs() {
   }
   get obraSocial() {
     return this.formPaciente.controls['obraSocial'];
+  }
+  resultadoCaptcha(resultado:any){
+    this.captachaAceptado = true;
   }
 }

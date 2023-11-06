@@ -1,0 +1,26 @@
+<div hidden="true" style=" margin: auto; width: 50%;">
+    <table id="tableTurnos">
+        <tr>
+            <th>paciente</th>
+            <th>especialista</th>
+            <th>Especialidad</th>
+            <th>fecha</th>
+        </tr>
+        <div *ngFor="let item of turnos">
+            <tr *ngIf="usuarioVisible == 'especialista' && item.especialista == especialista.mail">
+                <td>{{item.paciente}}</td>
+                <td>{{item.especialista}}</td>
+                <td>{{item.especialidad}}</td>
+                <td>{{item.fecha}}</td>
+                <td></td>
+            </tr>
+            <tr *ngIf="usuarioVisible == 'paciente' && item.paciente == paciente.mail">
+                <td>{{item.paciente}}</td>
+                <td>{{item.especialista}}</td>
+                <td>{{item.especialidad}}</td>
+                <td>{{item.fecha}}</td>
+                <td></td>
+            </tr>
+        </div>
+    </table>
+  </div>
