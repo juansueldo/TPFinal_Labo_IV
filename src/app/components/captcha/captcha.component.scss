@@ -2,12 +2,22 @@ img{
     height: 100px;
     text-align: center;
 }
+.captcha{
+    width: 40%;
+    display: flex;
+}
 .container-img{
-    width: 25%;
+    width: 35%;
     text-align: center;
 }
+.container-buttons{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 1;
+}
 .btn{
-    margin-right: 20px;
+    margin-bottom: 10px;
     font-size: 10px;
 }
 .check{
@@ -24,6 +34,16 @@ img{
 }
 .checker{
     display: flex;
-    border: 1px solid grey;
+    border: 2px solid rgb(145, 145, 145);
+    background-color: #fff;
     width: 40%;
+    height: 70px;
+    justify-content: space-around;
+    align-items:center;
+}
+.label{
+    font-weight: 500;
+}
+.recaptcha{
+    height: 60px;
 }
