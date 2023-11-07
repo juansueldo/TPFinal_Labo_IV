@@ -39,6 +39,7 @@ import { TurnosPacienteComponent } from './pages/turnos-paciente/turnos-paciente
 import { HttpClientModule } from '@angular/common/http';
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { CaptchaComponent } from './components/captcha/captcha.component';
+import { FormAltaComponent } from './components/form-alta/form-alta.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,6 +61,7 @@ import { CaptchaComponent } from './components/captcha/captcha.component';
     EspecialistasDetalleComponent,
     TurnosPacienteComponent,
     CaptchaComponent,
+    FormAltaComponent,
 
   ],
   imports: [
