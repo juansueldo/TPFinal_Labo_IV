@@ -1,4 +1,4 @@
-<div class="captcha">
+<div class="captcha mt-2">
     <div class="checker" *ngIf="!showCaptcha">
       <input type="checkbox" [(ngModel)]="showCaptcha" (click)="toggleCaptcha()">
       <label class="label" for="showCaptcha">I'm not a robot</label>
@@ -9,10 +9,12 @@
             <div class="container-img form-control">
                 <img id="pokemon-image" class="img" [src]="pokemonImage" alt="Pokemon Image">
             </div>
-            <img src="{{check}}" alt="" class="check">
-            <p class="{{colorText}}">{{mensaje}}</p>
             <div class="container-buttons">
                 <button class="btn btn-success"*ngFor="let option of options" (click)="checkAnswer(option, pokemonNameCorrect)"  [disabled]="disabledButton" >{{ option }}</button>
+            </div>
+            <div class="container-message">
+                <p class="{{colorText}}">{{mensaje}}</p>
+                <img src="{{check}}" alt="" class="check">
             </div>
         </div>
     </div>
