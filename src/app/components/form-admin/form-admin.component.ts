@@ -21,6 +21,7 @@ export class FormAdminComponent {
   imgUrl_1!: string;
   espcialidadSeleccionada: Admin[]=[];
   alerta: string = '';
+  buttonDisabled: boolean = true;
   constructor(
     private img: ImgService, 
     private especialistasService: AdminService,
@@ -165,6 +166,12 @@ validateEmptyInputs() {
   get clave() {
     return this.formAdmin.controls['clave'];
   }
-  
+  handleCaptchaSuccess(captchaResult: boolean) {
+    if (captchaResult) {
+      this.buttonDisabled = false;
+    } else {
+      this.buttonDisabled =true;
+    }
+  }
 }
 

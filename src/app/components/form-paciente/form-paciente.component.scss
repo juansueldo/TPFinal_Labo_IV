@@ -3,9 +3,12 @@ form{
 }
 .container-names, .container-files{
     display: flex;
-    justify-content: space-between;
 }
-.left{
-    padding-right: 2px;
+.name{
+    padding-right: 5px;
+    width: 50%;
+}
+.lastname{
+    width: 50%;
 }
 

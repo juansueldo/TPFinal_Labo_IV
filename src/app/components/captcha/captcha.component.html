@@ -2,6 +2,8 @@
     <div class="container-img form-control">
         <img id="pokemon-image" class="img" [src]="pokemonImage" alt="Pokemon Image">
     </div>
+    <img src="{{check}}" alt="" class="check">
+    <p class="{{colorText}}">{{mensaje}}</p>
     <br>
-    <a class="btn btn-success" *ngFor="let option of options" (click)="checkAnswer(option, pokemonNameCorrect)">{{ option }}</a>
+    <button class="btn btn-success"*ngFor="let option of options" (click)="checkAnswer(option, pokemonNameCorrect)"  [disabled]="disabledButton" >{{ option }}</button>
 </div>

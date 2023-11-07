@@ -34,7 +34,7 @@ $TPFinal_Labo_IV-theme: mat.define-light-theme((
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: #CDCDCD;}
 
 .mat-mdc-snack-bar-container {
   --mdc-snackbar-container-color: #49a22b !important;

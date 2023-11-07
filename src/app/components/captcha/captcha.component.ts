@@ -8,15 +8,14 @@ import { PokeapiService } from 'src/app/services/pokeapi.service';
 })
 export class CaptchaComponent {
   @Output() captchaSuccess = new EventEmitter<boolean>();
-  userInput: string = '';
   pokemonImage: string;
   options: string[] = [];
-  score: number = 0;
   pokemonNameCorrect: string;
   rounds : number = 0;
-  user: any;
-  loading:boolean =false;
-
+  check: string;
+  mensaje: string;
+  disabledButton: boolean = false;
+  colorText: string;
   constructor(private pokeapiService: PokeapiService){}
 
   ngOnInit() {
@@ -68,9 +67,26 @@ export class CaptchaComponent {
   checkAnswer(selectedName: string, correctName: string) {
     if (selectedName === correctName) {
       this.captchaSuccess.emit(true);
+      this.check = '../../../assets/gif/check.gif';
+      this.colorText = "green";
+      this.mensaje = 'Correcto';
+      this.disabledButton = true;
+      setTimeout(()=>{
+        this.check = '';
+        this.mensaje = '';
+      },2000)
     }else{
-      this.getRandomPokemon();
       this.captchaSuccess.emit(false);
+      this.check = '../../../assets/gif/error.gif';
+      this.mensaje = 'Incorrecto, intente nuevamente';
+      this.disabledButton = true;
+      this.colorText = "red";
+      setTimeout(()=>{
+        this.check = '';
+        this.mensaje = '';
+        this.disabledButton = false;
+      },2000)
+      this.getRandomPokemon();
     }
   }
 }

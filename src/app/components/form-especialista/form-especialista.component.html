@@ -42,6 +42,7 @@
           <app-select-especialidad [selectedItems]="espcialidadSeleccionada" (itemSelected)="handleItemSelected($event)"></app-select-especialidad> 
         </div>
       </div>
+      <app-captcha (captchaSuccess)="handleCaptchaSuccess($event)"></app-captcha>
     </div>
     <button type="submit" class="btn btn-primary mt-2">Enviar</button>
   </form>

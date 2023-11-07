@@ -39,6 +39,7 @@
       <small class="invalid-feedback">Clave invalida</small>
         </app-custom-input>
       </div>
+      <app-captcha (captchaSuccess)="handleCaptchaSuccess($event)"></app-captcha>
     </div>
     <button type="submit" class="btn btn-primary mt-2">Enviar</button>
   </form>

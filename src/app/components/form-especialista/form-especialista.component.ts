@@ -22,6 +22,7 @@ export class FormEspecialistaComponent {
   imgUrl_1!: string;
   espcialidadSeleccionada: Especialidad[]=[];
   alerta: string = '';
+  buttonDisabled: boolean = true;
   constructor(
     private img: ImgService, 
     private especialistasService: EspecialistasService,
@@ -172,5 +173,11 @@ validateEmptyInputs() {
   get clave() {
     return this.formEspecialista.controls['clave'];
   }
-  
+  handleCaptchaSuccess(captchaResult: boolean) {
+    if (captchaResult) {
+      this.buttonDisabled = false;
+    } else {
+      this.buttonDisabled =true;
+    }
+  }
 }

@@ -2,15 +2,20 @@
     <div class="row">
       <div class="col-md-6">
         <div class="container-names">
-          <app-custom-input class="form-control {{nombre.errors ? 'is-invalid': ''}} left" divClass="mb-4" label="Nombre"
+          <div class="name">
+            <app-custom-input class="form-control {{nombre.errors ? 'is-invalid': ''}} left" divClass="mb-4" label="Nombre"
             controlName="nombre" type="text">
             <small class="invalid-feedback">Nombre invalido (solo letras)</small>
           </app-custom-input>
-  
-          <app-custom-input class="form-control {{apellido.errors ? 'is-invalid': ''}}" divClass="mb-4" label="Apellido"
+          </div>
+          <div class="lastname">
+            <app-custom-input class="form-control {{apellido.errors ? 'is-invalid': ''}}" divClass="mb-4" label="Apellido"
             controlName="apellido" type="text">
             <small class="invalid-feedback">Apellido invalido (solo letras)</small>
           </app-custom-input>
+          </div>
+  
+         
         </div>
         
         <app-custom-input class="form-control {{edad.errors ? 'is-invalid': ''}}" divClass="mb-4" label="Edad"

@@ -77,15 +77,15 @@ onSubmit() {
     return;
   } 
   const aux = this.nombre.value + ' ' + this.apellido.value;
-  this.auth.register(this.email.value, this.clave.value).then(async res =>{
-    this.auth.confirmarMail(res.user.uid)
+  this.auth.register(this.email.value, this.clave.value).then( res =>{
+    this.auth.confirmarMail(res)
     .then(responseMail => {
         console.log(responseMail);
     })
     .catch(errorMail =>{
       console.log(errorMail);
     });
-    await this.auth.updateUser({displayName:aux})
+    this.auth.updateUser({displayName:aux})
     let user={
       uid: res.user.uid,
       name: res.user.displayName,
@@ -103,7 +103,7 @@ onSubmit() {
     img_2: this.imgUrl_2,
     tipo: 'paciente'
   };
-
+ 
   this.pacienteService.agregarPaciente(paciente).then((res) => {
     this.alerta = `¡Bienvenido ${user.email}! Revise su casilla para válidar su cuenta.`;
     this.snackBar.showSnackBar(this.alerta, 'cerrar', 3500);
@@ -180,12 +180,8 @@ validateEmptyInputs() {
   handleCaptchaSuccess(captchaResult: boolean) {
     if (captchaResult) {
       this.buttonDisabled = false;
-      console.log('Captcha correcto');
-      // Agrega aquí la lógica que deseas ejecutar cuando el captcha es correcto.
     } else {
       this.buttonDisabled =true;
-      console.log('Captcha incorrecto');
-      // Agrega aquí la lógica que deseas ejecutar cuando el captcha es incorrecto.
     }
   }
 }
