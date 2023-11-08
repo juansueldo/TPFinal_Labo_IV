@@ -15,7 +15,6 @@ import { LoginComponent } from './pages/login/login.component';
 import { SharedModule } from './shared/shared.module';
 
 import { FormsModule } from '@angular/forms'; 
-import { FormPacienteComponent } from './components/form-paciente/form-paciente.component';
 import { BienvenidaComponent } from './pages/bienvenida/bienvenida.component';
 import { RegistroComponent } from './pages/registro/registro.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -39,12 +38,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { CaptchaComponent } from './components/captcha/captcha.component';
 import { FormAltaComponent } from './components/form-alta/form-alta.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     SpinnerComponent,
     LoginComponent,
-    FormPacienteComponent,
     BienvenidaComponent,
     RegistroComponent,
     SelectEspecialidadComponent,
@@ -59,6 +58,7 @@ import { FormAltaComponent } from './components/form-alta/form-alta.component';
     TurnosPacienteComponent,
     CaptchaComponent,
     FormAltaComponent,
+    
 
   ],
   imports: [

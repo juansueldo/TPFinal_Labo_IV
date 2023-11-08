@@ -3,11 +3,11 @@ import { Especialista } from 'src/app/models/especialista.models';
 import { EspecialistasService } from 'src/app/services/especialistas.service';
 
 @Component({
-  selector: 'app-detalle-especialista',
-  templateUrl: './detalle-especialista.component.html',
-  styleUrls: ['./detalle-especialista.component.scss']
+  selector: 'app-card-especialista',
+  templateUrl: './card-especialista.component.html',
+  styleUrls: ['./card-especialista.component.scss']
 })
-export class DetalleEspecialistaComponent {
+export class CardEspecialistaComponent {
   @Input() especialista !: Especialista | null;
   @Output() cleanEspecialistaEvent = new EventEmitter<null>;
   constructor(private especialistaService: EspecialistasService){

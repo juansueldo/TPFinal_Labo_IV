@@ -11,7 +11,9 @@ export class Especialista implements User{
     img_1: string | undefined;
     tipo = "especialista";
     especialidades!: Especialidad[];
-    estados:Registro | undefined;
+    estados:{
+      registro: Registro;
+    };
   
     constructor(nombre = '', apellido = '', edad = 0, dni = '',email = '',especialidades=[], id = '') {
       this.id = id;
@@ -21,7 +23,6 @@ export class Especialista implements User{
       this.dni = dni;
       this.email = email;
       this.especialidades = especialidades;
-      this.estados= Registro.pendiente;
     }
   
   }

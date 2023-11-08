@@ -140,7 +140,10 @@ async handleEspecialistaRegistration(user) {
     email: this.form.value.email,
     especialidades: this.espcialidadSeleccionada,
     img_1: this.imgUrl_1,
-    estados: Registro.pendiente,
+    estados: {
+      registro: Registro.pendiente,
+    },
+
     tipo: 'especialista',
   };
 
