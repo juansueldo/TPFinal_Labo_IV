@@ -81,12 +81,12 @@ handleItemSelected(selectedItems: Especialidad[]) {
   this.espcialidadSeleccionada = selectedItems;
 }
 onSubmit() {
-  this.validateEmptyInputs();
+  //this.validateEmptyInputs();
   this.loadingEvent.emit(true);
-  if (this.form.invalid) {
-    this.loadingEvent.emit(false);
+ /* if (this.form.invalid) {
+   this.loadingEvent.emit(false);
     return;
-  }
+  }*/
   const aux = this.nombre.value + ' ' + this.apellido.value;
   this.auth.register(this.email.value, this.clave.value).then( res =>{
     this.auth.confirmarMail(res)
@@ -102,50 +102,69 @@ onSubmit() {
       name: res.user.displayName,
       email: res.user.email,
     }
-    this.setearUsuario();
+    if(this.tipoUsuario == 'paciente'){
+      const paciente: Paciente = {
+        id: user.uid,
+        nombre: this.nombre.value,
+        apellido: this.apellido.value,
+        edad: Number(this.edad.value),
+        dni: this.dni.value,
+        email: this.email.value,
+        obraSocial: this.obraSocial.value,
+        img_1: this.imgUrl_1,
+        img_2: this.imgUrl_2,
+        tipo: 'paciente'
+      }
+      this.pacienteService.agregarPaciente(paciente).then((res) => {
+        this.showSnackbar();
+      }).catch(error=>{
+        this.errorSnackbar(error);
+      });
+    }else if(this.tipoUsuario == 'especialista'){
+      const especialista: Especialista = {
+        id: user.uid,
+        nombre: this.nombre.value,
+        apellido: this.apellido.value,
+        edad: Number(this.edad.value),
+        dni: this.dni.value,
+        email: this.email.value,
+        especialidades: this.espcialidadSeleccionada,
+        img_1: this.imgUrl_1,
+        estados:  Registro.pendiente,
+        tipo: 'especialista'
+      };
+
+      this.especialistasService.agregarEspecialista(especialista);
+      this.showSnackbar();
+    }else{
+      const admin: Admin = {
+        id: user.uid,
+        nombre: this.nombre.value,
+        apellido: this.apellido.value,
+        edad: Number(this.edad.value),
+        dni: this.dni.value,
+        email: this.email.value,
+        img_1: this.imgUrl_1,
+        tipo: 'admin'
+      };
+      this.adminService.agregarAdmin(admin);
+      this.showSnackbar();
+    }
  
-  })
+  }).catch(error=>{
+    this.errorSnackbar(error);
+  });
   
 }
-setearUsuario(){
-  if(this.tipoUsuario == "paciente"){
-    const usuarioTipo = new Paciente(this.nombre.value,this.apellido.value,Number(this.edad),this.dni.value,this.email.value,this.obraSocial.value,this.imgUrl_1,this.imgUrl_2);
-    this.pacienteService.agregarPaciente(usuarioTipo).then((res) => {
-      this.alerta = `¡Bienvenido ${this.email.value}! Revise su casilla para válidar su cuenta.`;
-      this.snackBar.showSnackBar(this.alerta, 'cerrar', 3500);
-      this.router.navigate(['/bienvenida']);
-      this.loadingEvent.emit(false);
-      this.form.reset();
-    });
-  }
-  else if(this.tipoUsuario == "especialista"){
-    const usuarioTipo = new Especialista(this.nombre.value,this.apellido.value,Number(this.edad),this.dni.value,this.email.value,this.espcialidadSeleccionada,this.imgUrl_1);
-    this.especialistasService.agregarEspecialista(usuarioTipo);
-      this.alerta = `¡Bienvenido ${this.email.value}! Revise su casilla para válidar su cuenta.`;
-      this.snackBar.showSnackBar(this.alerta, 'cerrar', 3500);
-      this.router.navigate(['/bienvenida']);
-      this.loadingEvent.emit(false);
-      this.form.reset();
-  }
-  else{
-    const usuarioTipo = new Admin(this.nombre.value,this.apellido.value,Number(this.edad),this.dni.value,this.email.value,this.imgUrl_1);
-    this.adminService.agregarAdmin(usuarioTipo);
-      this.alerta = `¡Bienvenido ${this.email.value}! Revise su casilla para válidar su cuenta.`;
-      this.snackBar.showSnackBar(this.alerta, 'cerrar', 3500);
-      this.router.navigate(['/bienvenida']);
-      this.loadingEvent.emit(false);
-      this.form.reset();
-
-  }
- 
+showSnackbar(){
+  this.alerta = `¡Bienvenido ${this.email.value}! Revise su casilla para válidar su cuenta.`;
+  this.snackBar.showSnackBar(this.alerta, 'cerrar', 3500);
+  this.router.navigate(['/bienvenida']);
+  this.loadingEvent.emit(false);
+  this.form.reset();
 }
-subirFoto(event: any) {
-  const file: File = event.target.files[0];
-  if (file) {
-    this.img.uploadImage(file, 'imagenes/' + file.name).subscribe(url => {
-      this.imgUrl_1 = url;
-    });
-  }
+errorSnackbar(mensaje: string){
+  this.snackBar.showSnackBar(mensaje, 'cerrar', 3500);
 }
 validateEmptyInputs() {
   const arrayControls = Object.values(this.form.controls).map(
@@ -194,7 +213,14 @@ validateEmptyInputs() {
       });
     }
   }
-  
+  subirFoto(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.img.uploadImage(file, 'imagenes/' + file.name).subscribe(url => {
+        this.imgUrl_1 = url;
+      });
+    }
+  }
 }
 
 
