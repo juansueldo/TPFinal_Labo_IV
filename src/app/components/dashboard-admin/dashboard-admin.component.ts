@@ -20,7 +20,7 @@ export class DashboardAdminComponent implements OnInit{
   }
   cambiarEstado(especialista: Especialista): void {
     this.especialistaService.actualizarEspecialista(especialista);
-    console.log('Nuevo estado:', especialista.estados.registro);
+    console.log('Nuevo estado:', especialista.estados);
   }
 
 }

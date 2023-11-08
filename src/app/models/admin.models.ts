@@ -9,4 +9,13 @@ export class Admin implements User{
     email: string;
     img_1: string;
     tipo = 'admin';
+    constructor(nombre='',apellido='',edad = 0,dni='',email='',img_1=''){
+        this.nombre = nombre;
+        this.apellido =apellido;
+        this.edad = edad;
+        this.dni = dni;
+        this.email = email;
+        this.img_1 = img_1;
+        this.tipo = 'admin';
+    }
 }

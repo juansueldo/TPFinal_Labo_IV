@@ -18,7 +18,6 @@ import { FormsModule } from '@angular/forms';
 import { FormPacienteComponent } from './components/form-paciente/form-paciente.component';
 import { BienvenidaComponent } from './pages/bienvenida/bienvenida.component';
 import { RegistroComponent } from './pages/registro/registro.component';
-import { FormEspecialistaComponent } from './components/form-especialista/form-especialista.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SelectEspecialidadComponent } from './components/select-especialidad/select-especialidad.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -30,7 +29,7 @@ import { AltaPacienteComponent } from './pages/registro/alta-paciente/alta-pacie
 import { AltaEspecialistaComponent } from './pages/registro/alta-especialista/alta-especialista.component';
 import { AltaAdminComponent } from './pages/registro/alta-admin/alta-admin.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { FormAdminComponent } from './components/form-admin/form-admin.component';
+
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { PacientesDetalleComponent } from './pages/pacientes-detalle/pacientes-detalle.component';
@@ -48,12 +47,10 @@ import { FormAltaComponent } from './components/form-alta/form-alta.component';
     FormPacienteComponent,
     BienvenidaComponent,
     RegistroComponent,
-    FormEspecialistaComponent,
     SelectEspecialidadComponent,
     AltaPacienteComponent,
     AltaEspecialistaComponent,
     DashboardComponent,
-    FormAdminComponent,
     AltaAdminComponent,
     NavbarComponent,
     NotFoundComponent,
