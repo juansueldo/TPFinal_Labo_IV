@@ -32,6 +32,7 @@ export class FormAltaComponent {
   buttonDisabled: boolean = true;
   listadoObraSocial: any[]=[];
   usuario: any;
+  obraSocial: string;
   
   constructor(
     private img: ImgService, 
@@ -68,7 +69,6 @@ export class FormAltaComponent {
       validators: [Validators.minLength(6)],
       updateOn: 'change',
     }),
-    obraSocial: new FormControl(),
   });
 }
 ngOnInit(): void {
@@ -76,17 +76,20 @@ ngOnInit(): void {
     this.listadoObraSocial = posts;
   });
 }
-
+handleSelected(selectedObraSocial: string){
+  this.obraSocial = selectedObraSocial;
+}
 handleItemSelected(selectedItems: Especialidad[]) {
   this.espcialidadSeleccionada = selectedItems;
 }
 onSubmit() {
-  //this.validateEmptyInputs();
+  this.validateEmptyInputs();
   this.loadingEvent.emit(true);
- /* if (this.form.invalid) {
+  if (this.form.invalid) {
+    this.errorSnackbar("Faltan campos por completar");
    this.loadingEvent.emit(false);
     return;
-  }*/
+  }
   const aux = this.nombre.value + ' ' + this.apellido.value;
   this.auth.register(this.email.value, this.clave.value).then( res =>{
     this.auth.confirmarMail(res)
@@ -110,7 +113,7 @@ onSubmit() {
         edad: Number(this.edad.value),
         dni: this.dni.value,
         email: this.email.value,
-        obraSocial: this.obraSocial.value,
+        obraSocial: this.obraSocial,
         img_1: this.imgUrl_1,
         img_2: this.imgUrl_2,
         tipo: 'paciente'
@@ -195,9 +198,7 @@ validateEmptyInputs() {
   get clave() {
     return this.form.controls['clave'];
   }
-  get obraSocial() {
-    return this.form.controls['obraSocial'];
-  }
+  
   handleCaptchaSuccess(captchaResult: boolean) {
     if (captchaResult) {
       this.buttonDisabled = false;

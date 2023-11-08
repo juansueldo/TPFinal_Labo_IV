@@ -47,7 +47,7 @@
       <div class="col-md-6" *ngIf="tipoUsuario === 'paciente'">
         <app-custom-input class="form-control" divClass="mb-4" label="Foto de perfil 2" type="file" (change)="subirFoto_2($event)"></app-custom-input>
         <div class="form-floating mt-4">
-         <select formControlName="obraSocial" class="form-select" id="floatingInputValue">
+         <select formControlName="obraSocial" class="form-select" id="floatingInputValue" (click)="handleSelected(obraSocial)">
           <option *ngFor="let obraSocial of listadoObraSocial" [value]="obraSocial.nombre">{{ obraSocial.nombre }}</option>
          </select>
          <label for="floatingInputValue">Obra Social</label>
