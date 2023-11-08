@@ -39,9 +39,9 @@
         controlName="clave" type="password">
         <small class="invalid-feedback">Clave invalida</small>
       </app-custom-input>
-        <app-custom-input class="form-control" divClass="mb-4" label="Foto de perfil 1" type="file" (change)="subirFoto($event)">
-          <small class="invalid-feedback">Foto Perfil</small>
-        </app-custom-input>
+      <app-custom-input class="form-control {{foto.errors ? 'is-invalid': ''}}" controlName="foto" divClass="mb-4" label="Foto de perfil" type="file" (change)="subirFoto($event)">
+        <small class="invalid-feedback">Foto Perfil</small>
+      </app-custom-input>
       </div>
       <!-- PACIENTE -->
       <div class="col-md-6" *ngIf="tipoUsuario === 'paciente'">

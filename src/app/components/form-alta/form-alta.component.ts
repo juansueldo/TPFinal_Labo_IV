@@ -69,6 +69,10 @@ export class FormAltaComponent {
       validators: [Validators.minLength(6)],
       updateOn: 'change',
     }),
+    foto: new FormControl('',{
+      validators: [FormValidator.validateFileType(['jpg', 'jpeg', 'png'])],
+      updateOn: 'change',
+    })
   });
 }
 ngOnInit(): void {
@@ -83,89 +87,121 @@ handleItemSelected(selectedItems: Especialidad[]) {
   this.espcialidadSeleccionada = selectedItems;
 }
 onSubmit() {
-  this.validateEmptyInputs();
-  this.loadingEvent.emit(true);
-  if (this.form.invalid) {
-    this.errorSnackbar("Faltan campos por completar");
-   this.loadingEvent.emit(false);
-    return;
-  }
-  const aux = this.nombre.value + ' ' + this.apellido.value;
-  this.auth.register(this.email.value, this.clave.value).then( res =>{
-    this.auth.confirmarMail(res)
-    .then(responseMail => {
-        console.log(responseMail);
-    })
-    .catch(errorMail =>{
-      console.log(errorMail);
-    });
-    this.auth.updateUser({displayName:aux})
-    let user={
-      uid: res.user.uid,
-      name: res.user.displayName,
-      email: res.user.email,
-    }
-    if(this.tipoUsuario == 'paciente'){
-      const paciente: Paciente = {
-        id: user.uid,
-        nombre: this.nombre.value,
-        apellido: this.apellido.value,
-        edad: Number(this.edad.value),
-        dni: this.dni.value,
-        email: this.email.value,
-        obraSocial: this.obraSocial,
-        img_1: this.imgUrl_1,
-        img_2: this.imgUrl_2,
-        tipo: 'paciente'
-      }
-      this.pacienteService.agregarPaciente(paciente).then((res) => {
-        this.showSnackbar();
-      }).catch(error=>{
-        this.errorSnackbar(error);
-      });
-    }else if(this.tipoUsuario == 'especialista'){
-      const especialista: Especialista = {
-        id: user.uid,
-        nombre: this.nombre.value,
-        apellido: this.apellido.value,
-        edad: Number(this.edad.value),
-        dni: this.dni.value,
-        email: this.email.value,
-        especialidades: this.espcialidadSeleccionada,
-        img_1: this.imgUrl_1,
-        estados:  Registro.pendiente,
-        tipo: 'especialista'
-      };
-
-      this.especialistasService.agregarEspecialista(especialista);
-      this.showSnackbar();
-    }else{
-      const admin: Admin = {
-        id: user.uid,
-        nombre: this.nombre.value,
-        apellido: this.apellido.value,
-        edad: Number(this.edad.value),
-        dni: this.dni.value,
-        email: this.email.value,
-        img_1: this.imgUrl_1,
-        tipo: 'admin'
-      };
-      this.adminService.agregarAdmin(admin);
-      this.showSnackbar();
-    }
- 
-  }).catch(error=>{
-    this.errorSnackbar(error);
-  });
-  
+  this.validateForm();
 }
-showSnackbar(){
-  this.alerta = `¡Bienvenido ${this.email.value}! Revise su casilla para válidar su cuenta.`;
+
+async registerUser() {
+  try {
+    const res = await this.auth.register(this.form.value.email, this.form.value.clave);
+    await this.auth.confirmarMail(res);
+
+    return res.user;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async updateUserInfo(user) {
+  const fullName = this.form.value.nombre + ' ' + this.form.value.apellido;
+
+  await this.auth.updateUser({ displayName: fullName });
+
+  return {
+    uid: user.uid,
+    name: user.displayName,
+    email: user.email,
+  };
+}
+
+async handlePacienteRegistration(user) {
+  const paciente: Paciente = {
+    id: user.uid,
+    nombre: this.form.value.nombre,
+    apellido: this.form.value.apellido,
+    edad: Number(this.form.value.edad),
+    dni: this.form.value.dni,
+    email: this.form.value.email,
+    obraSocial: this.obraSocial,
+    img_1: this.imgUrl_1,
+    img_2: this.imgUrl_2,
+    tipo: 'paciente',
+  };
+
+  await this.pacienteService.agregarPaciente(paciente);
+}
+
+async handleEspecialistaRegistration(user) {
+  const especialista: Especialista = {
+    id: user.uid,
+    nombre: this.form.value.nombre,
+    apellido: this.form.value.apellido,
+    edad: Number(this.form.value.edad),
+    dni: this.form.value.dni,
+    email: this.form.value.email,
+    especialidades: this.espcialidadSeleccionada,
+    img_1: this.imgUrl_1,
+    estados: Registro.pendiente,
+    tipo: 'especialista',
+  };
+
+  await this.especialistasService.agregarEspecialista(especialista);
+}
+
+async handleAdminRegistration(user) {
+  const admin: Admin = {
+    id: user.uid,
+    nombre: this.form.value.nombre,
+    apellido: this.form.value.apellido,
+    edad: Number(this.form.value.edad),
+    dni: this.form.value.dni,
+    email: this.form.value.email,
+    img_1: this.imgUrl_1,
+    tipo: 'admin',
+  };
+
+  await this.adminService.agregarAdmin(admin);
+}
+
+showSnackbar() {
+  this.alerta = `¡Bienvenido ${this.form.value.email}! Revise su casilla para validar su cuenta.`;
   this.snackBar.showSnackBar(this.alerta, 'cerrar', 3500);
   this.router.navigate(['/bienvenida']);
   this.loadingEvent.emit(false);
   this.form.reset();
 }
+
+async validateForm() {
+  this.validateEmptyInputs();
+  this.loadingEvent.emit(true);
+
+  if (this.form.invalid) {
+    this.errorSnackbar("Faltan campos por completar");
+    this.loadingEvent.emit(false);
+    return;
+  }
+
+  try {
+    const user = await this.registerUser();
+    const userInfo = await this.updateUserInfo(user);
+
+    if (this.tipoUsuario === 'paciente') {
+      await this.handlePacienteRegistration(user);
+    } else if (this.tipoUsuario === 'especialista') {
+      await this.handleEspecialistaRegistration(user);
+    } else {
+      await this.handleAdminRegistration(user);
+    }
+
+    this.showSnackbar();
+  } catch (error) {
+    this.errorSnackbar(error);
+
+    // Si falla el registro, no ejecutar funciones adicionales
+    return;
+  }
+}
+
+
 errorSnackbar(mensaje: string){
   this.snackBar.showSnackBar(mensaje, 'cerrar', 3500);
 }
@@ -197,6 +233,9 @@ validateEmptyInputs() {
   }
   get clave() {
     return this.form.controls['clave'];
+  }
+  get foto() {
+    return this.form.controls['foto'];
   }
   
   handleCaptchaSuccess(captchaResult: boolean) {

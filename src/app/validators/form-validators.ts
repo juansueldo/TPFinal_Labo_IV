@@ -53,6 +53,18 @@ export class FormValidator{
       return { onlyLettersAndSpaces: true };
     }
   }
+  static validateFileType(allowedExtensions: string[]) {
+    return (control: any) => {
+      const file = control.value;
+      if (file instanceof File) { // Verifica si es una instancia de File
+        const extension = file.name.split('.').pop();
+        if (!allowedExtensions.includes(extension)) {
+          return { invalidFileType: true };
+        }
+      }
+      return null;
+    };
+  }
 
 
 }
