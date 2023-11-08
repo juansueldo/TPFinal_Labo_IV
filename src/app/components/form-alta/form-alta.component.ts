@@ -33,7 +33,7 @@ export class FormAltaComponent {
   listadoObraSocial: any[]=[];
   usuario: any;
   obraSocial: string;
-  
+  nombreCompleto: string;
   constructor(
     private img: ImgService, 
     private especialistasService: EspecialistasService,
@@ -102,9 +102,9 @@ async registerUser() {
 }
 
 async updateUserInfo(user) {
-  const fullName = this.form.value.nombre + ' ' + this.form.value.apellido;
+  this.nombreCompleto = this.form.value.nombre + ' ' + this.form.value.apellido;
 
-  await this.auth.updateUser({ displayName: fullName });
+  await this.auth.updateUser({ displayName: this.nombreCompleto  });
 
   return {
     uid: user.uid,
@@ -166,7 +166,7 @@ async handleAdminRegistration(user) {
 }
 
 showSnackbar() {
-  this.alerta = `¡Bienvenido ${this.form.value.email}! Revise su casilla para validar su cuenta.`;
+  this.alerta = `¡Bienvenido ${this.nombreCompleto }! Revise su casilla para validar su cuenta.`;
   this.snackBar.showSnackBar(this.alerta, 'cerrar', 3500);
   this.router.navigate(['/bienvenida']);
   this.loadingEvent.emit(false);

@@ -39,6 +39,7 @@ import { NgxCaptchaModule } from 'ngx-captcha';
 import { CaptchaComponent } from './components/captcha/captcha.component';
 import { FormAltaComponent } from './components/form-alta/form-alta.component';
 import { DashboardPacienteComponent } from './pages/dashboard-paciente/dashboard-paciente.component';
+import { FiltrarTurnosPipe } from './pipes/filtrar-turnos.pipe';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { DashboardPacienteComponent } from './pages/dashboard-paciente/dashboard
     CaptchaComponent,
     FormAltaComponent,
     DashboardPacienteComponent,
+    FiltrarTurnosPipe,
     
 
   ],
