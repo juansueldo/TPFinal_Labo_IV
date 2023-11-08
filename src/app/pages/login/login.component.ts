@@ -85,7 +85,7 @@ export class LoginComponent {
           this.router.navigate(['/bienvenida']);
         }
         else if(user.tipo === 'paciente'){
-          this.router.navigate(['/bienvenida']);
+          this.router.navigate(['/dashboard-paciente']);
         }
         else if(user.tipo === 'admin'){
           this.router.navigate(['/dashboard']);
