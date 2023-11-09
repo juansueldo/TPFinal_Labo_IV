@@ -1,4 +1,40 @@
 <app-navbar [showButtons]="true" [usuario]="user"></app-navbar>
+
+<div class="container-fluid contenedor p-4 h-100 mt-5" *ngIf="user.tipo === 'especialista'">
+  <div class="card">
+    <div class="container-img">
+      <img [src]="user.img_1" alt="Foto de {{ user.nombre }} {{ user.apellido }}">
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{ user.nombre }} {{ user.apellido }}</h5>
+      <p class="card-text"><span>DNI:</span> {{ user.dni }}</p>
+      <p class="card-text"><span>Edad:</span> {{ user.edad }}</p>
+      <p class="card-text"><span>Especialidades:</span> {{ user.especialidades.join(', ') }}</p>
+      <p class="card-text"><span>Email:</span> {{ user.email }}</p>
+      <p class="card-text"><span>Estado de Registro</span></p>
+    </div>
+    <div class="card-footer">
+      <p class="card-text"><span>{{mostrarRegistro(user.estados.registro)}}</span></p>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid contenedor p-4 h-100 mt-5" *ngIf="user.tipo === 'paciente'">
+  <div class="card">
+    <div class="container-img">
+      <img [src]="user.img_1" alt="Foto de {{ user.nombre }} {{ user.apellido }}">
+      <img [src]="user.img_2" alt="Foto de {{ user.nombre }} {{ user.apellido }}">
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{ user.nombre }} {{ user.apellido }}</h5>
+      <p class="card-text"><span>DNI:</span> {{ user.dni }}</p>
+      <p class="card-text"><span>Edad:</span> {{ user.edad }}</p>
+      <p class="card-text"><span>Obra Social:</span> {{ user.obraSocial}}</p>
+      <p class="card-text"><span>Email:</span> {{ user.email }}</p>
+    </div>
+  </div>
+</div>
+
 <div class="container-fluid contenedor p-4 h-100 mt-5" *ngIf="user.tipo ==='admin'">
     <div class="container-buttons">
         <button class="btn btn-primary" (click)="cambiarVista('pacientes')" [class.active]="mostrarPacientes">Ver Pacientes</button>
@@ -33,10 +69,5 @@
       <app-card-especialista [especialista]="selectEspecialista" (cleanEspecialistaEvent)="selectEspecialista = $event"></app-card-especialista>
     </div>
   </div>
-  <div class="container-fluid contenedor p-4 h-100 mt-5" *ngIf="user.tipo === 'especialista'">
-    <app-card-especialista [especialista]="selectEspecialista"></app-card-especialista>
-  </div>
-  <div class="container-fluid contenedor p-4 h-100 mt-5" *ngIf="user.tipo === 'paciente'">
-    <app-card-paciente [paciente]="selectPaciente"></app-card-paciente>
-  </div>
+ 
 </div>
