@@ -92,7 +92,7 @@ export class LoginComponent {
           }
           else if(user.tipo === 'admin'){
             this.usuariosService.setUsuario(user.tipo, user);
-            this.router.navigate(['/dashboard']);
+            this.router.navigate(['/especialistas']);
           }
           else{
             this.snackBar.showSnackBar('error', 'cerrar', 5000);

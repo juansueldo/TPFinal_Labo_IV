@@ -14,6 +14,9 @@ export class EspecialistasDetalleComponent {
   constructor(private usuarioService: UsuariosService){}
 
   ngOnInit(): void {
+    setTimeout(()=>{
+      this.loading = false;
+    },2500);
     this.cargarUsuario();
   }
 
