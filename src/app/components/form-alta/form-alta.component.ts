@@ -32,7 +32,7 @@ export class FormAltaComponent {
   buttonDisabled: boolean = true;
   listadoObraSocial: any[]=[];
   usuario: any;
-  obraSocial: string;
+  obraSocial: string = "PAMI";
   nombreCompleto: string;
   constructor(
     private img: ImgService, 
@@ -82,6 +82,7 @@ ngOnInit(): void {
 }
 handleSelected(selectedObraSocial: string){
   this.obraSocial = selectedObraSocial;
+  console.log(this.obraSocial);
 }
 handleItemSelected(selectedItems: Especialidad[]) {
   this.espcialidadSeleccionada = selectedItems;
