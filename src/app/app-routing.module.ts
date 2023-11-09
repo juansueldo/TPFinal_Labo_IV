@@ -4,9 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { BienvenidaComponent } from './pages/bienvenida/bienvenida.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
-import { PacientesDetalleComponent } from './pages/pacientes-detalle/pacientes-detalle.component';
-import { EspecialistasDetalleComponent } from './pages/especialistas-detalle/especialistas-detalle.component';
 import { DashboardPacienteComponent } from './pages/dashboard-paciente/dashboard-paciente.component';
+import { SeccionUsuariosComponent } from './pages/seccion-usuarios/seccion-usuarios.component';
 
 
 const routes: Routes = [
@@ -34,10 +33,7 @@ const routes: Routes = [
     path: "dashboard-paciente", component: DashboardPacienteComponent
   },
   {
-    path: "pacientes", component: PacientesDetalleComponent,
-  },
-  {
-    path: "especialistas", component: EspecialistasDetalleComponent,
+    path: "seccion-usuarios", component: SeccionUsuariosComponent,
   },
   { path: '**', component: NotFoundComponent },
 

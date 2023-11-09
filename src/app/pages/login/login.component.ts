@@ -85,15 +85,15 @@ export class LoginComponent {
         if(this.auth.autha.currentUser.emailVerified){
           if(user.tipo === 'especialista' && user.estados.registro == Registro.aceptado){
             this.usuariosService.setUsuario(user.tipo, user);
-            this.router.navigate(['/bienvenida']);
+            this.router.navigate(['/seccion-usuarios']);
           }
           else if(user.tipo === 'paciente'){
             this.usuariosService.setUsuario(user.tipo, user);
-            this.router.navigate(['/dashboard-paciente']);
+            this.router.navigate(['/seccion-usuarios']);
           }
           else if(user.tipo === 'admin'){
             this.usuariosService.setUsuario(user.tipo, user);
-            this.router.navigate(['/especialistas']);
+            this.router.navigate(['/seccion-usuarios']);
           }
           else{
             this.snackBar.showSnackBar('error', 'cerrar', 5000);

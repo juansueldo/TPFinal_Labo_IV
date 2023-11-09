@@ -21,35 +21,20 @@
       </div>
       <div class="dropdown" *ngIf="usuario?.tipo === 'admin'">
         <li class="nav-item dropdown">
-          <a class="dropdown-item" routerLink="/pacientes">Paciente</a>
+          <a class="dropdown-item" routerLink="/seccion-usuarios">Usuarios</a>
         </li>
         <li class="nav-item dropdown">
-          <a class="dropdown-item" routerLink="/especialistas">Especialista</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="dropdown-item" routerLink="/dashboard">Registrar</a>
+          <a class="dropdown-item" routerLink="/dashboard">Registrar Usuarios</a>
         </li>
       </div>
       <div class="dropdown" *ngIf="usuario?.tipo === 'paciente'">
         <li class="nav-item dropdown">
-          <a class="dropdown-item" routerLink="/pacientes">Paciente</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="dropdown-item" routerLink="/especialistas">Especialista</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="dropdown-item" routerLink="/dashboard">Registrar</a>
+          <a class="dropdown-item" routerLink="/seccion-usuarios">Usuarios</a>
         </li>
       </div>
       <div class="dropdown" *ngIf="usuario?.tipo === 'especialista'">
         <li class="nav-item dropdown">
-          <a class="dropdown-item" routerLink="/pacientes">Paciente</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="dropdown-item" routerLink="/especialistas">Especialista</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="dropdown-item" routerLink="/dashboard">Registrar</a>
+          <a class="dropdown-item" routerLink="/seccion-usuarios">Usuarios</a>
         </li>
       </div>
       <ng-container *ngIf="showButtons">

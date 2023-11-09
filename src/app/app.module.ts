@@ -31,8 +31,6 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
-import { PacientesDetalleComponent } from './pages/pacientes-detalle/pacientes-detalle.component';
-import { EspecialistasDetalleComponent } from './pages/especialistas-detalle/especialistas-detalle.component';
 import { TurnosPacienteComponent } from './pages/turnos-paciente/turnos-paciente.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxCaptchaModule } from 'ngx-captcha';
@@ -40,6 +38,7 @@ import { CaptchaComponent } from './components/captcha/captcha.component';
 import { FormAltaComponent } from './components/form-alta/form-alta.component';
 import { DashboardPacienteComponent } from './pages/dashboard-paciente/dashboard-paciente.component';
 import { FiltrarTurnosPipe } from './pipes/filtrar-turnos.pipe';
+import { SeccionUsuariosComponent } from './pages/seccion-usuarios/seccion-usuarios.component';
 
 @NgModule({
   declarations: [
@@ -55,13 +54,12 @@ import { FiltrarTurnosPipe } from './pipes/filtrar-turnos.pipe';
     AltaAdminComponent,
     NavbarComponent,
     NotFoundComponent,
-    PacientesDetalleComponent,
-    EspecialistasDetalleComponent,
     TurnosPacienteComponent,
     CaptchaComponent,
     FormAltaComponent,
     DashboardPacienteComponent,
     FiltrarTurnosPipe,
+    SeccionUsuariosComponent,
     
 
   ],
