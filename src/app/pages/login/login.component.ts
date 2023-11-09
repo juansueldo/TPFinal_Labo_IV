@@ -81,21 +81,27 @@ export class LoginComponent {
         this.alerta = `Bienvenido ${this.email.value}`;
         //this.auth.saveLog(this.email);
         this.snackBar.showSnackBar(this.alerta, 'cerrar', 5000);
-        if(user.tipo === 'especialista' && user.estados.registro == Registro.aceptado){
-          this.usuariosService.setUsuario(user.tipo, user);
-          this.router.navigate(['/bienvenida']);
-        }
-        else if(user.tipo === 'paciente'){
-          this.usuariosService.setUsuario(user.tipo, user);
-          this.router.navigate(['/dashboard-paciente']);
-        }
-        else if(user.tipo === 'admin'){
-          this.usuariosService.setUsuario(user.tipo, user);
-          this.router.navigate(['/dashboard']);
+        if(this.auth.autha.currentUser.emailVerified){
+          if(user.tipo === 'especialista' && user.estados.registro == Registro.aceptado){
+            this.usuariosService.setUsuario(user.tipo, user);
+            this.router.navigate(['/bienvenida']);
+          }
+          else if(user.tipo === 'paciente'){
+            this.usuariosService.setUsuario(user.tipo, user);
+            this.router.navigate(['/dashboard-paciente']);
+          }
+          else if(user.tipo === 'admin'){
+            this.usuariosService.setUsuario(user.tipo, user);
+            this.router.navigate(['/dashboard']);
+          }
+          else{
+            this.snackBar.showSnackBar('error', 'cerrar', 5000);
+          }
         }
         else{
-          this.snackBar.showSnackBar('error', 'cerrar', 5000);
+          this.snackBar.showSnackBar('Debe confirmar su cuenta.', 'cerrar', 5000);
         }
+       
         
         this.hide = false;
         this.formLogin.reset();

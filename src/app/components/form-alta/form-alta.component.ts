@@ -97,6 +97,7 @@ async registerUser() {
 
     return res.user;
   } catch (error) {
+    this.errorSnackbar("El email ingresado ya se encuentra utilizado.");
     throw error;
   }
 }
@@ -197,7 +198,7 @@ async validateForm() {
 
     this.showSnackbar();
   } catch (error) {
-    this.errorSnackbar(error);
+    this.errorSnackbar("No se pudo registrar su cuenta");
 
     // Si falla el registro, no ejecutar funciones adicionales
     return;

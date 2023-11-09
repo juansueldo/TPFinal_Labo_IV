@@ -32,12 +32,12 @@
         
         <app-custom-input class="form-control {{email.errors ? 'is-invalid': ''}}" divClass="mb-4" label="Email"
         controlName="email" type="mail">
-        <small class="invalid-feedback">Email invalido (solo letras)</small>
+        <small class="invalid-feedback">Email inválido (solo letras)</small>
       </app-custom-input>
 
       <app-custom-input class="form-control {{clave.errors ? 'is-invalid': ''}}" divClass="mb-4" label="Clave"
         controlName="clave" type="password">
-        <small class="invalid-feedback">Clave invalida</small>
+        <small class="invalid-feedback">Clave inválida</small>
       </app-custom-input>
       <app-custom-input class="form-control {{foto.errors ? 'is-invalid': ''}}" controlName="foto" divClass="mb-4" label="Foto de perfil" type="file" (change)="subirFoto($event)">
         <small class="invalid-feedback">Foto Perfil</small>

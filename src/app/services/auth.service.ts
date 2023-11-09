@@ -15,7 +15,7 @@ import {getAuth, updateProfile} from "firebase/auth";
   providedIn: 'root',
 })
 export class AuthService {
- 
+  autha = this.auth;
 
   constructor(private auth: Auth, private db: AngularFirestore) {}
 
