@@ -4,10 +4,10 @@
       <label class="label" for="showCaptcha">I'm not a robot</label>
       <img src="../../../assets/captcha.png" alt="" class="recaptcha">
     </div>
-    <div *ngIf="showCaptcha" class="container-img form-control">
+    <div *ngIf="showCaptcha" class="form-control">
         <div class="captcha">
             <div class="container-img form-control">
-                <img id="pokemon-image" class="img" [src]="pokemonImage" alt="Pokemon Image">
+                <img id="pokemon-image" class="img-pokemon" [src]="pokemonImage" alt="Pokemon Image">
             </div>
             <div class="container-buttons">
                 <button class="btn btn-success"*ngFor="let option of options" (click)="checkAnswer(option, pokemonNameCorrect)"  [disabled]="disabledButton" >{{ option }}</button>
