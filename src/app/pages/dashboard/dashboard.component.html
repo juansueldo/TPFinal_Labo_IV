@@ -1,25 +1,25 @@
-<app-navbar [items]="links"></app-navbar>
-<div class="container-web">
+<app-navbar [usuario]="user"></app-navbar>
+<div class="container-fluid contenedor p-4 h-100">
   <div class="row">
       <h2 class="title mt-5">Seleccione el tipo de usario</h2>
       <div class="col-md-12 col-lg-6 ">
           <div class="container-sections">
               <img src="../../../assets/especialista.png">
-              <h2>Dar de alta a un especialista</h2>
+              <h4>Dar de alta a un especialista</h4>
               <button class="btn btn-primary" routerLink="/registro/alta-especialista">Especialista</button>
           </div>
       </div>
       <div class="col-md-12 col-lg-6 ">
           <div class="container-sections">
               <img src="../../../assets/paciente.png">
-              <h2>Dar de alta a unpaciente</h2>
+              <h4>Dar de alta a unpaciente</h4>
               <button class="btn btn-primary" routerLink="/registro/alta-paciente">Paciente</button>
           </div>
       </div>
       <div class="col-md-12 col-lg-6 ">
         <div class="container-sections">
             <img src="../../../assets/admin.png">
-            <h2>Dar de alta a un Administrador </h2>
+            <h4>Dar de alta a un Administrador </h4>
             <button class="btn btn-primary" routerLink="/registro/alta-admin">Administrador</button>
         </div>
     </div>

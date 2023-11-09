@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Especialista } from 'src/app/models/especialista.models';
+import { UsuariosService } from 'src/app/services/usuarios.service';
 
 
 @Component({
@@ -10,20 +11,15 @@ import { Especialista } from 'src/app/models/especialista.models';
 export class DashboardComponent {
   selected!: Especialista | null;
   loading = false;
-  links = [
-    { label: 'Inicio', link: "/bienvenida" },
-    { label: 'Especialistas', link: '/especialistas' },
-    { label: 'Pacientes', link: '/pacientes'},
-    { label: 'Inicio', link: '/bienvenida' },
-]
-  constructor(){}
+  user: any | null;
+  constructor(private usuarioService: UsuariosService){}
 
   ngOnInit(): void {
     this.cargarUsuario();
   }
 
   cargarUsuario() {
-    //this.user = this.authService.getCurrentUser();
+    this.user = this.usuarioService.getUsuario();
   }
 
   selectedEspecialista(event: Especialista) {

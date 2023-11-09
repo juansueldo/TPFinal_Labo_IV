@@ -6,12 +6,44 @@
     </button>
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
 
-      <div class="dropdown">
+      <div class="dropdown" *ngIf="usuario?.tipo === null">
         <li class="nav-item dropdown" *ngFor="let item of items">
           <a class="dropdown-item" routerLink="{{item.link}}">{{item.label}}</a>
         </li>
       </div>
-
+      <div class="dropdown" *ngIf="usuario?.tipo === 'admin'">
+        <li class="nav-item dropdown">
+          <a class="dropdown-item" routerLink="/pacientes">Paciente</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="dropdown-item" routerLink="/especialistas">Especialista</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="dropdown-item" routerLink="/dashboard">Registrar</a>
+        </li>
+      </div>
+      <div class="dropdown" *ngIf="usuario?.tipo === 'paciente'">
+        <li class="nav-item dropdown">
+          <a class="dropdown-item" routerLink="/pacientes">Paciente</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="dropdown-item" routerLink="/especialistas">Especialista</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="dropdown-item" routerLink="/dashboard">Registrar</a>
+        </li>
+      </div>
+      <div class="dropdown" *ngIf="usuario?.tipo === 'especialista'">
+        <li class="nav-item dropdown">
+          <a class="dropdown-item" routerLink="/pacientes">Paciente</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="dropdown-item" routerLink="/especialistas">Especialista</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="dropdown-item" routerLink="/dashboard">Registrar</a>
+        </li>
+      </div>
       <ng-container *ngIf="showButtons">
         <div *ngIf="usuario" class="dropdown-center">
           <button class="btn btn-lg dropdown-toggle text-light" type="button" data-bs-toggle="dropdown"
