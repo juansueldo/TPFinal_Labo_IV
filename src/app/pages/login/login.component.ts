@@ -17,10 +17,7 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  links = [
-    { label: 'Home', link: '/bienvenida' },
-    { label: 'Registro', link: '/registro' },
-]
+  user: any;
   formLogin: FormGroup;
   alerta: string = '';
   hide = true;
@@ -66,6 +63,10 @@ export class LoginComponent {
       this.hide = false;
     },2500);
  
+    this.cargarUsuario();
+  }
+  cargarUsuario() {
+    this.user = this.usuariosService.getUsuario();
   }
   onSubmit(){
     if (this.formLogin.invalid){

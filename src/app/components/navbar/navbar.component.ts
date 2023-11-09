@@ -28,7 +28,7 @@ export class NavbarComponent {
         this.usuario = null;
         this.userEvent.emit(null);
         this.loadingEvent.emit(false);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/bienvenida']);
         localStorage.clear();
       })
       .catch((err) => {});
