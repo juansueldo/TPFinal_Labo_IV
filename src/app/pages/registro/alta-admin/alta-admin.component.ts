@@ -7,7 +7,7 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
   styleUrls: ['./alta-admin.component.scss']
 })
 export class AltaAdminComponent {
-  public loading = false;
+  public loading = true;
   user = null;
   constructor(private usuarioService: UsuariosService){}
   ngOnInit(): void {

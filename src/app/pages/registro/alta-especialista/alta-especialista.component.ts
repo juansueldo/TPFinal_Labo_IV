@@ -7,7 +7,7 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
   styleUrls: ['./alta-especialista.component.scss']
 })
 export class AltaEspecialistaComponent implements OnInit {
-  public loading = false;
+  public loading = true;
   user = null;
   constructor(private usuarioService: UsuariosService){}
   ngOnInit(): void {

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UsuariosService } from 'src/app/services/usuarios.service';
 
 @Component({
   selector: 'app-registro',
@@ -6,8 +7,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./registro.component.scss']
 })
 export class RegistroComponent {
-  links = [
-    { label: 'Home', link: '/bienvenida' },
-    { label: 'Login', link: '/login' },
-]
+  public loading = true;
+  user = null;
+  constructor(private usuarioService: UsuariosService){}
+  ngOnInit(): void {
+    setTimeout(()=>{
+      this.loading = false;
+
+  },2500);
+  this.cargarUsuario();
+}
+cargarUsuario() {
+  this.user = this.usuarioService.getUsuario();
+}
 }

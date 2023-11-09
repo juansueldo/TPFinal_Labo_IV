@@ -7,7 +7,7 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
   styleUrls: ['./alta-paciente.component.scss']
 })
 export class AltaPacienteComponent {
-  public loading = false;
+  public loading = true;
   user = null;
   constructor(private usuarioService: UsuariosService){}
   ngOnInit(): void {
