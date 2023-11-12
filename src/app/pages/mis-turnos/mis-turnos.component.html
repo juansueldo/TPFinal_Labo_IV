@@ -1,4 +1,4 @@
-
+<app-navbar [showButtons]="true" [usuario]="user"></app-navbar>
 <div hidden="true" style=" margin: auto; width: 50%;">
     <table id="tableTurnos">
         <tr>
@@ -8,14 +8,15 @@
             <th>fecha</th>
         </tr>
         <div *ngFor="let item of turnos">
-            <tr *ngIf="usuarioVisible == 'especialista' && item.especialista == especialista.mail">
+            <tr *ngIf="user.tipo === 'especialista' && item.especialista == especialista.email">
+                <h2>Hola</h2>
                 <td>{{item.paciente}}</td>
                 <td>{{item.especialista}}</td>
                 <td>{{item.especialidad}}</td>
                 <td>{{item.fecha}}</td>
                 <td></td>
             </tr>
-            <tr *ngIf="usuarioVisible == 'paciente' && item.paciente == paciente.mail">
+            <tr *ngIf="user.tipo === 'paciente' && item.paciente == paciente.email">
                 <td>{{item.paciente}}</td>
                 <td>{{item.especialista}}</td>
                 <td>{{item.especialidad}}</td>

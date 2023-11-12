@@ -7,6 +7,9 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { DashboardPacienteComponent } from './pages/dashboard-paciente/dashboard-paciente.component';
 import { SeccionUsuariosComponent } from './pages/seccion-usuarios/seccion-usuarios.component';
 
+import { MisTurnosComponent } from './pages/mis-turnos/mis-turnos.component';
+import { SolicitarTurnoComponent } from './pages/solicitar-turno/solicitar-turno.component';
+
 
 const routes: Routes = [
   { 
@@ -31,6 +34,12 @@ const routes: Routes = [
   },
   {
     path: "dashboard-paciente", component: DashboardPacienteComponent
+  },
+  {
+    path:"mis-turnos", component: MisTurnosComponent
+  },
+  {
+    path: 'solicitar-turno', component: SolicitarTurnoComponent
   },
   {
     path: "seccion-usuarios", component: SeccionUsuariosComponent,
