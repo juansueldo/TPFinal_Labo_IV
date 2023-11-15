@@ -1,6 +1,6 @@
 <app-navbar [showButtons]="true" [usuario]="user"></app-navbar>
 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-    <div class="modal-content text-bg-dark" style="text-align: center;">
+    <div class="modal-content text-bg-dark mt-5" style="text-align: center;">
     <div class="modal modal-sheet position-static d-block p-4 py-md-5" tabindex="-1" role="dialog" id="modalSignin">
              <h1 *ngIf="etapa != 'confirmar' && etapa != 'fin'">Solicitar Turno</h1>
     
@@ -10,10 +10,8 @@
              <h4>Especialidad</h4>
              <div *ngFor="let esp of especialidades">
                 <div class="container">
-                   <button  class="imagenBoton">{{esp.nombre}}</button>
-            
                    <div class="overlay imagenBoton">
-                      <div (click)="elegirEspecialidad(esp)" class="text">{{esp}}</div>
+                      <div (click)="elegirEspecialidad(esp)" class="btn btn-primary text">{{esp}}</div>
                    </div>
                    </div>
              </div>
@@ -30,9 +28,12 @@
              <h4>Especialista</h4>
              <div *ngFor="let esp of especialistas">
                 <div class="container">
-                <button class="imagenBoton"><img class="imagenBoton sombrita" src="{{esp.img_1}}" height="100px" width="100px" alt="Italian Trulli"></button>
+                <img class="imagen-especialista" src="{{esp.img_1}}" height="100px" width="100px" alt="{{esp.apellido}}">
+                <ul *ngFor="let epecialidad of esp.especialidad">
+                  <li>{{esp.especialidad}}</li>
+                </ul>
                 <div class="overlay imagenBoton">
-                   <div (click)="elegirEspecialista(esp.nombre, esp.apellido)" class="text">{{esp.nombre + ' ' + esp.apellido}}</div>
+                   <div (click)="elegirEspecialista(esp.nombre, esp.apellido)" class="btn btn-primary text">{{esp.nombre + ' ' + esp.apellido}}</div>
                 </div>
                 </div>
              </div>
