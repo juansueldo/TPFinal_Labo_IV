@@ -29,8 +29,8 @@
              <div *ngFor="let esp of especialistas">
                 <div class="container">
                 <img class="imagen-especialista" src="{{esp.img_1}}" height="100px" width="100px" alt="{{esp.apellido}}">
-                <ul *ngFor="let epecialidad of esp.especialidad">
-                  <li>{{esp.especialidad}}</li>
+                <ul *ngFor="let epecialidad of esp.especialidades">
+                  <li>{{epecialidad}}</li>
                 </ul>
                 <div class="overlay imagenBoton">
                    <div (click)="elegirEspecialista(esp.nombre, esp.apellido)" class="btn btn-primary text">{{esp.nombre + ' ' + esp.apellido}}</div>
