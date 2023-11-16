@@ -1,4 +1,5 @@
 <app-navbar [showButtons]="true" [usuario]="usuario"></app-navbar>
+<app-spinner [showSpinner]="loading"></app-spinner>
  <!-- 
  
 <div class="modal fade" id="MiModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -62,9 +63,9 @@ PopUp filtrar pdf -->
         <button *ngIf="tipo == 'especialista'" class="btn btn-primary horarios" (click)="abrirMisHorarios()">Mis Horarios</button>
     </div>
     <div>
-      <button *ngIf="tipo == 'paciente'" class="btn btn-primary" routerLink="../Historia" [state]="{ email: email }">Historia Clinica</button>
+      <!--<button *ngIf="tipo == 'paciente'" class="btn btn-primary" routerLink="../Historia" [state]="{ email: email }">Historia Clinica</button>-->
   </div>
-  <button *ngIf="tipo == 'paciente'" class="btn btn-danger" (click)="abrirPopUpFiltrarPdf()">Imprimir PDF</button>
+      <!--<button *ngIf="tipo == 'paciente'" class="btn btn-danger" (click)="abrirPopUpFiltrarPdf()">Imprimir PDF</button>-->
     </div>
   </div>
 </div>

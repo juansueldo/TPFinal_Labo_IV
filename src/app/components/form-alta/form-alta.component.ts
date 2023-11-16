@@ -3,11 +3,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Admin } from 'src/app/models/admin.models';
 import { Especialista, Registro } from 'src/app/models/especialista.models';
+import { HorarioEspecialista } from 'src/app/models/horario-especialista.models';
 import { Especialidad, ObraSocial } from 'src/app/models/interfaces.models';
 import { Paciente } from 'src/app/models/paciente.models';
 import { AdminService } from 'src/app/services/admin.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { EspecialistasService } from 'src/app/services/especialistas.service';
+import { HorariosEspecialistaService } from 'src/app/services/horarios-especialista.service';
 import { ImgService } from 'src/app/services/img.service';
 import { ObrasocialService } from 'src/app/services/obrasocial.service';
 import { PacienteService } from 'src/app/services/paciente.service';
@@ -44,7 +46,8 @@ export class FormAltaComponent {
     private auth: AuthService,
     private snackBar: SnackbarService,
     private router: Router, 
-    private obraSocialService: ObrasocialService
+    private obraSocialService: ObrasocialService,
+    private horariosEspecialista: HorariosEspecialistaService
     ) {
   this.form = new FormGroup({
     nombre: new FormControl(null, {
@@ -150,7 +153,7 @@ async handleEspecialistaRegistration(user) {
 
     tipo: 'especialista',
   };
-
+  this.cargarHorarioEspecialistas(especialista.email);
   await this.especialistasService.agregarEspecialista(especialista);
 }
 
@@ -171,7 +174,7 @@ async handleAdminRegistration(user) {
 
 showSnackbar() {
   this.alerta = `¡Bienvenido ${this.nombreCompleto }! Revise su casilla para validar su cuenta.`;
-  this.snackBar.showSnackBar(this.alerta, 'cerrar', 3500);
+  this.snackBar.showSnackBar(this.alerta, 'cerrar', 3500, true);
   this.router.navigate(['/bienvenida']);
   this.loadingEvent.emit(false);
   this.form.reset();
@@ -210,7 +213,7 @@ async validateForm() {
 
 
 errorSnackbar(mensaje: string){
-  this.snackBar.showSnackBar(mensaje, 'cerrar', 3500);
+  this.snackBar.showSnackBar(mensaje, 'cerrar', 3500,false);
 }
 validateEmptyInputs() {
   const arrayControls = Object.values(this.form.controls).map(
@@ -270,5 +273,9 @@ validateEmptyInputs() {
   }
   resultadoCaptcha(resultado:any){
     this.captachaAceptado = true;
+  }
+  cargarHorarioEspecialistas(mail:string){
+    let horarioAux = new HorarioEspecialista("",mail);
+    this.horariosEspecialista.cargarHorarioEspecialistas(horarioAux);
   }
 }

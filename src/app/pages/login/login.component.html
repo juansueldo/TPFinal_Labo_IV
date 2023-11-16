@@ -30,46 +30,40 @@
 
     <!-- Columna de botones de acceso rápido -->
     <div class="col-md-6 mt-5">
-      
-        <h2 class="mt-5">Acceso Rápido</h2>
-        <div class="row">
-          <!-- Botones para usuarios -->
-          <div class="card text-center center-content">
-            <h5>Pacientes</h5>
-            <div class="btn btn-success btn-block" (click)="autoComplete('comiendoconprogramadores@gmail.com','123456')">
-              <img class="foto" src="{{mostrarFoto('kevinjames@mail.com')}}" alt="">
-            </div>
-            <div class="btn btn-success btn-block" (click)="autoComplete('andrescronica@mail.com','123456')">
-              <img class="foto" src="{{mostrarFoto('andrescronica@mail.com')}}" alt="">
-            </div>
-            <div class="btn btn-success btn-block" (click)="autoComplete('haroldpain@mail.com','123456')">
-              <img class="foto" src="{{mostrarFoto('haroldpain@mail.com')}}" alt="">
-            </div>
+      <h2 class="mt-5">Acceso Rápido</h2>
+      <div class="d-flex flex-row">
+        <!-- Botones para usuarios -->
+        <div class="d-inline-block"> <!-- Agrega la clase d-inline-block -->
+          <h5>Pacientes</h5>
+          <div class="btn btn-outline square-button" (click)="autoComplete('lgxegi00cc@rfcdrive.com','123456')">
+            <img class="foto paciente-btn" src="{{mostrarFoto('lgxegi00cc@rfcdrive.com')}}" alt="">
           </div>
-    
-          <!-- Botones para especialistas -->
-          <div class="card text-center center-content">
-            <h5>Especialistas</h5>
-            <div class="btn btn-info btn-block" (click)="autoComplete('gregoryhouse597@gmail.com','123456')">
-              <img class="foto" src="{{mostrarFoto('gregoryhouse597@gmail.com')}}" alt="">
-            </div>
-            <div class="btn btn-info btn-block" (click)="autoComplete('xidifyhnukvzeiusls@cazlq.com','123456')">
-              <img class="foto" src="{{mostrarFoto('xidifyhnukvzeiusls@cazlq.com')}}" alt="">
-            </div>
+          <div class="btn btn-outline square-button" (click)="autoComplete('andres@tippabble.com','123456')">
+            <img class="foto paciente-btn" src="{{mostrarFoto('andres@tippabble.com')}}" alt="">
           </div>
+          <div class="btn btn-outline square-button" (click)="autoComplete('3zdl0h9p1z@rfcdrive.com','123456')">
+            <img class="foto paciente-btn" src="{{mostrarFoto('3zdl0h9p1z@rfcdrive.com')}}" alt="">
+          </div>
+        </div>
     
-          <!-- Botón para administrador -->
-          <div class="card text-center center-content">
-            <h5>Administrador</h5>
-            <div class="btn btn-danger btn-block  d-flex align-items-center" (click)="autoComplete('juan.sueldo1989@gmail.com','123456')">
-              <img class="foto" src="{{mostrarFoto('juan.sueldo1989@gmail.com')}}" alt="">
-            </div>
+        <!-- Botones para especialistas -->
+        <div class="d-inline-block"> <!-- Agrega la clase d-inline-block -->
+          <h5>Especialistas</h5>
+          <div class="btn btn-outline square-button" (click)="autoComplete('gregoryhouse597@gmail.com','123456')">
+            <img class="foto especialista-btn" src="{{mostrarFoto('gregoryhouse597@gmail.com')}}" alt="">
+          </div>
+          <div class="btn btn-outline square-button" (click)="autoComplete('xidifyhnukvzeiusls@cazlq.com','123456')">
+            <img class="foto especialista-btn" src="{{mostrarFoto('xidifyhnukvzeiusls@cazlq.com')}}" alt="">
+          </div>
+        </div>
+    
+        <!-- Botón para administrador -->
+        <div class="d-inline-block"> <!-- Agrega la clase d-inline-block -->
+          <h5>Administrador</h5>
+          <div class="btn btn-outline square-button" (click)="autoComplete('juan.sueldo1989@gmail.com','123456')">
+            <img class="foto admin-btn" src="{{mostrarFoto('juan.sueldo1989@gmail.com')}}" alt="">
           </div>
         </div>
       </div>
     </div>
     
-
-
-
-  

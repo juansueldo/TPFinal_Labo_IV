@@ -41,6 +41,17 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
   --mdc-snackbar-supporting-text-color: rgba(214, 214, 214, 0.87);
   --mat-snack-bar-button-color: rgba(0, 0, 0, 0.87);
 }
+.snackbar-success {
+  --mdc-snackbar-container-color: #49a22b !important;
+  --mdc-snackbar-supporting-text-color: rgba(214, 214, 214, 0.87);
+  --mat-snack-bar-button-color: rgba(0, 0, 0, 0.87);
+}
+
+.snackbar-error {
+  --mdc-snackbar-container-color: #ff0000 !important;
+  --mdc-snackbar-supporting-text-color: rgba(255, 255, 255, 0.87);
+  --mat-snack-bar-button-color: rgba(255, 255, 255, 0.87);
+}
 .header__navbar__logo, a {
   text-transform: uppercase;
   font-size: 1.5rem;
@@ -51,4 +62,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
 }
 .header__navbar__logo__span--green {
   color: #B4F00A;
+}
+.logo-online{
+  height: 100px;
+  margin-bottom: 20px;
 }

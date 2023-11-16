@@ -26,7 +26,10 @@ img{
 span{
     margin: 10px;
 }
-.btn-block{
+.d-inline-block{
+    width: 160px;
+}
+.btn-outline{
     height: 85px;
     width: 85px;
     margin-bottom: 10px;
@@ -35,11 +38,27 @@ span{
     justify-content: center;
     
 }
+.paciente-btn{
+    border: 2px solid rgb(182, 11, 11);
+}
+.especialista-btn{
+    border: 2px solid green;
+}
+.admin-btn{
+    border: 2px solid purple;
+}
 .foto{
     margin-top: 15px;
     height: 70px;
     width: 70px;
     border-radius: 5px;
+    box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);
+-webkit-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);
+}
+.foto:hover{
+    transition: all 0.5s;
+    transform: scale(1.5);
 }
 .card{
     width: 180px;

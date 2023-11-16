@@ -18,6 +18,7 @@ export class MiPerfilComponent implements OnInit{
   // USUARIO 
   usuario:any;
   mostrar = false;
+  loading = true;
   email = "";
   nombreCompleto = "";
   edad:number;
@@ -46,7 +47,9 @@ export class MiPerfilComponent implements OnInit{
 
   ngOnInit(): void {
     
-   
+    setTimeout(()=>{
+      this.loading = false;
+    },2500);
     this.usuario = this.usuarioService.getUsuario();
     
     this.horarioEspecialistaService.getHorarioEspecialistas().subscribe(horario => {

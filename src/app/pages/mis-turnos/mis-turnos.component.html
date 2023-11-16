@@ -1,11 +1,11 @@
 <app-navbar [showButtons]="true" [usuario]="usuario"></app-navbar>
-
-<div class="container">
+<app-spinner [showSpinner]="loading"></app-spinner>
+<div class="container card mt-5" style="max-height: 1200px;">
     <!-- Filtro -->
-    <div style="text-align: center;" class="mt-5">
+    <div style="text-align: center;" class="">
         <br>
-        <h4 for="fecha">Filtrar</h4>
-        <input name="filtro" [(ngModel)]="filtro" class="form-control"/>
+        <h4 for="fecha">Filtrar Turnos</h4>
+        <input name="filtro" [(ngModel)]="filtro" class="form-control" placeholder="Ingrese el nombre de la especialidad o nombre del especialista ..."/>
     </div>
     <!-- Filtro -->
 
@@ -14,7 +14,7 @@
         <div class="col-md-4 order-md-1 mb-4">
             <br>
             <br>        
-            <h1 class="text-center" style="color: black">Turnos</h1>
+            <h4 class="text-center" style="color: black">Turnos</h4>
             <div class="list-group bg-light">
                 <button type="button" class="list-group-item btn btn-secondary" (click)="verTurno(turno)" *ngFor="let turno of turnos | filtrarTurnos:filtro">
                     <i *ngIf="turno.estado == 'pendiente'" [ngStyle]="{'color': 'rgb(180, 180, 180)'}">{{turno.especialidad}} - {{turno.dia}} de {{turno.mes}}</i>
@@ -34,7 +34,7 @@
         <!-- Detalles -->
         <div class="col-md-8 order-md-2">
             <br><br>
-            <h1 style="text-align: center;" class="mb-3">Info</h1>
+            <h4 style="text-align: center;" class="mb-3">Información</h4>
             <div class="mb-3">
                 <label for="fecha">Fecha</label>
                 <input name="mail" [(ngModel)]="fechaAux" [readonly]="true" class="form-control"/>
@@ -42,7 +42,7 @@
             <div class="row">
                 <div class="col-md-6 mb-3" *ngIf="usuario.tipo == 'paciente'">
                     <label for="fecha">Paciente</label>
-                    <input name="fecha" [(ngModel)]="pacienteNombreCompleto" [readonly]="true" class="form-control"/>
+                    <input name="fecha" [(ngModel)]="usuario.nombre" [readonly]="true" class="form-control"/>
                 </div>
                 <div class="col-md-6 mb-3" *ngIf="usuario.tipo == 'especialista'">
                     <label for="fecha">Especialista</label>
@@ -62,19 +62,19 @@
             <!-- Botones Paciente -->
             <div style="text-align: center;" *ngIf="usuario.tipo == 'paciente'">
                 <button *ngIf="estado != 'finalizado' && estado != 'cancelado' && estado != 'rechazado' && estado != ''" class="w-50 btn btn-danger" (click)="abrirPopUp('cancelar')">Cancelar turno</button> 
-                <button *ngIf="comentario != ''" (click)="abrirPopUp('reseña')" class="w-50 btn btn-primary">Ver reseña</button> 
-                <button *ngIf="estado == 'finalizado'" (click)="abrirPopUp('calificar')" class="w-50 btn btn-primary"> Calificar atención</button> 
-                <button *ngIf="comentario != '' && estado == 'finalizado'" (click)="abrirPopUp('encuesta')" class="w-50 btn btn-primary">Completar encuesta</button> 
+                <button *ngIf="comentario != ''" (click)="abrirPopUp('reseña')" class="w-30 btn btn-primary calificadores">Ver reseña</button> 
+                <button *ngIf="estado == 'finalizado'" (click)="abrirPopUp('calificar')" class="w-30 btn btn-primary calificadores"> Calificar atención</button> 
+                <button *ngIf="comentario != '' && estado == 'finalizado'" (click)="abrirPopUp('encuesta')" class="w-30 btn btn-primary calificadores">Completar encuesta</button> 
                 <br>
             </div>
             <!-- Botones Paciente -->
 
             <!-- Botones Especialista -->
             <div style="text-align: center;" *ngIf="usuario.tipo == 'especialista'">
-                <button *ngIf="estado != 'aceptado' && estado != 'rechazado' && estado != 'finalizado' && estado != 'cancelado' && estado != ''" class="w-50 btn btn-primary" (click)="modificarTurnoSinComentario('aceptado')">Aceptar turno</button> 
+                <button *ngIf="estado != 'aceptado' && estado != 'rechazado' && estado != 'finalizado' && estado != 'cancelado' && estado != ''" class="w-30 btn btn-primary calificadores" (click)="modificarTurnoSinComentario('aceptado')">Aceptar turno</button> 
                 <button *ngIf="estado == 'aceptado'" class="w-50 btn btn-success" (click)="abrirPopUp('finalizado')">Finalizar turno</button> 
-                <button *ngIf="estado != 'aceptado' && estado != 'rechazado' && estado != 'finalizado' && estado != 'cancelado' && estado != ''" class="w-50 btn btn-warning" (click)="abrirPopUp('rechazar')">Rechazar turno</button> 
-                <button *ngIf="estado != 'aceptado' && estado != 'rechazado' && estado != 'finalizado' && estado != 'cancelado' && estado != ''" class="w-50 btn btn-warning" (click)="abrirPopUp('cancelar')">Cancelar turno</button> 
+                <button *ngIf="estado != 'aceptado' && estado != 'rechazado' && estado != 'finalizado' && estado != 'cancelado' && estado != ''" class="w-30 btn btn-warning calificadores" (click)="abrirPopUp('rechazar')">Rechazar turno</button> 
+                <button *ngIf="estado != 'aceptado' && estado != 'rechazado' && estado != 'finalizado' && estado != 'cancelado' && estado != ''" class="w-30 btn btn-danger calificadores" (click)="abrirPopUp('cancelar')">Cancelar turno</button> 
                 <button *ngIf="comentario != ''" (click)="abrirPopUp('reseña')" class="w-50 btn btn-primary">Ver reseña</button> 
                 <br>
             </div>
@@ -96,7 +96,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content text-bg-dark" style="text-align: center;">
             <!-- cancelar -->
-            <div *ngIf="popUpRazon == 'cancelar'">
+            <div class="card-color" *ngIf="popUpRazon == 'cancelar'">
                 <br>
                 <h1>Cancelar turno</h1>
                 <br>
@@ -111,7 +111,7 @@
             <!-- cancelar -->
 
             <!-- rechazar -->
-            <div *ngIf="popUpRazon == 'rechazar'">
+            <div class="card-color" *ngIf="popUpRazon == 'rechazar'">
                 <br>
                 <h1>Rechazar turno</h1>
                 <br>
@@ -126,7 +126,7 @@
             <!-- rechazar -->
 
             <!-- reseña -->
-            <div *ngIf="popUpRazon == 'reseña'">
+            <div class="card-color" *ngIf="popUpRazon == 'reseña'">
                 <br>
                 <h1>Reseña</h1>
                 {{comentario}}
@@ -140,7 +140,7 @@
             <!-- reseña -->
 
             <!-- finalizado -->
-            <div *ngIf="popUpRazon == 'finalizado'">
+            <div class="card-color" *ngIf="popUpRazon == 'finalizado'">
                 <br>
                 <h1>Finalizado</h1>
                 <div class="row">
@@ -193,7 +193,7 @@
             <!-- finalizado -->
 
             <!-- Calificar -->
-            <div *ngIf="popUpRazon == 'calificar'">
+            <div class="card-color" *ngIf="popUpRazon == 'calificar'">
                 <br>
                 <h1>Calificar atención</h1>
                 <div style="font-size: 40px" class="star-wrapper">
@@ -217,16 +217,16 @@
             <!-- Calificar -->
 
             <!-- encuesta -->
-            <div *ngIf="popUpRazon == 'encuesta'">
+            <div class="card-color" *ngIf="popUpRazon == 'encuesta'">
             <br>
             <h1>Encuesta</h1>
-            <label for="fecha">¿Como lo trató el medico?</label>
+            <label for="fecha">¿Como calficas la atención recibida?</label>
             <input name="mail" [(ngModel)]="preguntas[0]" class="w-75 form-control" style="margin: 0 auto; float: none;"/>
             <br>
-            <label for="fecha">¿En que podriamos mejorar?</label>
+            <label for="fecha">¿Qué mejoras crees que podriamos realizar?</label>
             <input name="mail" [(ngModel)]="preguntas[1]" class="w-75 form-control" style="margin: 0 auto; float: none;"/>
             <br>
-            <label for="fecha">¿Volveria?</label>
+            <label for="fecha">¿Recomendarias nuestra clinica?</label>
             <input name="mail" [(ngModel)]="preguntas[2]" class="w-75 form-control" style="margin: 0 auto; float: none;"/>
             <br>
             <button class="btn btn-secondary" style="margin: 0 auto; float: none;" (click)="cerrarPopUp()">Completar encuesta</button> 

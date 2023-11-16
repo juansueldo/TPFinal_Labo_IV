@@ -42,6 +42,7 @@ import { MisTurnosComponent } from './pages/mis-turnos/mis-turnos.component';
 import { SolicitarTurnoComponent } from './pages/solicitar-turno/solicitar-turno.component';
 import {BsDropdownConfig  } from 'ngx-bootstrap/dropdown';
 import { BsDropdownModule  } from 'ngx-bootstrap/dropdown';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { MiPerfilComponent } from './pages/mi-perfil/mi-perfil.component';
 import { DiaStringPipe } from './pipes/dia-string.pipe';
 @NgModule({
@@ -87,7 +88,8 @@ import { DiaStringPipe } from './pipes/dia-string.pipe';
     NgxCaptchaModule,
     HttpClientModule,
     CommonModule,
-    BsDropdownModule.forRoot()
+    BsDropdownModule.forRoot(),
+    ModalModule.forRoot(),
   ],
   providers: [BsDropdownConfig,{ provide: FIREBASE_OPTIONS, useValue: environment }],
   bootstrap: [AppComponent]

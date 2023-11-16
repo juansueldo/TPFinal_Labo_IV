@@ -8,6 +8,7 @@ import { DataService } from 'src/app/services/data.service';
 import { EspecialidadesService } from 'src/app/services/especialidades.service';
 import { TurnosService } from 'src/app/services/turnos.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
+declare var window: any;
 
 @Component({
   selector: 'app-mis-turnos',
@@ -17,6 +18,8 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 export class MisTurnosComponent {
   usuario:any;
   turnos:Turno[] = [];
+  email: string;
+  loading = true;
   // turnosFiltrados:Turno[] = [];
   // turnosFiltrados$:Subject<Turno[]>;
   turnoElegido:Turno;
@@ -60,37 +63,46 @@ export class MisTurnosComponent {
 
   ngOnInit(): void {
     // this.turnosFiltrados$ = new Subject();
-    this.usuario = this.usuarioService.getUsuario();
+    setTimeout(()=>{
+      this.loading = false;
+    },2500);
     this.especialidadesService.obtenerEspecialidades().subscribe(esp => {
       this.especialidades = (esp as any[]).map(e => e.nombre);
-      console.log(this.especialidades );
     });
     
     this.data.getTurnosDB().subscribe(turnos => {
-      console.log(turnos);
+     
       this.especialistas = this.usuarioService.especialistas;
       this.pacientes = this.usuarioService.pacientes;
+      this.cargarUsuario();
       this.turnos = [];
       this.tipo = this.usuario.tipo;
-      if(this.usuario.tipo != "admin"){
+      this.email = this.usuario.email;
+      if(this.usuario.tipo !== "admin"){
         turnos.forEach(turno => {
-          if(this.usuario.tipo == "paciente" && turno.paciente == this.usuario.email){
+          console.log(turno.paciente);
+          if(this.tipo === "paciente" && turno.paciente === this.email){
             this.turnos.push(turno);
-            console.log(this.turnos);
+           
           }
-          else if(this.usuario.tipo == "especialista" && turno.especialista == this.usuario.email){
+          else if(this.usuario.tipo === "especialista" && turno.especialista === this.email){
             this.turnos.push(turno);
           }
         });
       }
       else{
         this.turnos = turnos;
-        console.log(this.turnos);
       }
       //this.ordernarListaTurnos();
       
     });
-    //console.log(this.turnos);
+    this.formModal = new window.bootstrap.Modal(
+      document.getElementById('cancelarTurno')
+    );
+    
+  }
+  cargarUsuario() {
+    this.usuario = this.usuarioService.getUsuario();
   }
 
   verTurno(turno:Turno){

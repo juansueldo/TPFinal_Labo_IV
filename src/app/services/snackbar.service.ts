@@ -6,10 +6,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class SnackbarService {
 
   constructor(private snackBar: MatSnackBar) { }
-  showSnackBar(message: string, buttonText: string, duration: number){
+  showSnackBar(message: string, buttonText: string, duration: number, isSuccess: boolean){
     let sb = this.snackBar.open(message, buttonText, {
       duration: 3000 | duration,
-      panelClass:'error-alert-snackbar'
+      panelClass:isSuccess ? 'snackbar-success' : 'snackbar-error'
     });
     sb.onAction().subscribe(() => {
       sb.dismiss();

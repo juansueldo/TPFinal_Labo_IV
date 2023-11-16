@@ -81,13 +81,9 @@ export class LoginComponent {
       console.log(user);
         this.alerta = `Bienvenido ${this.email.value}`;
         //this.auth.saveLog(this.email);
-        this.snackBar.showSnackBar(this.alerta, 'cerrar', 5000);
+        this.snackBar.showSnackBar(this.alerta, 'cerrar', 5000, true);
         if(this.auth.autha.currentUser.emailVerified){
-          if(user.tipo === 'especialista' && user.estados.registro == Registro.aceptado){
-            this.usuariosService.setUsuario(user.tipo, user);
-            this.router.navigate(['/mi-perfil']);
-          }
-          else if(user.tipo === 'paciente'){
+          if(user.tipo === 'paciente'){
             this.usuariosService.setUsuario(user.tipo, user);
             this.router.navigate(['/mi-perfil']);
           }
@@ -95,12 +91,22 @@ export class LoginComponent {
             this.usuariosService.setUsuario(user.tipo, user);
             this.router.navigate(['/seccion-usuarios']);
           }
-          else{
-            this.snackBar.showSnackBar('error', 'cerrar', 5000);
+          else if(user.tipo === 'especialista'){
+            if(user.estados.registro == Registro.aceptado){
+              this.usuariosService.setUsuario(user.tipo, user);
+              this.router.navigate(['/mi-perfil']);
+            }
+            else{
+              this.snackBar.showSnackBar('Su cuenta esta pendiente de aprobación', 'cerrar', 5000, false);
+            }
           }
+          else{
+            this.snackBar.showSnackBar('Ocurrió un error al ingresar, intente nuevamente', 'cerrar', 5000, false);
+          }
+         
         }
         else{
-          this.snackBar.showSnackBar('Debe confirmar su cuenta.', 'cerrar', 5000);
+          this.snackBar.showSnackBar('Debe confirmar su cuenta.', 'cerrar', 5000, false);
         }
        
         
@@ -115,12 +121,12 @@ export class LoginComponent {
           this.alerta = "Usuario incorrecto vuelva a intentar";
         }
         if(error.message === "Firebase: Error (auth/invalid-login-credentials)."){
-          this.alerta = "Usuario invalido";
+          this.alerta = "Usuario y/o contraseña inválida";
         }
         if(error.message === "Firebase: Error (auth/network-request-failed)."){
           this.alerta = "Debe validar su cuenta";
         }
-        this.snackBar.showSnackBar(this.alerta, 'cerrar', 5000);
+        this.snackBar.showSnackBar(this.alerta, 'cerrar', 5000, false);
       })
   }
   get email() {
