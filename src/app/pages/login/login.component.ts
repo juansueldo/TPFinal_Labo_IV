@@ -70,6 +70,7 @@ export class LoginComponent {
   }
   onSubmit(){
     if (this.formLogin.invalid){
+      this.snackBar.showSnackBar("Debe completar los datos", 'cerrar', 5000, false);
       return;
     }
       this.hide = true;
@@ -79,7 +80,7 @@ export class LoginComponent {
       
       let user =  this.usuariosService.buscarUsuarioPorMail(this.email.value);
       console.log(user);
-        this.alerta = `Bienvenido ${this.email.value}`;
+        this.alerta = `Bienvenido ${user.nombre} ${user.apellido}`;
         //this.auth.saveLog(this.email);
         this.snackBar.showSnackBar(this.alerta, 'cerrar', 5000, true);
         if(this.auth.autha.currentUser.emailVerified){
