@@ -61,7 +61,7 @@
             <br><br><br>
             <!-- Botones Paciente -->
             <div style="text-align: center;" *ngIf="usuario.tipo == 'paciente'">
-                <button *ngIf="estado != 'finalizado' && estado != 'cancelado' && estado != 'rechazado' && estado != ''" class="w-50 btn btn-warning" (click)="abrirPopUp('cancelar')">Cancelar turno</button> 
+                <button *ngIf="estado != 'finalizado' && estado != 'cancelado' && estado != 'rechazado' && estado != ''" class="w-50 btn btn-danger" (click)="abrirPopUp('cancelar')">Cancelar turno</button> 
                 <button *ngIf="comentario != ''" (click)="abrirPopUp('reseña')" class="w-50 btn btn-primary">Ver reseña</button> 
                 <button *ngIf="estado == 'finalizado'" (click)="abrirPopUp('calificar')" class="w-50 btn btn-primary"> Calificar atención</button> 
                 <button *ngIf="comentario != '' && estado == 'finalizado'" (click)="abrirPopUp('encuesta')" class="w-50 btn btn-primary">Completar encuesta</button> 
