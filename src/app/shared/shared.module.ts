@@ -5,10 +5,12 @@ import { FormsModule } from '@angular/forms';
 import { CustomInputComponent } from '../components/custom-input/custom-input.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
+
 import { ListadoEspecialistasComponent } from '../components/listado-especialistas/listado-especialistas.component';
 import { ListadoPacientesComponent } from '../components/listado-pacientes/listado-pacientes.component';
 import { CardPacienteComponent } from '../components/card-paciente/card-paciente.component';
 import { CardEspecialistaComponent } from '../components/card-especialista/card-especialista.component';
+
 
 @NgModule({
   declarations: [
@@ -17,6 +19,7 @@ import { CardEspecialistaComponent } from '../components/card-especialista/card-
     ListadoEspecialistasComponent,
     ListadoPacientesComponent,
     CardEspecialistaComponent,
+    
   ],
   exports: [
     CustomInputComponent,
@@ -24,7 +27,9 @@ import { CardEspecialistaComponent } from '../components/card-especialista/card-
     CardEspecialistaComponent,
     ListadoEspecialistasComponent,
     ListadoPacientesComponent,
+    
   ],
+  providers:[],
   imports: [ReactiveFormsModule,CommonModule,FormsModule],
 })
 export class SharedModule { }

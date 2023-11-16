@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
+import { CommonModule } from '@angular/common';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
@@ -40,7 +40,10 @@ import { FiltrarTurnosPipe } from './pipes/filtrar-turnos.pipe';
 import { SeccionUsuariosComponent } from './pages/seccion-usuarios/seccion-usuarios.component';
 import { MisTurnosComponent } from './pages/mis-turnos/mis-turnos.component';
 import { SolicitarTurnoComponent } from './pages/solicitar-turno/solicitar-turno.component';
-
+import {BsDropdownConfig  } from 'ngx-bootstrap/dropdown';
+import { BsDropdownModule  } from 'ngx-bootstrap/dropdown';
+import { MiPerfilComponent } from './pages/mi-perfil/mi-perfil.component';
+import { DiaStringPipe } from './pipes/dia-string.pipe';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,7 +65,8 @@ import { SolicitarTurnoComponent } from './pages/solicitar-turno/solicitar-turno
     SeccionUsuariosComponent,
     MisTurnosComponent,
     SolicitarTurnoComponent,
-    
+    MiPerfilComponent,
+    DiaStringPipe
 
   ],
   imports: [
@@ -81,9 +85,11 @@ import { SolicitarTurnoComponent } from './pages/solicitar-turno/solicitar-turno
     BrowserAnimationsModule,
     FormsModule,
     NgxCaptchaModule,
-    HttpClientModule
+    HttpClientModule,
+    CommonModule,
+    BsDropdownModule.forRoot()
   ],
-  providers: [{ provide: FIREBASE_OPTIONS, useValue: environment }],
+  providers: [BsDropdownConfig,{ provide: FIREBASE_OPTIONS, useValue: environment }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

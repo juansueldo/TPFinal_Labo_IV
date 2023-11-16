@@ -1,41 +1,77 @@
 <app-navbar [showButtons]="true" [usuario]="user"></app-navbar>
 <app-spinner [showSpinner]="hide"></app-spinner>
-<div class="container">
-  <div class="center-content">
-    <img src="../../../../assets/logo.png" alt="">
-    <br>
-    <a class="header__navbar__logo">On<span class="header__navbar__logo__span--green" id="color">Line</span></a>
-    <h2>Ingrese con su cuenta</h2>
-    <form (submit)="onSubmit()" [formGroup]="formLogin">
-      <div class="row">
-        <div class="col-md-12">
-  
-          <app-custom-input class="form-control {{email.errors ? 'is-invalid': ''}}" divClass="mb-4" label="Email"
-            controlName="email" type="mail">
-            <small class="invalid-feedback">Email invalido (solo letras)</small>
-          </app-custom-input>
-  
-          <app-custom-input class="form-control {{clave.errors ? 'is-invalid': ''}}" divClass="mb-4" label="Clave"
-            controlName="clave" type="password">
-            <small class="invalid-feedback">Clave invalida</small>
-          </app-custom-input>
+<div class="container-fluid">
+  <div class="row">
+    <!-- Columna del formulario de login -->
+    <div class="col-md-6 mt-5">
+      <div class="mt-5">
+        <img src="../../../../assets/logo.png" alt="">
+        <br>
+        <a class="header__navbar__logo">On<span class="header__navbar__logo__span--green" id="color">Line</span></a>
+        <h2>Ingrese con su cuenta</h2>
+        <form (submit)="onSubmit()" [formGroup]="formLogin">
+          <div class="row">
+            <div class="col-md-12">
+              <app-custom-input class="form-control {{email.errors ? 'is-invalid': ''}}" divClass="mb-4" label="Email"
+                controlName="email" type="mail">
+                <small class="invalid-feedback">Email invalido (solo letras)</small>
+              </app-custom-input>
+
+              <app-custom-input class="form-control {{clave.errors ? 'is-invalid': ''}}" divClass="mb-4" label="Clave"
+                controlName="clave" type="password">
+                <small class="invalid-feedback">Clave invalida</small>
+              </app-custom-input>
+            </div>
+          </div>
+          <button class="btn btn-primary position">Enviar</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Columna de botones de acceso rápido -->
+    <div class="col-md-6">
+      <div class="center-content">
+        <h2>Acceso Rápido</h2>
+        <div class="row">
+          <!-- Botones para usuarios -->
+          
+            <div class="card">
+              <button class="btn btn-success btn-block" (click)="autoComplete('juan.sueldo1989@gmail.com','123456')">
+                <img class="foto" src="{{mostrarFoto('gregoryhouse597@gmail.com')}}" alt="">
+              </button>
+            
+          
+            
+              <button class="btn btn-success btn-block" (click)="autoComplete('juan.sueldo1989@gmail.com','123456')">
+                <img class="foto" src="{{mostrarFoto('gregoryhouse597@gmail.com')}}" alt="">
+              </button>
+          
+         
+          
+              <button class="btn btn-success btn-block" (click)="autoComplete('juan.sueldo1989@gmail.com','123456')">
+                <img class="foto" src="{{mostrarFoto('gregoryhouse597@gmail.com')}}" alt="">
+              </button>
+            </div>
+          
+
+          <!-- Botones para especialistas -->
+          <div class="col-md-6 mb-4">
+            <button class="btn btn-info btn-block">Especialista 1</button>
+          </div>
+          <div class="col-md-6 mb-4">
+            <button class="btn btn-info btn-block">Especialista 2</button>
+          </div>
+
+          <!-- Botón para administrador -->
+          <div class="col-md-12">
+            <button class="btn btn-danger btn-block">Administrador</button>
+          </div>
         </div>
       </div>
-      <button  class="btn btn-primary position">Enviar</button>
-      <div class="container-autologin mt-3">
-        <span class="btn btn-primary btn-sm rounded-circle" (click)="autoComplete('juan.sueldo1989@gmail.com','123456')" >
-            <i class="fa-solid fa-user"></i>
-        </span>
-        <span class="btn btn-danger btn-sm rounded-circle" (click)="autoComplete('gregoryhouse597@gmail.com','123456')">
-            <i class="fa-solid fa-user"></i>
-        </span>
-        <span class="btn btn-success btn-sm rounded-circle" (click)="autoComplete('comiendoconprogramadores@gmail.com','123456')">
-            <i class="fa-solid fa-user"></i>
-        </span>
-      </div>
-    </form>
+    </div>
   </div>
 </div>
+
 
 
   

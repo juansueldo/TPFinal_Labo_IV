@@ -1,6 +1,6 @@
 export class HorarioEspecialista {
     id:string;
-    mail:string;
+    email:string;
     lunInicio:string;
     lunFin:string;
     marInicio:string;
@@ -16,9 +16,9 @@ export class HorarioEspecialista {
     estados:string[];
     especialidadesPorDia:string[];
 
-    constructor(id:string,mail:string){
+    constructor(id:string,email:string){
         this.id = id;
-        this.mail = mail;
+        this.email = email;
         this.lunInicio = "8:00";
         this.lunFin = "19:00";
         this.marInicio = "8:00";

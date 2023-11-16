@@ -1,7 +1,7 @@
 <app-navbar [showButtons]="true" [usuario]="user"></app-navbar>
-<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-    <div class="modal-content text-bg-dark mt-5" style="text-align: center;">
-    <div class="modal modal-sheet position-static d-block p-4 py-md-5" tabindex="-1" role="dialog" id="modalSignin">
+<div class="h-100" style="text-align: center;">
+   <div class="container-fluid contenedor p-4 mt-5">
+      <div class="card">
              <h1 *ngIf="etapa != 'confirmar' && etapa != 'fin'">Solicitar Turno</h1>
     
              <br>
@@ -18,46 +18,52 @@
              <p *ngIf="especialidades.length == 0"><br>No se encuentran especialistas con esta especialidad <br>Elija otra por favor</p>
              <br><br>
              <div style="text-align: right;">
-                <button class="btn btn-warning" (click)="volver('especialista')">Volver</button> 
+                <button class="btn btn-success" (click)="volver('especialista')">Volver</button> 
              </div>
              </div>
             <!-- Dropdown especialidades-->
     
              <!-- Dropdown especialistas -->
              <div class="form-floating mb-3" *ngIf="etapa == 'especialista'">
-             <h4>Especialista</h4>
-             <div *ngFor="let esp of especialistas">
-                <div class="container">
-                <img class="imagen-especialista" src="{{esp.img_1}}" height="100px" width="100px" alt="{{esp.apellido}}">
-                <ul *ngFor="let epecialidad of esp.especialidades">
-                  <li>{{epecialidad}}</li>
-                </ul>
-                <div class="overlay imagenBoton">
-                   <div (click)="elegirEspecialista(esp.nombre, esp.apellido)" class="btn btn-primary text">{{esp.nombre + ' ' + esp.apellido}}</div>
-                </div>
-                </div>
-             </div>
+               <h4>Especialista</h4>
+               <div class="row">
+                 <div *ngFor="let esp of especialistas" class="col-md-2 mb-3">
+                   <div class="container">
+                     <img class="imagen-especialista" src="{{esp.img_1}}" height="100px" width="100px" alt="{{esp.apellido}}">
+                     <div class="overlay btn-especialista">
+                        <div (click)="elegirEspecialista(esp.nombre, esp.apellido)" class="btn btn-primary text">{{esp.nombre + ' ' + esp.apellido}}</div>
+                      </div>
+                        <h5 class="card-text"><span>Especialidades:</span> {{ esp.especialidades.join(', ') }}</h5>
+                     
+                   </div>
+                 </div>
+               </div>
              </div>
              <!-- Dropdown especialistas-->
     
              <!-- HORARIOS DISPONIBLES -->
-             <div class="modal-content rounded-4 shadow" *ngIf="etapa == 'horario'">  
-                <div class="modal-body p-5 pt-0">
-                   <br>   
-                   <div style="text-align: right; color:black;">
-                      {{diaString}} {{dia}} de {{mes}}
-                      <button class="btn" [ngClass]="{'btn-primary': restarDia, 'btn-secondary': !restarDia}" (click)="cambiarDia('antes')"><</button> 
-                      <button class="btn" [ngClass]="{'btn-primary': sumarDia, 'btn-secondary': !sumarDia}" (click)="cambiarDia('despues')">></button> 
+             <div class="modal-content rounded-4 shadow"style="text-align: center; max-width: 1250px;max-height: 600px; margin: 0 auto;"  *ngIf="etapa == 'horario'">  
+               <div class="modal-body p-5 pt-0">
+                 <br>   
+                 <div style="text-align: right;">
+                   {{diaString}} {{dia}} de {{mes}}
+                   <button class="btn" [ngClass]="{'btn-primary': restarDia, 'btn-secondary': !restarDia}" (click)="sumarRestarDias('antes')"><</button> 
+                   <button class="btn" [ngClass]="{'btn-primary': sumarDia, 'btn-secondary': !sumarDia}" (click)="sumarRestarDias('despues')">></button> 
+                 </div>
+                 <br>
+                 <div class="table">
+                   <h4 style="text-align: center;">Horarios disponibles</h4>
+             
+                   <div class="row">
+                     <h3>{{noHayDatos}}</h3>
+                     <div class="col-2" *ngFor="let horario of horariosDisponiblesOtroFormato; let i=index">
+                       <button type="button" class="btn btn-success horarios" (click)="elegirHorario(horario)">{{horario}}</button>
+                     </div>
                    </div>
-                   <br>
-                   <div class="table">
-                      <h4 style="text-align: center; color:black;">Horarios disponibles</h4>
-                      <div *ngFor="let horario of horariosDisponiblesOtroFormato; let i=index">
-                         <button type="button" class="horarioBoton" (click)="elegirHorario(horario)">{{horario}}</button>
-                      </div>
-                   </div>
-                   <button class="btn btn-warning" (click)="volver('especialidad')">Volver</button> 
-                </div>
+             
+                 </div>
+                 <button class="btn btn-primary" (click)="volver('especialidad')">Volver</button> 
+               </div>
              </div>
              <!-- HORARIOS DISPONIBLES -->
     
@@ -77,7 +83,7 @@
                 <button class="btn btn-success" (click)="confirmar()" >Confirmar</button> 
                 <br><br>
                 <div style="text-align: right;">
-                   <button class="btn btn-warning" (click)="volver('horario')" >Volver</button> 
+                   <button class="btn btn-primary" (click)="volver('horario')" >Volver</button> 
                 </div>
                 </div>
                 <!-- Confirmar turno-->
@@ -87,9 +93,10 @@
                 <h1>Turno Solicitado</h1>
                 <p>Ir a mis turnos</p>
                 <br><br>
-                   <button class="btn btn-warning" (click)="volver('irMisTurno')" >Mis Turnos</button> 
+                   <button class="btn btn-success" (click)="volver('irMisTurno')" >Mis Turnos</button> 
                 </div>
                 <!-- Turno Solicitado-->
+               </div>
           </div>
-       </div>
-    </div>
+         </div>
+   

@@ -85,11 +85,11 @@ export class LoginComponent {
         if(this.auth.autha.currentUser.emailVerified){
           if(user.tipo === 'especialista' && user.estados.registro == Registro.aceptado){
             this.usuariosService.setUsuario(user.tipo, user);
-            this.router.navigate(['/seccion-usuarios']);
+            this.router.navigate(['/mi-perfil']);
           }
           else if(user.tipo === 'paciente'){
             this.usuariosService.setUsuario(user.tipo, user);
-            this.router.navigate(['/seccion-usuarios']);
+            this.router.navigate(['/mi-perfil']);
           }
           else if(user.tipo === 'admin'){
             this.usuariosService.setUsuario(user.tipo, user);
@@ -135,5 +135,7 @@ export class LoginComponent {
       clave: clave
     });
   }
-
+  mostrarFoto(email: string){
+    return this.usuariosService.buscarUsuarioPorMail(email).img_1;
+  }
 }

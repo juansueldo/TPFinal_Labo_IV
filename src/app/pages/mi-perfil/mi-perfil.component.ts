@@ -1,22 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
-//import { PdfMakeWrapper, Img, Txt } from 'pdfmake-wrapper';
+import { PdfMakeWrapper, Img, Txt } from 'pdfmake-wrapper';
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import { HorarioEspecialista } from 'src/app/models/horario-especialista.models';
 import { EspecialidadesService } from 'src/app/services/especialidades.service';
 import { HorariosEspecialistaService } from 'src/app/services/horarios-especialista.service';
 import { HistoriaClinica } from 'src/app/models/historiaclinica.models';
+import { NgZone } from '@angular/core';
 declare var window: any;
 @Component({
   selector: 'app-mi-perfil',
   templateUrl: './mi-perfil.component.html',
   styleUrls: ['./mi-perfil.component.scss']
 })
-export class MiPerfilComponent {
+export class MiPerfilComponent implements OnInit{
   // USUARIO 
   usuario:any;
-  mail = "";
+  mostrar = false;
+  email = "";
   nombreCompleto = "";
   edad:number;
   dni:string;
@@ -28,7 +30,7 @@ export class MiPerfilComponent {
   especialidadesPorDia:string[] = [];
   formModal: any;
   formModalPdf: any;
-  disponibilidades = ["","","","","",""];
+  disponibilidades = ["Habilitado","Habilitado","Habilitado","Habilitado","Habilitado","Habilitado"];
   especialidadPDFseleccionada = "";
 
   diasDisponibles = [{dia:"Lunes", ini: "", fin: ""},{dia:"Martes", ini: "", fin: ""},{dia:"Miercoles", ini: "", fin: ""},
@@ -40,21 +42,17 @@ export class MiPerfilComponent {
   constructor(private usuarioService:UsuariosService,
     private data:DataService, 
     private especialidadesService: EspecialidadesService,
-    private horarioEspecialistaService: HorariosEspecialistaService) {}
+    private horarioEspecialistaService: HorariosEspecialistaService,) {}
 
   ngOnInit(): void {
-    this.formModal = new window.bootstrap.Modal(
-      document.getElementById('MiModal')
-    );
-    this.formModalPdf = new window.bootstrap.Modal(
-      document.getElementById('pdfModal')
-    );
+    
    
     this.usuario = this.usuarioService.getUsuario();
     
     this.horarioEspecialistaService.getHorarioEspecialistas().subscribe(horario => {
       horario.forEach(hor => {
-        if(this.usuario.mail == hor.mail){
+        console.log(hor);
+        if(this.usuario.email == hor.email){
           this.horariosEspecialista = hor;
           this.disponibilidades = this.horariosEspecialista.estados;
           this.especialidadesPorDia = this.horariosEspecialista.especialidadesPorDia;
@@ -63,22 +61,40 @@ export class MiPerfilComponent {
       });
     });
     this.especialidadesService.obtenerEspecialidades().subscribe(esp => {
-      this.especialidadesDisponibles = [];
-      esp.forEach(e => {
-
-        this.especialidadesDisponibles.push(e[0].nombre);
-      });
+      this.especialidadesDisponibles = (esp as any[]).map(e => e.nombre);
     });
+    
     this.data.getHistoriaDB().subscribe(historias => {
       this.historias = historias;
     });
+    console.log(this.usuario);
   }
-
+  
   ngAfterViewInit() {
     this.usuario = this.usuarioService.getUsuario();
     this.completarCampos();
   }
-  
+  completarCampos(){
+    this.email = this.usuario.email;
+    this.nombreCompleto = this.usuario.nombre + " " + this.usuario.apellido;
+    this.edad = this.usuario.edad;
+    this.dni = this.usuario.dni;
+    this.tipo = this.usuario.tipo;
+    if(this.tipo == 'paciente'){
+      this.imagenes[0] = this.usuario.img_1;
+      this.imagenes[1] = this.usuario.img_2;
+      this.obraSocial = this.usuario.obraSocial;
+    }
+    else if(this.tipo == 'especialista'){
+      this.especialidades = this.usuario.especialidades;
+      // this.especialidadesAux = [this.especialidades[0],this.especialidades[0],
+      //   this.especialidades[0],this.especialidades[0],this.especialidades[0],this.especialidades[0]];
+      this.imagenes[0] = this.usuario.img_1;
+    }
+    else{
+      this.imagenes[0] = this.usuario.img_1;
+    }
+  }
 
   cargarHorarios(horario:HorarioEspecialista){
     this.diasDisponibles[0].ini = horario.lunInicio;
@@ -104,7 +120,7 @@ export class MiPerfilComponent {
   }
 
   async imprimirPdf(){
-    /*this.formModalPdf.hide();
+    this.formModalPdf.hide();
     //PdfMakeWrapper.setFonts(pdfFonts);
     const pdf = new PdfMakeWrapper();
     const logo = await (new Img('../../../asssets/logo.png'));
@@ -133,7 +149,7 @@ export class MiPerfilComponent {
     });
     // pdf.create().download("archivoRePiola");
     pdf.create().open();
-    this.especialidadPDFseleccionada = "";*/
+    this.especialidadPDFseleccionada = "";
   }
 
   cambiarHorario(dia:string,tipo:string,horario:string){
@@ -235,30 +251,8 @@ export class MiPerfilComponent {
     }
   }
 
-  completarCampos(){
-    this.mail = this.usuario.email;
-    this.nombreCompleto = this.usuario.nombre + " " + this.usuario.apellido;
-    this.edad = this.usuario.edad;
-    this.dni = this.usuario.dni;
-    this.tipo = this.usuario.tipo;
-    if(this.tipo == 'paciente'){
-      this.imagenes[0] = this.usuario.img_1;
-      this.imagenes[1] = this.usuario.img_2;
-      this.obraSocial = this.usuario.obraSocial;
-    }
-    else if(this.tipo == 'especialista'){
-      this.especialidades = this.usuario.especialidades;
-      // this.especialidadesAux = [this.especialidades[0],this.especialidades[0],
-      //   this.especialidades[0],this.especialidades[0],this.especialidades[0],this.especialidades[0]];
-      this.imagenes[0] = this.usuario.img_1;
-    }
-    else{
-      this.imagenes[0] = this.usuario.imagen;
-    }
-  }
-
   abrirMisHorarios(){
-    this.formModal.show();
+    this.mostrar = true;
   }
 
   actualizarHorarioEspecialista(){
@@ -279,6 +273,6 @@ export class MiPerfilComponent {
   cerrarModulo(){
     this.actualizarHorarioEspecialista();
     this.horarioEspecialistaService.updateHorarioEspecialistas(this.horariosEspecialista);
-    this.formModal.hide();
+    this.mostrar = false;
   }
 }

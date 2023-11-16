@@ -34,6 +34,8 @@ export class FormAltaComponent {
   usuario: any;
   obraSocial: string = "PAMI";
   nombreCompleto: string;
+  siteKey ="6Le3n_4oAAAAAEozPISTi3Q3j3INt2opcWvlfW7-";
+  captachaAceptado = false;
   constructor(
     private img: ImgService, 
     private especialistasService: EspecialistasService,
@@ -266,6 +268,7 @@ validateEmptyInputs() {
       });
     }
   }
+  resultadoCaptcha(resultado:any){
+    this.captachaAceptado = true;
+  }
 }
-
-

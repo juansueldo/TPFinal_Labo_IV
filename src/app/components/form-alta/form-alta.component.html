@@ -1,68 +1,72 @@
 <form (submit)="onSubmit()" [formGroup]="form">
-    <div class="row">
-      <div class="col-md-6">
-        <!-- COMUN A TODOS LOS USUARIOS -->
-        
-        <div class="container-names">
-          <div class="name">
-            <app-custom-input class="form-control {{nombre.errors ? 'is-invalid': ''}} left" divClass="mb-4" label="Nombre"
-              controlName="nombre" type="text">
-              <small class="invalid-feedback">Nombre inválido (solo letras)</small>
-            </app-custom-input>
-          </div>
-
-          <div class="lastname">
-            <app-custom-input class="form-control {{apellido.errors ? 'is-invalid': ''}}" divClass="mb-4" label="Apellido"
-              controlName="apellido" type="text">
-              <small class="invalid-feedback">Apellido inválido (solo letras)</small>
-            </app-custom-input>
-          </div>
-
+  <div class="row">
+    <div class="col-md-6">
+      <!-- COMUN A TODOS LOS USUARIOS -->
+      
+      <div class="container-names">
+        <div class="name">
+          <app-custom-input class="form-control {{nombre.errors ? 'is-invalid': ''}} left" divClass="mb-4" label="Nombre"
+            controlName="nombre" type="text">
+            <small class="invalid-feedback">Nombre inválido (solo letras)</small>
+          </app-custom-input>
         </div>
-  
-        <app-custom-input class="form-control {{edad.errors ? 'is-invalid': ''}}" divClass="mb-4" label="Edad"
-          controlName="edad" type="text">
-          <small class="invalid-feedback">Edad inválido (solo numeros)</small>
-        </app-custom-input>
-    
-        <app-custom-input class="form-control {{dni.errors ? 'is-invalid': ''}}" divClass="mb-4" label="DNI"
-          controlName="dni" type="text">
-          <small class="invalid-feedback">DNI inválido (solo numeros)</small>
-        </app-custom-input>
-        
-        <app-custom-input class="form-control {{email.errors ? 'is-invalid': ''}}" divClass="mb-4" label="Email"
-        controlName="email" type="mail">
-        <small class="invalid-feedback">Email inválido (solo letras)</small>
-      </app-custom-input>
 
-      <app-custom-input class="form-control {{clave.errors ? 'is-invalid': ''}}" divClass="mb-4" label="Clave"
-        controlName="clave" type="password">
-        <small class="invalid-feedback">Clave inválida</small>
-      </app-custom-input>
-      <app-custom-input class="form-control {{foto.errors ? 'is-invalid': ''}}" controlName="foto" divClass="mb-4" label="Foto de perfil" type="file" (change)="subirFoto($event)">
-        <small class="invalid-feedback">Foto Perfil</small>
-      </app-custom-input>
-      <app-captcha (captchaSuccess)="handleCaptchaSuccess($event)"></app-captcha>
+        <div class="lastname">
+          <app-custom-input class="form-control {{apellido.errors ? 'is-invalid': ''}}" divClass="mb-4" label="Apellido"
+            controlName="apellido" type="text">
+            <small class="invalid-feedback">Apellido inválido (solo letras)</small>
+          </app-custom-input>
+        </div>
+
       </div>
-      <!-- PACIENTE -->
-      <div class="col-md-6" *ngIf="tipoUsuario === 'paciente'">
-        <app-custom-input class="form-control" divClass="mb-4" label="Foto de perfil 2" type="file" (change)="subirFoto_2($event)"></app-custom-input>
-        <div class="form-floating mt-4">
-          <select class="form-select" id="floatingInputValue" (change)="handleSelected($event.target.value)">
-            <option *ngFor="let obraSocial of listadoObraSocial" [value]="obraSocial.nombre">{{ obraSocial.nombre }}</option>
-          </select>
-          <label for="floatingInputValue">Obra Social</label>
-        </div>
-     </div>
-       
+
+      <app-custom-input class="form-control {{edad.errors ? 'is-invalid': ''}}" divClass="mb-4" label="Edad"
+        controlName="edad" type="text">
+        <small class="invalid-feedback">Edad inválido (solo numeros)</small>
+      </app-custom-input>
   
-        <div class="col-md-6" *ngIf="tipoUsuario === 'especialista'">
-            <div class="container-files">
-                <app-select-especialidad [selectedItems]="espcialidadSeleccionada" (itemSelected)="handleItemSelected($event)"></app-select-especialidad> 
-            </div>
-        </div>
-     
+      <app-custom-input class="form-control {{dni.errors ? 'is-invalid': ''}}" divClass="mb-4" label="DNI"
+        controlName="dni" type="text">
+        <small class="invalid-feedback">DNI inválido (solo numeros)</small>
+      </app-custom-input>
+      
+      <app-custom-input class="form-control {{email.errors ? 'is-invalid': ''}}" divClass="mb-4" label="Email"
+      controlName="email" type="mail">
+      <small class="invalid-feedback">Email inválido (solo letras)</small>
+    </app-custom-input>
+
+    <app-custom-input class="form-control {{clave.errors ? 'is-invalid': ''}}" divClass="mb-4" label="Clave"
+      controlName="clave" type="password">
+      <small class="invalid-feedback">Clave inválida</small>
+    </app-custom-input>
+    <app-custom-input class="form-control {{foto.errors ? 'is-invalid': ''}}" controlName="foto" divClass="mb-4" label="Foto de perfil" type="file" (change)="subirFoto($event)">
+      <small class="invalid-feedback">Foto Perfil</small>
+    </app-custom-input>
+    <div class="form-floating mb-3">
+      <ngx-recaptcha2 #captchaElem
+      [siteKey]="siteKey"
+      (success)="resultadoCaptcha($event)">
+      </ngx-recaptcha2>
     </div>
-    <button type="submit" class="btn btn-primary mt-2" [disabled]="buttonDisabled">Enviar</button>
-  </form>
-  
+    </div>
+    <!-- PACIENTE -->
+    <div class="col-md-6" *ngIf="tipoUsuario === 'paciente'">
+      <app-custom-input class="form-control" divClass="mb-4" label="Foto de perfil 2" type="file" (change)="subirFoto_2($event)"></app-custom-input>
+      <div class="form-floating mt-4">
+        <select class="form-select" id="floatingInputValue" (change)="handleSelected($event.target.value)">
+          <option *ngFor="let obraSocial of listadoObraSocial" [value]="obraSocial.nombre">{{ obraSocial.nombre }}</option>
+        </select>
+        <label for="floatingInputValue">Obra Social</label>
+      </div>
+   </div>
+     
+
+      <div class="col-md-6" *ngIf="tipoUsuario === 'especialista'">
+          <div class="container-files">
+              <app-select-especialidad [selectedItems]="espcialidadSeleccionada" (itemSelected)="handleItemSelected($event)"></app-select-especialidad> 
+          </div>
+      </div>
+   
+  </div>
+  <button type="submit" class="btn btn-primary mt-2" [disabled]="!captachaAceptado">Enviar</button>
+</form>

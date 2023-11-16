@@ -27,6 +27,7 @@ export class SolicitarTurnoComponent {
   sumarDia = true;
   public loading = true;
   user = null;
+  noHayDatos = "";
 
   // HORARIOS
   horarios:string[] = ["8:00","8:30","9:00","9:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30",
@@ -67,6 +68,7 @@ export class SolicitarTurnoComponent {
     });
     this.horariosEspecialistaService.getHorarioEspecialistas().subscribe(horario => {
       this.horariosEspecialistas = horario;
+      console.log(this.horariosEspecialistas);
     });
     this.data.getTurnosDB().subscribe(turnos => {
       this.turnos = turnos;
@@ -109,7 +111,7 @@ export class SolicitarTurnoComponent {
     });
     this.especialistaElegido = this.especialistas[indice];
     this.especialistaElegidoStr = this.especialistaElegido.nombre + " " + this.especialistaElegido.apellido;
-    console.log(this.especialistaElegidoStr);
+    console.log(this.especialistaElegido );
     this.cambiarHorariosPorEspecialista();
     this.volver('especialidad');
   }
@@ -124,8 +126,11 @@ export class SolicitarTurnoComponent {
       indiceFin = this.horarios.length;
     }
     this.horariosEspecialistas.forEach(horEsp => {
-      if(horEsp.mail == this.especialistaElegido.email){
+      if(horEsp.email == this.especialistaElegido.email){
+
         this.horarios.forEach((horarios,index) => {
+          console.log(horEsp);
+          console.log(index);
           switch(this.diaString){
             case "Lunes":
               if(horarios == horEsp.lunInicio){
@@ -203,8 +208,15 @@ export class SolicitarTurnoComponent {
           });
         }
       });
+      
     let listAux = [...this.horarios];
     this.horariosDisponibles = listAux.splice(indiceIni,indiceFin-indiceIni);
+    if (this.horariosDisponibles.length === 0){
+      this.noHayDatos = "No hay turnos disponibles para el día seleccionado"
+    }else{
+      this.noHayDatos = "";
+    }
+    console.log(this.horariosDisponibles );
     this.sacarHorariosNoDisponibles();
     this.cambiarFormato();
   }
@@ -273,7 +285,7 @@ export class SolicitarTurnoComponent {
       this.etapa = "fin";
     }
     else{
-      this.router.navigateByUrl("MisTurnos");
+      this.router.navigateByUrl("mis-turnos");
     }
   }
 
@@ -281,36 +293,48 @@ export class SolicitarTurnoComponent {
     this.especialidades.sort((one, two) => (one < two ? -1 : 1));
   }
 
-  cambiarDia(cuando:string){
+  cambiarDia(cuando: string) {
+    console.log("La función cambiarDia se está ejecutando.");
     let sePuede = false;
-    if(cuando == "antes"){
-      if(this.limitarFecha("restar")){
+    this.now = new Date();
+    if (cuando == "antes") {
+      if (this.limitarFecha("restar")) {
         sePuede = true;
+        // Resta un día a la fecha actual
         this.now.setDate(this.now.getDate() - 1);
-        if(this.now.getDay() == 0){
+  
+        // Si el día resultante es domingo, resta un día adicional
+        if (this.now.getDay() == 0) {
           this.now.setDate(this.now.getDate() - 1);
         }
       }
-    }
-    else{
-      if(this.limitarFecha("sumar")){
+    } else {
+      if (this.limitarFecha("sumar")) {
         sePuede = true;
+        // Suma un día a la fecha actual
         this.now.setDate(this.now.getDate() + 1);
-        if(this.now.getDay() == 0){
+  
+        // Si el día resultante es domingo, suma un día adicional
+        if (this.now.getDay() == 0) {
           this.now.setDate(this.now.getDate() + 1);
         }
       }
     }
-    if(sePuede){
+  
+    if (sePuede) {
+      // Actualiza las variables de fecha y día de la semana
       this.dia = this.now.getDate().toString();
       this.mesNumero = this.now.getMonth();
       this.mes = this.mesNumeroToString(this.mesNumero);
       this.diaString = this.diaSemanaString(this.now.getDay());
       this.anio = this.now.getFullYear().toString();
+  console.log(this.dia);
+      // Actualiza los horarios disponibles y por especialista
       this.getHorariosDisponibles();
       this.cambiarHorariosPorEspecialista();
     }
   }
+  
 
 
   limitarFecha(sumarOrestar:string){
@@ -412,5 +436,35 @@ export class SolicitarTurnoComponent {
         break;
     }
     return mes;
+  }
+  sumarRestarDias(cuando: 'antes' | 'despues'): void {
+    const multiplicador = cuando === 'antes' ? -1 : 1;
+    const cantidadDias = 1 * multiplicador;
+
+    const fechaLimite = new Date(this.now);
+    fechaLimite.setDate(this.now.getDate() + cantidadDias);
+
+    const fechaActual = new Date();
+    const quinceDiasDespues = new Date(fechaActual);
+    quinceDiasDespues.setDate(fechaActual.getDate() + 15);
+
+    // Permite avanzar hasta 15 días adelante o retroceder siempre que no se alcance la fecha actual
+    if ((cuando === 'despues' && fechaLimite <= quinceDiasDespues) ||
+        (cuando === 'antes' && fechaLimite >= fechaActual)) {
+      this.now = fechaLimite;
+
+      this.dia = this.now.getDate().toString();
+      this.mesNumero = this.now.getMonth();
+      this.mes = this.mesNumeroToString(this.mesNumero);
+      this.anio = this.now.getFullYear().toString();
+      this.hora = this.now.getHours();
+      this.diaString = this.diaSemanaString(this.now.getDay());
+
+      
+      this.getHorariosDisponibles();
+      this.cambiarHorariosPorEspecialista();
+    } else {
+      console.error("No se puede avanzar más allá de los 15 días posteriores a la fecha actual o retroceder desde la fecha actual.");
+    }
   }
 }
