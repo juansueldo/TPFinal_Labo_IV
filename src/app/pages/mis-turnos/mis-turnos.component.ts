@@ -74,11 +74,11 @@ export class MisTurnosComponent {
       this.tipo = this.usuario.tipo;
       if(this.usuario.tipo != "admin"){
         turnos.forEach(turno => {
-          if(this.usuario.tipo == "paciente" && turno.paciente == this.usuario.mail){
+          if(this.usuario.tipo == "paciente" && turno.paciente == this.usuario.email){
             this.turnos.push(turno);
             console.log(this.turnos);
           }
-          else if(this.usuario.tipo == "especialista" && turno.especialista == this.usuario.mail){
+          else if(this.usuario.tipo == "especialista" && turno.especialista == this.usuario.email){
             this.turnos.push(turno);
           }
         });
