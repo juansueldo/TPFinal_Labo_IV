@@ -19,7 +19,7 @@
   
   
   <li>Login</li>
-  <p align="center"><img src="https://s5.gifyu.com/images/S8yNT.png" style="width: 70%"></p>
+  <p align="center"><img src="https://s5.gifyu.com/images/SRNRV.png" style="width: 70%"></p>
   <li>Sección usuarios</li>
  <p align="center"> <img src="https://s5.gifyu.com/images/S8yNh.png" style="width: 70%"></p>
  <p align="center"> <img src="https://s5.gifyu.com/images/S8yT0.png" style="width: 70%"></p>
