@@ -63,6 +63,7 @@ export class MisTurnosComponent {
     this.usuario = this.usuarioService.getUsuario();
     this.especialidadesService.obtenerEspecialidades().subscribe(esp => {
       this.especialidades = (esp as any[]).map(e => e.nombre);
+      console.log(this.especialidades );
     });
     
     this.data.getTurnosDB().subscribe(turnos => {
