@@ -1,5 +1,5 @@
 <h1 align="center">TP Final Laboratorio IV</h1>
-<p align="center"><img src="https://s6.gifyu.com/images/S8nAD.png" style="height: 150px"></p>
+<div align="center" style="text-align:center;"><a align="center" href="https://tpfinal-labo-iv.web.app/"><img src="https://s6.gifyu.com/images/S8nAD.png" style="height: 150px"></a></div>
 <h2 align="center">Clínica OnLine</h2>
 
 <h3 align="center">Sprint 1</h3>
