@@ -24,22 +24,10 @@ export class HistoriaComponent {
     if(usuario.tipo == "paciente"){
       this.paciente = usuario;
     }
-   
-      this.cargarPacientes();
-  
-
+    this.cargarPacientes();
   } 
 
-  ngAfterViewInit() {
-    let pac = undefined;
-    if(this.usuarioService.getUsuario() != undefined){
-      pac = this.usuarioService.pacientes;
-      this.cargarPacientes();
-    }
-    if(pac != undefined){
-      
-    }
-  }
+  
 
   cargarPacientes(){
     this.historias = [];
@@ -50,7 +38,7 @@ export class HistoriaComponent {
     });
     this.data.getHistoriaDB().subscribe(historias => {
       historias.forEach(historia=>{
-        if(historia.paciente == this.paciente.email){
+        if(historia.paciente === this.paciente.email){
           this.historias.push(historia);
         }
       })

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Especialista, Registro } from 'src/app/models/especialista.models';
 import { Paciente } from 'src/app/models/paciente.models';
 import { UsuariosService } from 'src/app/services/usuarios.service';
-
+import * as XLSX from 'xlsx';
 @Component({
   selector: 'app-seccion-usuarios',
   templateUrl: './seccion-usuarios.component.html',
@@ -61,5 +61,14 @@ export class SeccionUsuariosComponent {
       mostrar = "Pendiente";
     }
     return mostrar;
+  }
+ 
+
+  exportExcelPorUsuario(){
+    let element = document.getElementById('tableTurnos');
+    const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    XLSX.writeFile(wb, 'ExcelSheet.xlsx');
   }
 }

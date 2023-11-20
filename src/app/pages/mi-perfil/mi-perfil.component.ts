@@ -18,6 +18,7 @@ export class MiPerfilComponent implements OnInit{
   // USUARIO 
   usuario:any;
   mostrar = false;
+  mostrarPdf = false;
   loading = true;
   email = "";
   nombreCompleto = "";
@@ -31,6 +32,8 @@ export class MiPerfilComponent implements OnInit{
   especialidadesPorDia:string[] = [];
   formModal: any;
   formModalPdf: any;
+  popUpRazon = "";
+  historiaPaciente;
   disponibilidades = ["Habilitado","Habilitado","Habilitado","Habilitado","Habilitado","Habilitado"];
   especialidadPDFseleccionada = "";
 
@@ -46,16 +49,13 @@ export class MiPerfilComponent implements OnInit{
     private horarioEspecialistaService: HorariosEspecialistaService,) {}
 
   ngOnInit(): void {
-    
-    setTimeout(()=>{
-      this.loading = false;
-    },2500);
-    this.formModal = new window.bootstrap.Modal(
-      document.getElementById('MiModal')
-    );
     this.formModalPdf = new window.bootstrap.Modal(
       document.getElementById('pdfModal')
     );
+    setTimeout(()=>{
+      this.loading = false;
+    },2500);
+    
     this.usuario = this.usuarioService.getUsuario();
     
     this.horarioEspecialistaService.getHorarioEspecialistas().subscribe(horario => {
@@ -74,9 +74,16 @@ export class MiPerfilComponent implements OnInit{
     });
     
     this.data.getHistoriaDB().subscribe(historias => {
-      this.historias = historias;
+ 
+    historias.forEach(historia=>{
+     
+      if(this.usuario.email === historia.paciente){
+        this.historiaPaciente = historia;
+        console.log(this.historiaPaciente);
+      }
+    })
     });
-    console.log(this.usuario);
+   
   }
   
   ngAfterViewInit() {
@@ -120,7 +127,8 @@ export class MiPerfilComponent implements OnInit{
     this.diasDisponibles[5].fin = horario.sabFin;
   }
 
-  abrirPopUpFiltrarPdf(){
+  abrirPopUpFiltrarPdf(razon:string){
+    this.popUpRazon = razon;
     this.formModalPdf.show();
   }
 
@@ -129,35 +137,36 @@ export class MiPerfilComponent implements OnInit{
   }
 
   async imprimirPdf(){
-    this.formModalPdf.hide();
-    //PdfMakeWrapper.setFonts(pdfFonts);
+   // this.formModalPdf.hide();
+    PdfMakeWrapper.setFonts(pdfFonts);
     const pdf = new PdfMakeWrapper();
-    const logo = await (new Img('../../../asssets/logo.png'));
+    const logo = await new Img('../../../assets/logo.png').absolutePosition(30,20).fit([40,40]).build();
 
-    pdf.add([logo, new Txt('Clinica OnLine')]);
+
+    pdf.add([logo, new Txt('Clinica OnLine').color('gray').absolutePosition(73,35).fontSize(15).italics().end]);
     pdf.add('\n');
-    pdf.add(new Txt('Historial Clínico'));
+    pdf.add(new Txt('Historia Clínica').decoration('underline').alignment('center').fontSize(20).bold().end);
     pdf.add(new Txt(['\n\n',new Txt('Paciente: ').bold().end,' '+this.usuario.nombre + " " + this.usuario.apellido]).end);
     let hoy = new Date();
-    pdf.add(new Txt(['',new Txt('Fecha: ').bold().end,' ',hoy.getDate().toString(),'/',(hoy.getMonth()+1).toString(),'/',hoy.getFullYear().toString()]).end);
+    pdf.add(new Txt(['', new Txt('Fecha: ').bold().end, ' ', hoy.getDate().toString(), '/', (hoy.getMonth() + 1).toString(), '/', hoy.getFullYear().toString()]).end);
+
     
     pdf.add("\n\n");
 
-    this.historias.forEach(historia => {
-      if(historia.paciente == this.usuario.mail && (this.especialidadPDFseleccionada == "" || this.especialidadPDFseleccionada == historia.especialidad)){
-        pdf.add("Altura: " + historia.altura);
-        pdf.add("Peso: " + historia.peso);
-        pdf.add("Temperatura: " + historia.temperatura);
-        pdf.add("Presion: " + historia.presion);
-        pdf.add("Especialidad: " + historia.especialidad);
-        historia.dinamicos.forEach(dinamico => {
+
+        pdf.add("Altura: " + this.historiaPaciente.altura);
+        pdf.add("Peso: " + this.historiaPaciente.peso);
+        pdf.add("Temperatura: " + this.historiaPaciente.temperatura);
+        pdf.add("Presion: " + this.historiaPaciente.presion);
+        pdf.add("Especialidad: " + this.historiaPaciente.especialidad);
+        this.historiaPaciente.dinamicos.forEach(dinamico => {
           pdf.add(dinamico.clave + ": " + dinamico.valor);
         });
         pdf.add("\n");
-      }
-    });
-    // pdf.create().download("archivoRePiola");
+ 
+    pdf.create().download("historiaClinica");
     pdf.create().open();
+
     this.especialidadPDFseleccionada = "";
   }
 

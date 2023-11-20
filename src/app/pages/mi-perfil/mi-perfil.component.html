@@ -2,8 +2,6 @@
 <app-spinner [showSpinner]="loading"></app-spinner>
  
  
-
-
 <div class="h-100" style="text-align: center;" *ngIf="!mostrar">
 
   <div class="container-fluid contenedor p-4 mt-5">
@@ -27,12 +25,12 @@
         <h5 class="card-text"><span>Email:</span> {{ email }}</h5>
       </div>
       <div>
-        <button *ngIf="tipo == 'especialista'" class="btn btn-primary horarios" (click)="abrirMisHorarios()">Mis Horarios</button>
+        <button *ngIf="tipo == 'especialista'" class="btn btn-primary horarios largo" (click)="abrirMisHorarios()">Mis Horarios</button>
     </div>
-    <div>
-      <button *ngIf="tipo == 'paciente'" class="btn btn-primary" routerLink="/historia" [state]="{ email: email }">Historia Clinica</button>
-  </div>
-    <button *ngIf="tipo == 'paciente'" class="btn btn-danger" (click)="abrirPopUpFiltrarPdf()">Imprimir PDF</button>
+    <div class="container-btn-paciente">
+      <button *ngIf="tipo == 'paciente'" class="btn btn-primary largo" routerLink="/historia" [state]="{ email: email }">Historia Clinica</button>
+      <button *ngIf="tipo == 'paciente'" class="btn btn-danger largo" (click)="imprimirPdf()">Imprimir PDF</button>
+    </div>
     </div>
   </div>
 </div>

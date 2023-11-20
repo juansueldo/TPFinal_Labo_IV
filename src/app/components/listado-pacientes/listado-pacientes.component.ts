@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Paciente } from 'src/app/models/paciente.models';
 import { PacienteService } from 'src/app/services/paciente.service';
-
+import * as XLSX from 'xlsx';
 @Component({
   selector: 'app-listado-pacientes',
   templateUrl: './listado-pacientes.component.html',
@@ -23,5 +23,15 @@ export class ListadoPacientesComponent {
   onClick(paciente: any) {
 
     this.selectedPacienteEvent.emit(paciente);    
+  }
+  exportarExcel() {
+    this.exportToExcel(this.pacientes, 'pacientes');
+  }
+  exportToExcel(data: any[], fileName: string): void {
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+  
+    XLSX.writeFile(wb, `${fileName}.xlsx`);
   }
 }

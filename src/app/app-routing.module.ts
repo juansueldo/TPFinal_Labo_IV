@@ -17,7 +17,7 @@ const routes: Routes = [
   { 
     path: "", component:BienvenidaComponent, 
   },
-  { path: "bienvenida", component:BienvenidaComponent, 
+  { path: "bienvenida", component:BienvenidaComponent, data: { animation: 'fade' }
   },
   {
     path: "registro", loadChildren: () =>
@@ -30,7 +30,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('../app/pages/login/login.module').then(
         (m) => m.LoginModule
-      ),
+      )
   },
   { path: "dashboard", component:DashboardComponent, 
   },
@@ -41,7 +41,7 @@ const routes: Routes = [
     path:"mis-turnos", component: MisTurnosComponent
   },
   {
-    path: 'solicitar-turno', component: SolicitarTurnoComponent
+    path: 'solicitar-turno', component: SolicitarTurnoComponent,data: { animation: 'isRight' }
   },
   {
     path: 'mi-perfil', component: MiPerfilComponent
