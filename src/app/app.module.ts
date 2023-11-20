@@ -69,7 +69,8 @@ import { HistoriaComponent } from './pages/historia/historia.component';
     SolicitarTurnoComponent,
     MiPerfilComponent,
     DiaStringPipe,
-    HistoriaComponent
+    HistoriaComponent,
+
 
   ],
   imports: [

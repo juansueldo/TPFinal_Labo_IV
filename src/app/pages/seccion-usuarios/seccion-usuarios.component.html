@@ -1,29 +1,41 @@
 <app-navbar [showButtons]="true" [usuario]="user"></app-navbar>
 
 <div class="container-fluid contenedor p-4 h-100 mt-5" *ngIf="user.tipo === 'especialista'">
-  <div class="card">
-    <div class="container-img">
-      <img [src]="user.img_1" alt="Foto de {{ user.nombre }} {{ user.apellido }}">
-    </div>
-    <div class="card-body">
-      <h5 class="card-title">{{ user.nombre }} {{ user.apellido }}</h5>
-      <p class="card-text"><span>DNI:</span> {{ user.dni }}</p>
-      <p class="card-text"><span>Edad:</span> {{ user.edad }}</p>
-      <p class="card-text"><span>Especialidades:</span> {{ user.especialidades.join(', ') }}</p>
-      <p class="card-text"><span>Email:</span> {{ user.email }}</p>
-      <p class="card-text"><span>Estado de Registro</span></p>
-    </div>
-    <div class="card-footer">
-      <p class="card-text"><span>{{mostrarRegistro(user.estados.registro)}}</span></p>
-    </div>
-  </div>
+  <h2 class="text-center">Pacientes atendidos</h2>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Foto</th>
+        <th>Nombre y Apellido</th>
+        <th>DNI</th>
+        <th>Edad</th>
+        <th>Obra Social</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let paciente of pacientesEspecialista">
+        <td>
+          <div class="container-img">
+            <img class="foto-tabla" [src]="paciente.img_1" alt="Foto de {{ paciente.nombre }} {{ paciente.apellido }}">
+          </div>
+        </td>
+        <td>{{ paciente.nombre }} {{ paciente.apellido }}</td>
+        <td>{{ paciente.dni }}</td>
+        <td>{{ paciente.edad }}</td>
+        <td>{{ paciente.obraSocial }}</td>
+        <td>{{ paciente.email }}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
+
 
 <div class="container-fluid contenedor p-4 h-100 mt-5" *ngIf="user.tipo === 'paciente'">
   <div class="card">
     <div class="container-img">
-      <img [src]="user.img_1" alt="Foto de {{ user.nombre }} {{ user.apellido }}">
-      <img [src]="user.img_2" alt="Foto de {{ user.nombre }} {{ user.apellido }}">
+      <img class="foto" [src]="user.img_1" alt="Foto de {{ user.nombre }} {{ user.apellido }}">
+      <img class="foto" [src]="user.img_2" alt="Foto de {{ user.nombre }} {{ user.apellido }}">
     </div>
     <div class="card-body">
       <h5 class="card-title">{{ user.nombre }} {{ user.apellido }}</h5>

@@ -7,7 +7,7 @@
     display: flex;
     justify-content: space-around;
 }
-img{
+.foto{
     width: 150px;
     height: 150px;
     border-radius: 50%;
@@ -20,4 +20,7 @@ img{
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
 -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+.foto-tabla{
+    height: 50px;
 }

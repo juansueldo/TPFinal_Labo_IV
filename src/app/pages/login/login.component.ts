@@ -10,11 +10,20 @@ import { EspecialistasService } from 'src/app/services/especialistas.service';
 import { PacienteService } from 'src/app/services/paciente.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  animations: [
+    trigger('fadeInOut', [
+      state('void', style({
+        opacity: 0.3
+      })),
+      transition('void <=> *', animate(2000)),
+    ]),
+  ],
 })
 export class LoginComponent {
   user: any;

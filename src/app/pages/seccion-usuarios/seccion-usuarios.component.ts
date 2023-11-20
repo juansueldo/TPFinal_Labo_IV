@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { Especialista, Registro } from 'src/app/models/especialista.models';
 import { Paciente } from 'src/app/models/paciente.models';
+import { Turno } from 'src/app/models/turno.models';
+import { DataService } from 'src/app/services/data.service';
+import { PacienteService } from 'src/app/services/paciente.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
-import * as XLSX from 'xlsx';
+
 @Component({
   selector: 'app-seccion-usuarios',
   templateUrl: './seccion-usuarios.component.html',
@@ -15,17 +18,38 @@ export class SeccionUsuariosComponent {
   user: any | null;
   mostrarPacientes: boolean = true;
   mostrarEspecialistas: boolean = false;
-
-  constructor(private usuarioService: UsuariosService){}
+  turnos:Turno[] = [];
+  pacientes;
+  pacientesEspecialista: Paciente[]=[];
+  constructor(private usuarioService: UsuariosService, private data: DataService, private pacienteService: PacienteService ){}
 
   ngOnInit(): void {
     this.cargarUsuario();
+    this.cargarPacientesEspecialista();   
   }
 
   cargarUsuario() {
     this.user = this.usuarioService.getUsuario();
   }
-
+  cargarPacientesEspecialista() {
+    this.data.getTurnosDB().subscribe(turnos => {
+      turnos.forEach(turno=>{
+        if(turno.especialista === this.user.email){
+          this.pacienteService.obtenerPacientes().subscribe(pacientes=>{
+            pacientes.forEach(paciente=>{
+              if(turno.paciente === paciente.email){
+                this.pacientesEspecialista.push(paciente);
+                console.log(turnos);
+              }
+            })
+           
+          })
+        }
+      });
+      
+    });
+  }
+  
   selectedPaciente(event: Paciente) {
     console.log(event);
     if(this.user.tipo === 'paciente'){
@@ -64,11 +88,5 @@ export class SeccionUsuariosComponent {
   }
  
 
-  exportExcelPorUsuario(){
-    let element = document.getElementById('tableTurnos');
-    const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-    XLSX.writeFile(wb, 'ExcelSheet.xlsx');
-  }
+ 
 }

@@ -5,7 +5,7 @@
     <div style="text-align: center;" class="">
         <br>
         <h4 for="fecha">Filtrar Turnos</h4>
-        <input name="filtro" [(ngModel)]="filtro" class="form-control" placeholder="Ingrese el nombre de la especialidad o nombre del especialista ..."/>
+        <input name="filtro" [(ngModel)]="filtro" class="form-control" placeholder="Ingrese el nombre de la especialidad o nombre del especialista o paciente..."/>
     </div>
     <!-- Filtro -->
 
@@ -41,12 +41,12 @@
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3" *ngIf="usuario.tipo == 'paciente'">
-                    <label for="fecha">Paciente</label>
-                    <input name="fecha" [(ngModel)]="usuario.nombre" [readonly]="true" class="form-control"/>
-                </div>
-                <div class="col-md-6 mb-3" *ngIf="usuario.tipo == 'especialista'">
                     <label for="fecha">Especialista</label>
                     <input name="fecha" [(ngModel)]="especialistaNombreCompleto" [readonly]="true" class="form-control"/>
+                </div>
+                <div class="col-md-6 mb-3" *ngIf="usuario.tipo == 'especialista'">
+                    <label for="fecha">Paciente</label>
+                    <input name="fecha" [(ngModel)]="pacienteNombreCompleto" [readonly]="true" class="form-control"/>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="apellido">Especialidad</label>
