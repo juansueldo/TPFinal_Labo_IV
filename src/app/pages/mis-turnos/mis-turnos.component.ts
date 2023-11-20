@@ -93,7 +93,7 @@ export class MisTurnosComponent {
       else{
         this.turnos = turnos;
       }
-      //this.ordernarListaTurnos();
+      
       
     });
     this.formModal = new window.bootstrap.Modal(
@@ -136,24 +136,7 @@ export class MisTurnosComponent {
     this.estrellas = estrellas;
   }
 
-  // filtarTurnos(filtro:string, tipo:string){
-  //   this.turnosFiltrados = [];
-  //   this.turnos.forEach(turno => {
-  //     if(filtro == 'sinFiltro'){
-  //       this.turnosFiltrados.push(turno);
-  //     }
-  //     else if(tipo == "especialidades" && turno.especialidad == filtro){
-  //       this.turnosFiltrados.push(turno);
-  //     }
-  //     else if(tipo == "especialistas" && turno.especialista == filtro){
-  //       this.turnosFiltrados.push(turno);
-  //     }
-  //     else if(tipo == "pacientes" && turno.paciente == filtro){
-  //       this.turnosFiltrados.push(turno);
-  //     }
-  //   });
-  //   this.turnosFiltrados$.next(this.turnosFiltrados);
-  // }
+ 
 
   abrirPopUp(razon:string){
     this.popUpRazon = razon;

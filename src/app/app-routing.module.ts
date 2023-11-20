@@ -10,6 +10,7 @@ import { SeccionUsuariosComponent } from './pages/seccion-usuarios/seccion-usuar
 import { MisTurnosComponent } from './pages/mis-turnos/mis-turnos.component';
 import { SolicitarTurnoComponent } from './pages/solicitar-turno/solicitar-turno.component';
 import { MiPerfilComponent } from './pages/mi-perfil/mi-perfil.component';
+import { HistoriaComponent } from './pages/historia/historia.component';
 
 
 const routes: Routes = [
@@ -44,6 +45,9 @@ const routes: Routes = [
   },
   {
     path: 'mi-perfil', component: MiPerfilComponent
+  },
+  {
+    path: 'historia', component: HistoriaComponent
   },
   {
     path: "seccion-usuarios", component: SeccionUsuariosComponent,

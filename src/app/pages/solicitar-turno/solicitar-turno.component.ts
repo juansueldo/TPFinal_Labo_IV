@@ -18,8 +18,8 @@ export class SolicitarTurnoComponent {
   hoy:Date = new Date();
   now:Date = new Date();
   dia:string = this.now.getDate().toString();
-  mesNumero:number = this.now.getMonth();
-  mes:string = this.mesNumeroToString(this.mesNumero);
+  mesNumero:number = this.now.getMonth()+1;
+  mes:string = this.mesNumeroToString(this.mesNumero-1);
   anio:string = this.now.getFullYear().toString();
   hora:number = this.now.getHours();
   diaString:string = this.diaSemanaString(this.now.getDay());
@@ -36,19 +36,20 @@ export class SolicitarTurnoComponent {
   horariosDisponiblesOtroFormato:string[] = [];
 
   // DOM
-  etapa = "especialista";
+  etapa = "especialidad";
 
   // TURNOS
   turnos:Turno[] = [];
 
   // Especialidades
   especialidades:any ;
-  especialidadElegida = "";
+  especialidadElegida: any;
   especialistas:Especialista[] = [];
   especialistaElegido:Especialista;
   especialistaElegidoStr = "";
   diaElegido = "";
   horarioElegido = "";
+  especialistasPorEspecialidad:Especialista[] = [];
 
   // HORARIOS
   horariosEspecialistas:HorarioEspecialista[] = [];
@@ -56,9 +57,9 @@ export class SolicitarTurnoComponent {
   constructor(private data:DataService,private horariosEspecialistaService: HorariosEspecialistaService, private especialidadesService: EspecialidadesService, private usuarioService:UsuariosService, private router: Router){}
   
   ngOnInit(): void {
-
+    
     this.especialidadesService.obtenerEspecialidades().subscribe(esp => {
-      console.log(esp);
+      
       this.especialidades = esp;
       this.ordernarListaEspecialidades();
       this.especialistas = [];
@@ -69,6 +70,7 @@ export class SolicitarTurnoComponent {
     this.horariosEspecialistaService.getHorarioEspecialistas().subscribe(horario => {
       this.horariosEspecialistas = horario;
       console.log(this.horariosEspecialistas);
+
     });
     this.data.getTurnosDB().subscribe(turnos => {
       this.turnos = turnos;
@@ -83,9 +85,19 @@ export class SolicitarTurnoComponent {
     this.user = this.usuarioService.getUsuario();
   }
 
-  elegirEspecialidad(esp:string){
-    this.especialidadElegida = esp;
-    this.volver("horario");
+  elegirEspecialidad(especialidadElegida){
+    let indice = -1;
+    this.especialidadElegida = especialidadElegida;
+    this.especialistas.forEach((esp, index) => {
+      esp.especialidades.forEach((especialidad)=>{
+        if(especialidad == especialidadElegida){
+          indice = index;
+          this.especialistasPorEspecialidad.push(esp);
+        }
+      })
+    });
+   
+    this.volver("especialista");
   }
 
 
@@ -111,115 +123,115 @@ export class SolicitarTurnoComponent {
     });
     this.especialistaElegido = this.especialistas[indice];
     this.especialistaElegidoStr = this.especialistaElegido.nombre + " " + this.especialistaElegido.apellido;
-    console.log(this.especialistaElegido );
     this.cambiarHorariosPorEspecialista();
-    this.volver('especialidad');
+    this.volver('horario');
   }
-
-  cambiarHorariosPorEspecialista(){
+  cambiarHorariosPorEspecialista() {
     let indiceIni = 0;
     let indiceFin = 0;
-    if(this.diaString == "Sabado"){
+  
+    if (this.diaString == "Sabado") {
       indiceFin = 12;
-    }
-    else{
+    } else {
       indiceFin = this.horarios.length;
     }
-    this.horariosEspecialistas.forEach(horEsp => {
-      if(horEsp.email == this.especialistaElegido.email){
-
-        this.horarios.forEach((horarios,index) => {
-          console.log(horEsp);
-          console.log(index);
-          switch(this.diaString){
-            case "Lunes":
-              if(horarios == horEsp.lunInicio){
-                indiceIni = index;
-              }
-              if(horarios == horEsp.lunFin){
-                indiceFin = index;
-              }
-              if(horEsp.estados[0] == "Inhabilitado"){
-                indiceIni = 0;
-                indiceFin = 0;
-              }
-              break;
-            case "Martes":
-              if(horarios == horEsp.marInicio){
-                indiceIni = index;
-              }
-              if(horarios == horEsp.marFin){
-                indiceFin = index;
-              }
-              if(horEsp.estados[1] == "Inhabilitado"){
-                indiceIni = 0;
-                indiceFin = 0;
-              }
-              break;
-            case "Miercoles":
-              if(horarios == horEsp.mierInicio){
-                indiceIni = index;
-              }
-              if(horarios == horEsp.mierFin){
-                indiceFin = index;
-              }
-              if(horEsp.estados[2] == "Inhabilitado"){
-                indiceIni = 0;
-                indiceFin = 0;
-              }
-              break;
-            case "Jueves":
-              if(horarios == horEsp.jueInicio){
-                indiceIni = index;
-              }
-              if(horarios == horEsp.jueFin){
-                indiceFin = index;
-              }
-              if(horEsp.estados[3] == "Inhabilitado"){
-                indiceIni = 0;
-                indiceFin = 0;
-              }
-              break;
-            case "Viernes":
-              if(horarios == horEsp.vierInicio){
-                indiceIni = index;
-              }
-              if(horarios == horEsp.vierFin){
-                indiceFin = index;
-              }
-              if(horEsp.estados[4] == "Inhabilitado"){
-                indiceIni = 0;
-                indiceFin = 0;
-              }
-              break;
-            case "Sabado":
-              if(horarios == horEsp.sabInicio){
-                indiceIni = index;
-              }
-              if(horarios == horEsp.sabFin){
-                indiceFin = index;
-              }
-              if(horEsp.estados[5] == "Inhabilitado"){
-                indiceIni = 0;
-                indiceFin = 0;
-              }
-              break;
+  
+   this.horariosEspecialistas.forEach(horarioEspecialista =>{
+    if(horarioEspecialista.email == this.especialistaElegido.email){
+      this.horarios.forEach((horarios,index) => {
+        console.log(horarioEspecialista.especialidadesPorDia[0]);
+        console.log(this.especialidadElegida );
+        switch(this.diaString){
+          case "Lunes":
+            if(horarios == horarioEspecialista.lunInicio && this.especialidadElegida == horarioEspecialista.especialidadesPorDia[0]){
+              indiceIni = index;
             }
-          });
-        }
-      });
-      
+            if(horarios == horarioEspecialista.lunFin && this.especialidadElegida == horarioEspecialista.especialidadesPorDia[0]){
+              indiceFin = index;
+            }
+            if(horarioEspecialista.estados[0] == "Inhabilitado" || this.especialidadElegida != horarioEspecialista.especialidadesPorDia[0]){
+              indiceIni = 0;
+              indiceFin = 0;
+            }
+            break;
+          case "Martes":
+            if(horarios == horarioEspecialista.marInicio && this.especialidadElegida == horarioEspecialista.especialidadesPorDia[1]){
+              indiceIni = index;
+            }
+            if(horarios == horarioEspecialista.marFin && this.especialidadElegida == horarioEspecialista.especialidadesPorDia[1]){
+              indiceFin = index;
+            }
+            if(horarioEspecialista.estados[1] == "Inhabilitado" || this.especialidadElegida != horarioEspecialista.especialidadesPorDia[1]){
+              indiceIni = 0;
+              indiceFin = 0;
+            }
+            break;
+          case "Miercoles":
+            if(horarios == horarioEspecialista.mierInicio && this.especialidadElegida == horarioEspecialista.especialidadesPorDia[2]){
+              indiceIni = index;
+            }
+            if(horarios == horarioEspecialista.mierFin && this.especialidadElegida == horarioEspecialista.especialidadesPorDia[2]){
+              indiceFin = index;
+            }
+            if(horarioEspecialista.estados[2] == "Inhabilitado" ||  this.especialidadElegida != horarioEspecialista.especialidadesPorDia[2]){
+              indiceIni = 0;
+              indiceFin = 0;
+            }
+            break;
+          case "Jueves":
+            if(horarios == horarioEspecialista.jueInicio && this.especialidadElegida == horarioEspecialista.especialidadesPorDia[3] ){
+              indiceIni = index;
+            }
+            if(horarios == horarioEspecialista.jueFin  && this.especialidadElegida == horarioEspecialista.especialidadesPorDia[3] ){
+              indiceFin = index;
+            }
+            if(horarioEspecialista.estados[3] == "Inhabilitado"  ||  this.especialidadElegida != horarioEspecialista.especialidadesPorDia[3] ){
+              indiceIni = 0;
+              indiceFin = 0;
+            }
+            break;
+          case "Viernes":
+            if(horarios == horarioEspecialista.vierInicio  && this.especialidadElegida == horarioEspecialista.especialidadesPorDia[4] ){
+              indiceIni = index;
+            }
+            if(horarios == horarioEspecialista.vierFin  && this.especialidadElegida == horarioEspecialista.especialidadesPorDia[4] ){
+              indiceFin = index;
+            }
+            if(horarioEspecialista.estados[4] == "Inhabilitado"  || this.especialidadElegida != horarioEspecialista.especialidadesPorDia[4] ){
+              indiceIni = 0;
+              indiceFin = 0;
+            }
+            break;
+          case "Sabado":
+            if(horarios == horarioEspecialista.sabInicio  && this.especialidadElegida == horarioEspecialista.especialidadesPorDia[5] ){
+              indiceIni = index;
+            }
+            if(horarios == horarioEspecialista.sabFin  && this.especialidadElegida == horarioEspecialista.especialidadesPorDia[5] ){
+              indiceFin = index;
+            }
+            if(horarioEspecialista.estados[5] == "Inhabilitado"  ||  this.especialidadElegida == horarioEspecialista.especialidadesPorDia[5] ){
+              indiceIni = 0;
+              indiceFin = 0;
+            }
+            break;
+          }
+        });
+      }
+    });
+  
     let listAux = [...this.horarios];
-    this.horariosDisponibles = listAux.splice(indiceIni,indiceFin-indiceIni);
-    if (this.horariosDisponibles.length === 0){
-      this.noHayDatos = "No hay turnos disponibles para el día seleccionado"
-    }else{
+    this.horariosDisponibles = listAux.splice(indiceIni, indiceFin - indiceIni);
+    console.log(this.horariosDisponibles);
+    console.log(this.horarios);
+    if (this.horariosDisponibles.length === 0) {
+      this.noHayDatos = "No hay turnos disponibles para el día seleccionado";
+    } else {
       this.noHayDatos = "";
     }
-    console.log(this.horariosDisponibles );
     this.sacarHorariosNoDisponibles();
     this.cambiarFormato();
   }
+  
 
   volverCambiarFormato(hora:string){
     let horaAux = hora.split(" ");
@@ -234,7 +246,7 @@ export class SolicitarTurnoComponent {
   cambiarFormato(){
     this.horariosDisponiblesOtroFormato = [];
     this.horariosDisponibles.forEach(horario => {
-      this.horariosDisponiblesOtroFormato.push(this.anio+'-'+this.mesNumero+'-'+this.dia+' '+this.cambiarHoraAmPm(horario));
+      this.horariosDisponiblesOtroFormato.push(this.anio+'-'+this.mesNumero +'-'+this.dia+' '+this.cambiarHoraAmPm(horario));
     });
   }
 
@@ -440,31 +452,77 @@ export class SolicitarTurnoComponent {
   sumarRestarDias(cuando: 'antes' | 'despues'): void {
     const multiplicador = cuando === 'antes' ? -1 : 1;
     const cantidadDias = 1 * multiplicador;
-
+  
     const fechaLimite = new Date(this.now);
     fechaLimite.setDate(this.now.getDate() + cantidadDias);
-
+  
     const fechaActual = new Date();
     const quinceDiasDespues = new Date(fechaActual);
     quinceDiasDespues.setDate(fechaActual.getDate() + 15);
-
+  
+    // Verificar si la fecha límite cae en domingo
+    if (fechaLimite.getDay() === 0) {
+      // Si es domingo y estamos restando días, retroceder al día sábado
+      if (cuando === 'antes') {
+        fechaLimite.setDate(fechaLimite.getDate() - 1); // Restar 2 días para ir al sábado
+      } else {
+        // Si es domingo y estamos sumando días, avanzar al día lunes
+        fechaLimite.setDate(fechaLimite.getDate() + 1);
+      }
+    }
+  
     // Permite avanzar hasta 15 días adelante o retroceder siempre que no se alcance la fecha actual
     if ((cuando === 'despues' && fechaLimite <= quinceDiasDespues) ||
         (cuando === 'antes' && fechaLimite >= fechaActual)) {
       this.now = fechaLimite;
-
+  
       this.dia = this.now.getDate().toString();
       this.mesNumero = this.now.getMonth();
       this.mes = this.mesNumeroToString(this.mesNumero);
       this.anio = this.now.getFullYear().toString();
       this.hora = this.now.getHours();
       this.diaString = this.diaSemanaString(this.now.getDay());
-
-      
+  
       this.getHorariosDisponibles();
       this.cambiarHorariosPorEspecialista();
     } else {
       console.error("No se puede avanzar más allá de los 15 días posteriores a la fecha actual o retroceder desde la fecha actual.");
     }
   }
+  
+  imgEspecialidad(especialidad){
+    let imagen;
+    switch(especialidad){
+      case "Traumatólogo":
+        imagen = "../../../assets/especialistas/Traumatólogo.png"
+        break;
+      case "Clínico":
+        imagen = "../../../assets/especialistas/Traumatólogo.png"
+        break;
+      case "Cirujano":
+        imagen = "../../../assets/especialistas/Cirujano.png"
+          break;
+      case "Neumólogo":
+        imagen = "../../../assets/especialistas/Infectologo.png"
+          break;
+      case "Dentista":
+        imagen = "../../../assets/especialistas/Dentista.png"
+        break;
+      case "Cardiologo":
+        imagen = "../../../assets/especialistas/Cardiologo.png"
+        break;
+      case "Pediatra":
+        imagen = "../../../assets/especialistas/Pediatra.png"
+        break;
+        case "Ginecolo":
+          imagen = "../../../assets/especialistas/Ginecologa.png"
+          break;
+        default:
+          imagen = "../../../assets/especialistas/Generico.png"
+          break;
+                  
+    }
+    return imagen;
+  }
+  
 }

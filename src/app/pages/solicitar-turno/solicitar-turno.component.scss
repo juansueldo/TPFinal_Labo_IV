@@ -1,9 +1,7 @@
 .card{
     background-color: #49a22b;
 }
-.imagen-especialista{
-    border-radius: 50%;
-}
+
 ul, li{
     list-style: none;
     text-align: center;
@@ -21,6 +19,19 @@ ul, li{
     height: 50px;
     margin: 2px;
 }
+.especialidad-btn{
+    width: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.img-especialidad, .imagen-especialista{
+    height: 80px;
+}
 .btn-especialista{
-
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

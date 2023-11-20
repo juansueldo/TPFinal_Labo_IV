@@ -45,6 +45,7 @@ import { BsDropdownModule  } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { MiPerfilComponent } from './pages/mi-perfil/mi-perfil.component';
 import { DiaStringPipe } from './pipes/dia-string.pipe';
+import { HistoriaComponent } from './pages/historia/historia.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,7 +68,8 @@ import { DiaStringPipe } from './pipes/dia-string.pipe';
     MisTurnosComponent,
     SolicitarTurnoComponent,
     MiPerfilComponent,
-    DiaStringPipe
+    DiaStringPipe,
+    HistoriaComponent
 
   ],
   imports: [

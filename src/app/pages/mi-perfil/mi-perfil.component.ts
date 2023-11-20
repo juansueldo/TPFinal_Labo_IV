@@ -50,6 +50,12 @@ export class MiPerfilComponent implements OnInit{
     setTimeout(()=>{
       this.loading = false;
     },2500);
+    this.formModal = new window.bootstrap.Modal(
+      document.getElementById('MiModal')
+    );
+    this.formModalPdf = new window.bootstrap.Modal(
+      document.getElementById('pdfModal')
+    );
     this.usuario = this.usuarioService.getUsuario();
     
     this.horarioEspecialistaService.getHorarioEspecialistas().subscribe(horario => {

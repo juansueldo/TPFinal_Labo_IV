@@ -1,41 +1,8 @@
 <app-navbar [showButtons]="true" [usuario]="usuario"></app-navbar>
 <app-spinner [showSpinner]="loading"></app-spinner>
- <!-- 
  
-<div class="modal fade" id="MiModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-        <div class="modal-content text-bg-dark" style="text-align: center;">
-            <br>
-            <h1>Disponibilidad Horaria</h1>
-            <br>
-    </div>
-</div>
+ 
 
-
-<div class="modal fade" id="pdfModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-        <div class="modal-content text-bg-dark" style="text-align: center;">
-            <br>
-            <h1>Filtrar PDF por especialidad</h1>
-            <br>
-            <div>
-                <input (click)="seleccionarEspecialidad('')" class="form-check-input" type="radio" name="pdfFlex" id="pdfFlex" checked>
-                <label class="form-check-label" for="pdfFlex">
-                    Ninguna
-                </label>
-            </div>
-            <div *ngFor="let esp of especialidadesDisponibles">
-                <input (click)="seleccionarEspecialidad(esp)" class="form-check-input" type="radio" name="pdfFlex" id="pdfFlex">
-                <label class="form-check-label" for="pdfFlex">
-                    {{esp}}
-                </label>
-            </div>
-            <br>
-            <button style="margin: 0 auto; float: none;" class="btn btn-primary" (click)="imprimirPdf()">Crear</button>
-        </div>
-    </div>
-</div>
-PopUp filtrar pdf -->
 
 <div class="h-100" style="text-align: center;" *ngIf="!mostrar">
 
@@ -63,9 +30,9 @@ PopUp filtrar pdf -->
         <button *ngIf="tipo == 'especialista'" class="btn btn-primary horarios" (click)="abrirMisHorarios()">Mis Horarios</button>
     </div>
     <div>
-      <!--<button *ngIf="tipo == 'paciente'" class="btn btn-primary" routerLink="../Historia" [state]="{ email: email }">Historia Clinica</button>-->
+      <button *ngIf="tipo == 'paciente'" class="btn btn-primary" routerLink="/historia" [state]="{ email: email }">Historia Clinica</button>
   </div>
-      <!--<button *ngIf="tipo == 'paciente'" class="btn btn-danger" (click)="abrirPopUpFiltrarPdf()">Imprimir PDF</button>-->
+    <button *ngIf="tipo == 'paciente'" class="btn btn-danger" (click)="abrirPopUpFiltrarPdf()">Imprimir PDF</button>
     </div>
   </div>
 </div>
@@ -137,4 +104,39 @@ PopUp filtrar pdf -->
       <button style="margin: 0 auto; float: none;" class="btn btn-primary" (click)="cerrarModulo()">Confirmar</button>
       <br>
     </div>
+    
   </div>
+  
+<div class="modal fade" id="MiModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content text-bg-dark" style="text-align: center;">
+          <br>
+          <h1>Disponibilidad Horaria</h1>
+          <br>
+  </div>
+</div>
+
+
+<div class="modal fade" id="pdfModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content text-bg-dark" style="text-align: center;">
+          <br>
+          <h1>Filtrar PDF por especialidad</h1>
+          <br>
+          <div>
+              <input (click)="seleccionarEspecialidad('')" class="form-check-input" type="radio" name="pdfFlex" id="pdfFlex" checked>
+              <label class="form-check-label" for="pdfFlex">
+                  Ninguna
+              </label>
+          </div>
+          <div *ngFor="let esp of especialidadesDisponibles">
+              <input (click)="seleccionarEspecialidad(esp)" class="form-check-input" type="radio" name="pdfFlex" id="pdfFlex">
+              <label class="form-check-label" for="pdfFlex">
+                  {{esp}}
+              </label>
+          </div>
+          <br>
+          <button style="margin: 0 auto; float: none;" class="btn btn-primary" (click)="imprimirPdf()">Crear</button>
+      </div>
+  </div>
+</div>

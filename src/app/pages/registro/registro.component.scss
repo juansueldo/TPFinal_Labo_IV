@@ -20,20 +20,28 @@
     align-items: center;
 }
 img{
-    height: 200px;
+    height: 100px;
+    
 }
 .title{
     text-align: center;
 }
-.container-sections{
+.contenedor-tipo{
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-around;
 
 }
+.cuadrado{
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);
+}
 .btn{
-    width: 150px;
+    width: 200px;
 }
 .col-md-12{
     cursor: pointer;
