@@ -245,6 +245,7 @@ export class SolicitarTurnoComponent {
 
   cambiarFormato(){
     this.horariosDisponiblesOtroFormato = [];
+    this.mesNumero+=1;
     this.horariosDisponibles.forEach(horario => {
       this.horariosDisponiblesOtroFormato.push(this.anio+'-'+this.mesNumero +'-'+this.dia+' '+this.cambiarHoraAmPm(horario));
     });
@@ -494,9 +495,6 @@ export class SolicitarTurnoComponent {
     let imagen;
     switch(especialidad){
       case "Traumatólogo":
-        imagen = "../../../assets/especialistas/Traumatólogo.png"
-        break;
-      case "Clínico":
         imagen = "../../../assets/especialistas/Traumatólogo.png"
         break;
       case "Cirujano":

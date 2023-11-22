@@ -1,7 +1,7 @@
-
-<div style="text-align: center;">
+<app-navbar [showButtons]="true" [usuario]="paciente"></app-navbar>
+<div style="text-align: center;" class="mt-5">
     <br>
-    <h1>Historial de {{paciente.nombre}} {{paciente.apellido}}</h1>
+    <h1>Historia Clinica de: {{paciente.nombre}} {{paciente.apellido}}</h1>
 </div>
 <br><br>
 <div class="text-light" *ngFor="let historia of historias">
