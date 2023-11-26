@@ -28,7 +28,8 @@
         <button *ngIf="tipo == 'especialista'" class="btn btn-primary horarios largo" (click)="abrirMisHorarios()">Mis Horarios</button>
     </div>
     <div class="container-btn-paciente">
-      <button *ngIf="tipo == 'paciente'" class="btn btn-primary largo" routerLink="/historia" [state]="{ email: email }">Historia Clinica</button>
+      <button *ngIf="tipo == 'paciente'" class="btn btn-primary largo" routerLink="/login/historia" [state]="{ email: email }">Historia Clinica</button>
+      <button *ngIf="tipo == 'paciente'" class="btn btn-danger largo" (click)="abrirVentanaModal()">Atenciones</button>
       <button *ngIf="tipo == 'paciente'" class="btn btn-danger largo" (click)="imprimirPdf()">Imprimir PDF</button>
     </div>
     </div>

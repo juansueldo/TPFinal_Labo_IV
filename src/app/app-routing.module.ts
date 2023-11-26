@@ -32,26 +32,7 @@ const routes: Routes = [
         (m) => m.LoginModule
       )
   },
-  { path: "dashboard", component:DashboardComponent, 
-  },
-  {
-    path: "dashboard-paciente", component: DashboardPacienteComponent
-  },
-  {
-    path:"mis-turnos", component: MisTurnosComponent
-  },
-  {
-    path: 'solicitar-turno', component: SolicitarTurnoComponent,data: { animation: 'isRight' }
-  },
-  {
-    path: 'mi-perfil', component: MiPerfilComponent
-  },
-  {
-    path: 'historia', component: HistoriaComponent
-  },
-  {
-    path: "seccion-usuarios", component: SeccionUsuariosComponent,
-  },
+ 
   { path: '**', component: NotFoundComponent },
 
 ];

@@ -42,4 +42,17 @@ export class DataService {
       let col = collection(this.firestore, 'historias');
       addDoc(col, Object.assign({}, historia));
     }
+    updateHistoria(historia:HistoriaClinica){
+      let col = collection(this.firestore, 'historias');
+      const documento = doc(col, historia.id);
+      updateDoc(documento, {
+        especialista:historia.especialista,
+        dinamicos:historia.dinamicos,
+        altura:historia.altura,
+        peso:historia.peso,
+        temperatura:historia.temperatura,
+        presion:historia.presion,
+        especialidad:historia.especialidad
+      });
+    }
 }

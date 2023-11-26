@@ -14,12 +14,13 @@ export class HistoriaComponent {
   mail = "";
   paciente:Paciente = new Paciente("","",0,"","","","","","");
   historias:HistoriaClinica[] = [];
-
+  
   constructor(private usuarioService:UsuariosService,private data:DataService){}
 
   ngOnInit(): void {
    
     this.mail = history.state.mail;
+    console.log(this.mail);
     const usuario = this.usuarioService.getUsuario();
     if(usuario.tipo == "paciente"){
       this.paciente = usuario;

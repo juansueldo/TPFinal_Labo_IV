@@ -14,6 +14,8 @@ import { environment } from './environments/environments';
 import { LoginComponent } from './pages/login/login.component';
 import { SharedModule } from './shared/shared.module';
 
+import { MatDialogModule } from '@angular/material/dialog';
+
 import { FormsModule } from '@angular/forms'; 
 import { BienvenidaComponent } from './pages/bienvenida/bienvenida.component';
 import { RegistroComponent } from './pages/registro/registro.component';
@@ -46,6 +48,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { MiPerfilComponent } from './pages/mi-perfil/mi-perfil.component';
 import { DiaStringPipe } from './pipes/dia-string.pipe';
 import { HistoriaComponent } from './pages/historia/historia.component';
+import { MiVentanaModalComponent } from './components/mi-ventana-modal/mi-ventana-modal.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -70,6 +73,7 @@ import { HistoriaComponent } from './pages/historia/historia.component';
     MiPerfilComponent,
     DiaStringPipe,
     HistoriaComponent,
+    MiVentanaModalComponent,
 
 
   ],
@@ -93,6 +97,7 @@ import { HistoriaComponent } from './pages/historia/historia.component';
     CommonModule,
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
+    MatDialogModule
   ],
   providers: [BsDropdownConfig,{ provide: FIREBASE_OPTIONS, useValue: environment }],
   bootstrap: [AppComponent]

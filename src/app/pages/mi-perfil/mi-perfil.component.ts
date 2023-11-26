@@ -8,6 +8,8 @@ import { EspecialidadesService } from 'src/app/services/especialidades.service';
 import { HorariosEspecialistaService } from 'src/app/services/horarios-especialista.service';
 import { HistoriaClinica } from 'src/app/models/historiaclinica.models';
 import { NgZone } from '@angular/core';
+import { MiVentanaModalComponent } from 'src/app/components/mi-ventana-modal/mi-ventana-modal.component';
+import { MatDialog } from '@angular/material/dialog';
 declare var window: any;
 @Component({
   selector: 'app-mi-perfil',
@@ -46,7 +48,8 @@ export class MiPerfilComponent implements OnInit{
   constructor(private usuarioService:UsuariosService,
     private data:DataService, 
     private especialidadesService: EspecialidadesService,
-    private horarioEspecialistaService: HorariosEspecialistaService,) {}
+    private horarioEspecialistaService: HorariosEspecialistaService,
+    public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.formModalPdf = new window.bootstrap.Modal(
@@ -292,5 +295,17 @@ export class MiPerfilComponent implements OnInit{
     this.actualizarHorarioEspecialista();
     this.horarioEspecialistaService.updateHorarioEspecialistas(this.horariosEspecialista);
     this.mostrar = false;
+  }
+  abrirVentanaModal(): void {
+    const dialogRef = this.dialog.open(MiVentanaModalComponent, {
+      width: '700px',
+      height: '500px',
+      data: { emailPaciente: this.usuario.email },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('La ventana modal se cerró', result);
+      // Puedes realizar acciones después de cerrar la ventana modal si es necesario
+    });
   }
 }

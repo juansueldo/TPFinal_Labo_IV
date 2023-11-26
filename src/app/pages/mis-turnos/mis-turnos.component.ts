@@ -55,6 +55,7 @@ export class MisTurnosComponent {
   presion:number = 0;
   dinamicos: {clave: string, valor: string}[] = [];
   cantidadDatos = 0;
+  historiaPrevia: HistoriaClinica[]=[];
 
   // ENCUESTA
   preguntas:string[] = ["","",""];
@@ -93,7 +94,10 @@ export class MisTurnosComponent {
       else{
         this.turnos = turnos;
       }
-      
+      this.data.getHistoriaDB().subscribe(historias=>{
+        this.historiaPrevia = historias;
+        console.log(historias);
+      })
       
     });
     this.formModal = new window.bootstrap.Modal(
@@ -209,8 +213,26 @@ export class MisTurnosComponent {
       this.peso == 0;
       this.temperatura == 0;
       this.presion == 0;
-      this.data.cargarHistoriasBD(new HistoriaClinica("",this.turnoElegido.paciente,this.turnoElegido.especialista,this.dinamicos,this.altura,
+      let nuevaHistoria: HistoriaClinica = null;
+      this.historiaPrevia.forEach(historia=>{
+        if(this.turnoElegido.paciente == historia.paciente){
+          nuevaHistoria = historia;
+        }
+      })
+      if(nuevaHistoria !== null){
+        nuevaHistoria.especialista = `${nuevaHistoria.especialista}, ${this.turnoElegido.especialista}`,
+        nuevaHistoria.dinamicos = this.dinamicos,
+        nuevaHistoria.altura=this.altura,
+        nuevaHistoria.peso=this.peso,
+        nuevaHistoria.temperatura=this.temperatura.toString(),
+        nuevaHistoria.presion=this.presion.toString(),
+        nuevaHistoria.especialidad=`${nuevaHistoria.especialidad}, ${this.turnoElegido.especialidad}`,
+        this.data.updateHistoria(nuevaHistoria);
+      }else{
+        this.data.cargarHistoriasBD(new HistoriaClinica("",this.turnoElegido.paciente,this.turnoElegido.especialista,this.dinamicos,this.altura,
         this.peso,this.temperatura.toString(),this.presion.toString(),this.turnoElegido.especialidad));
+
+      }
       this.limpiarData();
       this.cerrarPopUp();
     }

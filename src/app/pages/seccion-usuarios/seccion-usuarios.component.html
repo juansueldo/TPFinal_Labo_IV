@@ -2,32 +2,20 @@
 
 <div class="container-fluid contenedor p-4 h-100 mt-5" *ngIf="user.tipo === 'especialista'">
   <h2 class="text-center">Pacientes atendidos</h2>
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>Foto</th>
-        <th>Nombre y Apellido</th>
-        <th>DNI</th>
-        <th>Edad</th>
-        <th>Obra Social</th>
-        <th>Email</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let paciente of pacientesEspecialista">
-        <td>
-          <div class="container-img">
-            <img class="foto-tabla" [src]="paciente.img_1" alt="Foto de {{ paciente.nombre }} {{ paciente.apellido }}">
-          </div>
-        </td>
-        <td>{{ paciente.nombre }} {{ paciente.apellido }}</td>
-        <td>{{ paciente.dni }}</td>
-        <td>{{ paciente.edad }}</td>
-        <td>{{ paciente.obraSocial }}</td>
-        <td>{{ paciente.email }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="card-deck">
+    <div class="card" *ngFor="let paciente of pacientesEspecialista">
+      <img class="card-img-top" [src]="paciente.img_1" alt="Foto de {{ paciente.nombre }} {{ paciente.apellido }}">
+      <div class="card-body">
+        <h5 class="card-title">{{ paciente.nombre }} {{ paciente.apellido }}</h5>
+        <p class="card-text">DNI: {{ paciente.dni }}</p>
+        <p class="card-text">Edad: {{ paciente.edad }}</p>
+        <p class="card-text">Obra Social: {{ paciente.obraSocial }}</p>
+        <p class="card-text">Email: {{ paciente.email }}</p>
+        <p class="card-text" *ngFor="let turno of paciente.ultimosTurnos">Último turno: {{ turno.fecha}}</p>
+        <button  class="btn btn-primary largo" routerLink="/login/historia" [state]="{ mail: paciente.email }">Historia Clinica</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 

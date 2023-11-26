@@ -7,14 +7,14 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
   templateUrl: './bienvenida.component.html',
   styleUrls: ['./bienvenida.component.scss'],
   animations: [
-    trigger('slideLeft', [
+    trigger('slideUp', [
       transition(':enter', [
-        style({ transform: 'translateX(100%)' }),
-        animate('600ms ease', style({ transform: 'translateX(0%)' })),
+        style({ transform: 'translateY(100%)' }),
+        animate('600ms ease', style({ transform: 'translateY(0%)' })),
       ]),
       transition(':leave', [
-        style({ transform: 'translateX(0%)' }),
-        animate('600ms ease', style({ transform: 'translateX(-100%)' })),
+        style({ transform: 'translateY(0%)' }),
+        animate('600ms ease', style({ transform: 'translateY(-100%)' })),
       ]),
     ])
   ]

@@ -17,13 +17,17 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   animations: [
-    trigger('fadeInOut', [
-      state('void', style({
-        opacity: 0
-      })),
-      transition('void <=> *', animate(1500)),
-    ]),
-  ],
+    trigger('slideUp', [
+      transition(':enter', [
+        style({ transform: 'translateY(100%)' }),
+        animate('600ms ease', style({ transform: 'translateY(0%)' })),
+      ]),
+      transition(':leave', [
+        style({ transform: 'translateY(0%)' }),
+        animate('600ms ease', style({ transform: 'translateY(-100%)' })),
+      ]),
+    ])
+  ]
 })
 export class LoginComponent {
   user: any;
@@ -95,16 +99,16 @@ export class LoginComponent {
         if(this.auth.autha.currentUser.emailVerified){
           if(user.tipo === 'paciente'){
             this.usuariosService.setUsuario(user.tipo, user);
-            this.router.navigate(['/mi-perfil']);
+            this.router.navigate(['/login/mi-perfil']);
           }
           else if(user.tipo === 'admin'){
             this.usuariosService.setUsuario(user.tipo, user);
-            this.router.navigate(['/seccion-usuarios']);
+            this.router.navigate(['/login/seccion-usuarios']);
           }
           else if(user.tipo === 'especialista'){
             if(user.estados.registro == Registro.aceptado){
               this.usuariosService.setUsuario(user.tipo, user);
-              this.router.navigate(['/mi-perfil']);
+              this.router.navigate(['/login/mi-perfil']);
             }
             else{
               this.snackBar.showSnackBar('Su cuenta esta pendiente de aprobación', 'cerrar', 5000, false);

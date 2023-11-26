@@ -18,7 +18,7 @@ export class SolicitarTurnoComponent {
   hoy:Date = new Date();
   now:Date = new Date();
   dia:string = this.now.getDate().toString();
-  mesNumero:number = this.now.getMonth()+1;
+  mesNumero:number = this.now.getMonth();
   mes:string = this.mesNumeroToString(this.mesNumero-1);
   anio:string = this.now.getFullYear().toString();
   hora:number = this.now.getHours();
@@ -298,7 +298,7 @@ export class SolicitarTurnoComponent {
       this.etapa = "fin";
     }
     else{
-      this.router.navigateByUrl("mis-turnos");
+      this.router.navigateByUrl("/login/mis-turnos");
     }
   }
 
