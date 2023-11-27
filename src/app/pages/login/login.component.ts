@@ -11,6 +11,8 @@ import { PacienteService } from 'src/app/services/paciente.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { LogIngreso } from 'src/app/models/log-ingreso';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-login',
@@ -47,7 +49,8 @@ export class LoginComponent {
     private pacientesService: PacienteService,
     private especialistaService: EspecialistasService,
     private adminService: AdminService,
-    private usuariosService: UsuariosService
+    private usuariosService: UsuariosService,
+    private data: DataService
     ){
     this.formLogin = new FormGroup({
    
@@ -90,7 +93,10 @@ export class LoginComponent {
       //const date = new Date();
       //const fullDate = date.toLocaleDateString() + '-' + date.toLocaleTimeString();
       this.auth.login(this.email.value, this.clave.value).then(res =>{
-      
+        let now = new Date();
+        let fecha = now.getDate().toString()+"/"+(now.getMonth()+1).toString()+"/"+now.getFullYear().toString();
+        let hora = now.getHours().toString()+":"+this.formatoMinutos(now.getMinutes());
+        this.data.cargarLogIngresos(new LogIngreso(this.email.value,fecha,hora));
       let user =  this.usuariosService.buscarUsuarioPorMail(this.email.value);
       console.log(user);
         this.alerta = `Bienvenido ${user.nombre} ${user.apellido}`;
@@ -157,5 +163,11 @@ export class LoginComponent {
   }
   mostrarFoto(email: string){
     return this.usuariosService.buscarUsuarioPorMail(email).img_1;
+  }
+  formatoMinutos(minutos:number){
+    if(minutos < 10){
+      return "0" + minutos;
+    }
+    return minutos.toString();
   }
 }

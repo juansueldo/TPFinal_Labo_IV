@@ -73,7 +73,7 @@ export class MiVentanaModalComponent implements OnInit {
           pdf.add("Especialista: " + atencion.especialista);
           pdf.add("Estado: " + atencion.estado);
           pdf.add(`Hora ${atencion.hora}`);
-          pdf.add(`Fecha: ${atencion.dia}  ${atencion.fecha} de ${atencion.mes} del ${atencion.anio}`);
+          pdf.add(`Fecha: ${atencion.fecha} de ${atencion.mes} del ${atencion.anio}`);
           
           pdf.add("\n");
         })

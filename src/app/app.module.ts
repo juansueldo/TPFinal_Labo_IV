@@ -49,6 +49,10 @@ import { MiPerfilComponent } from './pages/mi-perfil/mi-perfil.component';
 import { DiaStringPipe } from './pipes/dia-string.pipe';
 import { HistoriaComponent } from './pages/historia/historia.component';
 import { MiVentanaModalComponent } from './components/mi-ventana-modal/mi-ventana-modal.component';
+import { EstadisticasComponent } from './pages/estadisticas/estadisticas.component';
+import { CalendarioComponent } from './components/calendario/calendario.component';
+import { MesStringPipe } from './pipes/mes-string.pipe';
+import { HoverColorearDirective } from './directivas/hover-colorear.directive';
 @NgModule({
   declarations: [
     AppComponent,
@@ -74,6 +78,10 @@ import { MiVentanaModalComponent } from './components/mi-ventana-modal/mi-ventan
     DiaStringPipe,
     HistoriaComponent,
     MiVentanaModalComponent,
+    EstadisticasComponent,
+    CalendarioComponent,
+    MesStringPipe,
+    HoverColorearDirective,
 
 
   ],

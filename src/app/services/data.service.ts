@@ -1,16 +1,24 @@
 
 import { Injectable } from '@angular/core';
 import { doc, addDoc, collection, collectionData, Firestore, getDoc, getDocs, updateDoc, setDoc } from "@angular/fire/firestore";
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Turno } from '../models/turno.models';
+import{LogIngreso} from '../models/log-ingreso';
+
 import { HistoriaClinica } from '../models/historiaclinica.models';
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-
+  historias$ : Subject<HistoriaClinica[]>;
+  historias:HistoriaClinica[];
   constructor(private firestore: Firestore) {
-    
+    this.historias$ = new Subject();
+
+    this.getHistoriaDB().subscribe(historia => {
+      this.historias = historia;
+      this.historias$.next(historia);
+    });
  }
   getTurnosDB(): Observable<Turno[]>{
     let col = collection(this.firestore, 'turnos');
@@ -54,5 +62,13 @@ export class DataService {
         presion:historia.presion,
         especialidad:historia.especialidad
       });
+    }
+    getLogIngresos():Observable<LogIngreso[]>{
+      let col = collection(this.firestore, 'logIngresos');
+      return collectionData(col) as Observable<LogIngreso[]>;
+    }
+    cargarLogIngresos(ingresos:LogIngreso){
+      let col = collection(this.firestore, 'logIngresos');
+      addDoc(col, Object.assign({}, ingresos));
     }
 }

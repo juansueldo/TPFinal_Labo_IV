@@ -8,7 +8,7 @@ import { SolicitarTurnoComponent } from '../solicitar-turno/solicitar-turno.comp
 import { MiPerfilComponent } from '../mi-perfil/mi-perfil.component';
 import { HistoriaComponent } from '../historia/historia.component';
 import { SeccionUsuariosComponent } from '../seccion-usuarios/seccion-usuarios.component';
-
+import {EstadisticasComponent} from '../estadisticas/estadisticas.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -32,6 +32,9 @@ const routes: Routes = [
 {
   path: "seccion-usuarios", component: SeccionUsuariosComponent,
 },
+{
+  path: "estadisticas", component: EstadisticasComponent,
+}
 ];
 
 @NgModule({
