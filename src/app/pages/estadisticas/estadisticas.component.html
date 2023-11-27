@@ -1,6 +1,6 @@
 <app-navbar [showButtons]="true" [usuario]="user"></app-navbar>
 <!-- PopUp -->
-<div class="modal fade" id="pdfModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade mt-lg-5" id="pdfModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content" style="text-align: center; background-color:rgb(19, 43, 71)">
             <app-calendario *ngIf="this.popUpMomento == 'inicio'" (diaEmitter)="recibiRespuesta($event, 'inicio')"></app-calendario>
@@ -11,8 +11,8 @@
 <!-- PopUp -->
 
 
-<div class="container" [hidden]="!cargarPdf">
-    <!-- <button class="btn btn-warning" (click)="cambiar(false)">Volver</button> -->
+<div class="container mt-lg-5"  style="margin-top: 40px;" [hidden]="!cargarPdf">
+    <br><br>
     <button class="btn btn-danger" [hidden]="!cargarPdf" (click)="imprimirPdf()">Descargar PDF</button>
     <button style="margin-left: 20px" class="btn btn-success" [hidden]="!cargarPdf" (click)="exportExcel()">Descargar Excel</button>
     <br><br>
@@ -21,12 +21,12 @@
     <!-- GRAFICOS -->
     <div class="card-group">
         <div style="text-align: center;" class="card">
-            <h2>Especialidades</h2>
+            <h2>Cantidad de turnos por especialidad</h2>
             <canvas id="especialidades"></canvas>
         </div>
         <p style="color: transparent;">ssssss</p>
         <div style="text-align: center;" class="card">
-            <h2>Dia</h2>
+            <h2>Cantidad de turnos por día</h2>
             <canvas id="dia"></canvas>
         </div>
     </div>

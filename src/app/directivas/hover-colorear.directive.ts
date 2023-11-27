@@ -8,12 +8,14 @@ export class HoverColorearDirective {
   constructor(private el: ElementRef) {}
 
   @HostListener("mouseenter") onMouseEnter() {
-    this.el.nativeElement.style.backgroundColor = 'rgb(0, 179, 255)';
+    this.el.nativeElement.style.backgroundColor = 'rgb(5, 5, 99)';
     this.el.nativeElement.style.cursor = 'pointer';
-    this.el.nativeElement.style.borderRadius = '100%';
+    this.el.nativeElement.style.color = 'white';
+    
   }
 
   @HostListener("mouseleave") onMouseLeave() {
     this.el.nativeElement.style.backgroundColor = 'transparent';
+    this.el.nativeElement.style.color = 'black';
   }
 }

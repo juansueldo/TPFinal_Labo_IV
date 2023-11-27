@@ -102,7 +102,7 @@ export class EstadisticasComponent {
         Number(turno.dia),this.cambiarMesNumero(turno.mes),Number(turno.anio)) == "menor" && 
         this.evaluarFechas(this.fechaFin.getDate(),(this.fechaFin.getMonth()+1),this.fechaFin.getFullYear(),
         Number(turno.dia),this.cambiarMesNumero(turno.mes),Number(turno.anio)) == "mayor"){
-          if(turno.especialista == esp.email){ // && turno.estado == "pendiente"
+          if(turno.especialista == esp.email){
             cantidad++;
           }
         }
