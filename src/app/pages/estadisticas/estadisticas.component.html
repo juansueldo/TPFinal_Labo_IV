@@ -18,6 +18,14 @@
     <br><br>
 </div>
 <div id="content" #content class="container" [hidden]="!cargarPdf">
+    <br>
+    <div class="card-group">
+        <div style="text-align: center;" class="card">
+            <h2>Historial Ingresos</h2>
+            <canvas id="ingresos"></canvas>
+        </div>
+    </div>
+    <br>
     <!-- GRAFICOS -->
     <div class="card-group">
         <div style="text-align: center;" class="card">
@@ -42,9 +50,11 @@
             <canvas id="finalizados"></canvas>
         </div>
     </div>
+    
     <!-- GRAFICOS -->
 
     <br>
+    
     <table id="logIngresos" class="table" style="text-align: center;">
     <thead>
         <tr>

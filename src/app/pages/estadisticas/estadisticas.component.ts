@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Chart, registerables } from 'chart.js';
+import { Chart, registerables } from 'chart.js/auto';
 import { PdfMakeWrapper, Img, Txt } from 'pdfmake-wrapper';
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import * as XLSX from 'xlsx';
@@ -33,6 +33,24 @@ export class EstadisticasComponent {
   turnosFinalizadosPorFecha:number[] = [];
   especialidades:string[] = [];
   colores:string[] = ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'];
+  backgroundColor: string[] =[
+    'rgba(255, 99, 132, 0.2)',
+    'rgba(255, 159, 64, 0.2)',
+    'rgba(255, 205, 86, 0.2)',
+    'rgba(75, 192, 192, 0.2)',
+    'rgba(54, 162, 235, 0.2)',
+    'rgba(153, 102, 255, 0.2)',
+    'rgba(201, 203, 207, 0.2)'
+  ];
+  borderColor:string[] = [
+    'rgb(255, 99, 132)',
+    'rgb(255, 159, 64)',
+    'rgb(255, 205, 86)',
+    'rgb(75, 192, 192)',
+    'rgb(54, 162, 235)',
+    'rgb(153, 102, 255)',
+    'rgb(201, 203, 207)'
+  ];
   turnos:Turno[] = [];
   @ViewChild('content', {static:true}) el!: ElementRef<HTMLImageElement>;
   formModal: any;
@@ -282,26 +300,47 @@ export class EstadisticasComponent {
 
   grafico(){
     const ctx = new Chart("especialidades", {
-      type: 'bar',
+      type: 'pie',
       data: {
         labels: this.especialidades,
         datasets: [{
           label: 'Turnos',
           data: this.turnosPorEspecialidad,
+          backgroundColor: this.backgroundColor,
+          borderColor: this.borderColor,
+          borderWidth: 1
+        }]
+      },
+      options: {
+        
+      }
+    });
+  }
+  grafico1() {
+    const usuarios = this.logIngresos.map(item => item.usuario);
+    const fechasHorarios = this.logIngresos.map(item => `${item.dia} ${item.hora}`);
+    
+    const ctx = new Chart("ingresos", {
+      type: 'bar',
+      data: {
+        labels: usuarios,
+        datasets: [{
+          label: 'Horario de Ingresos',
+          data: fechasHorarios,
           borderWidth: 1,
           backgroundColor: this.colores
         }]
       },
       options: {
         scales: {
-          y: {
-            beginAtZero: true
-          }
+          x: { type: 'category', position: 'bottom' },
+          y: { type: 'category', position: 'left' }
         }
       }
     });
   }
-
+  
+  
   cambiar(pdf:boolean){
     this.cargarPdf = pdf;
     if(pdf){
@@ -310,6 +349,7 @@ export class EstadisticasComponent {
       this.contarTurnosSolicitadosPorFecha();
       this.contarTurnosFinalizadosPorFecha();
       this.grafico();
+      this.grafico1();
       this.grafico2();
       this.grafico3();
       this.grafico4();
@@ -334,22 +374,19 @@ export class EstadisticasComponent {
 
   grafico2(){
     const ctx = new Chart("dia", {
-      type: 'bar',
+      type: 'doughnut',
       data: {
         labels: this.dias,
         datasets: [{
           label: 'Turnos',
           data: this.diasPorTurno,
           borderWidth: 1,
-          backgroundColor: this.colores
+          backgroundColor: this.backgroundColor,
+          borderColor: this.borderColor,
         }]
       },
       options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
+       
       }
     });
   }
@@ -363,7 +400,8 @@ export class EstadisticasComponent {
           label: 'Turnos',
           data: this.turnosSolicitadosPorFecha,
           borderWidth: 1,
-          backgroundColor: this.colores
+          backgroundColor: this.backgroundColor,
+          borderColor: this.borderColor,
         }]
       },
       options: {
@@ -384,7 +422,8 @@ export class EstadisticasComponent {
           label: 'Turnos',
           data: this.turnosFinalizadosPorFecha,
           borderWidth: 1,
-          backgroundColor: this.colores
+          backgroundColor: this.backgroundColor,
+          borderColor: this.borderColor,
         }]
       },
       options: {
