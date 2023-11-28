@@ -1,4 +1,20 @@
 
+.button-container {
+  display: flex;
+  margin-top: 10px;
+}
+
+.custom-fab {
+  position: relative;
+  width: 72px; /* Ajusta el tamaño del botón según tus necesidades */
+  height: 72px; /* Ajusta el tamaño del botón según tus necesidades */
+  padding: 5px;
+  border-radius: 50%; /* Hace que el botón sea redondo */
+  margin-right: 10px; /* Espacio entre los botones, ajusta según tus preferencias */
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Espacio entre los botones, ajusta según tus preferencias */
+}
 .table-container{
     background-color: #49a22b;
     color: aliceblue;
@@ -30,16 +46,20 @@
 }
 
 .foto {
-  width: 90%;
-  height: 90%;
+  height: 70px;
+  width: 70px;
   position: absolute;
-  top: 0;
-  bottom: 0;
-  border-radius: 50%; /* Asegura que la imagen sea redonda en un botón circular */
+  border-radius: 50%;
+  object-fit: cover;
 }
-
+.foto:hover{
+  opacity: 0.5;
+}
 .nombre {
+  color: #cfd6cd;
   z-index: 9;
-  margin-top: 28px; /* Espacio entre la imagen y el nombre */
-  text-shadow: 4px 4px 8px rgba(0,0,0,0.6);
+  margin-top: 28px;
+  text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.842);
+  -webkit-text-fill-color: transparent; /* Relleno de texto transparente para permitir el uso de text-stroke */
+  -webkit-text-stroke: 1px #004373; /* Ancho y color del borde del texto */
 }

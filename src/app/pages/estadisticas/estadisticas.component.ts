@@ -321,11 +321,17 @@ export class EstadisticasComponent {
   grafico1() {
     const usuarios = this.logIngresos.map(item => item.usuario);
     const fechasHorarios = this.logIngresos.map(item => `${item.dia} ${item.hora}`);
-    
+    const usuariosSinFechas = usuarios.filter(item => {
+      // Usa una expresión regular para verificar si el elemento es un correo electrónico
+      const esCorreoElectronico = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(item);
+  
+      // Retorna true si el elemento parece ser un correo electrónico
+      return esCorreoElectronico;
+    });
     const ctx = new Chart("ingresos", {
       type: 'bar',
       data: {
-        labels: usuarios,
+        labels: usuariosSinFechas,
         datasets: [{
           label: 'Horario de Ingresos',
           data: fechasHorarios,
@@ -335,8 +341,23 @@ export class EstadisticasComponent {
       },
       options: {
         scales: {
-          x: { type: 'category', position: 'bottom' },
-          y: { type: 'category', position: 'left' }
+          x: { 
+            type: 'category', 
+            position: 'bottom',
+          },
+          y: { 
+            type: 'category', 
+            position: 'left',
+            ticks: {
+              callback: (value, index, values) => {
+                if (typeof value === 'string') {
+                  const parts = value.split(' ');
+                  return parts.length > 1 ? parts[1] : value;
+                }
+                return value.toString();
+              }
+            }
+          }
         }
       }
     });
