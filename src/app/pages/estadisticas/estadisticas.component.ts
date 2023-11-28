@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Chart, registerables } from 'chart.js/auto';
 import { PdfMakeWrapper, Img, Txt } from 'pdfmake-wrapper';
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
@@ -12,6 +12,7 @@ import { UsuariosService } from '../../services/usuarios.service';
 import { DataService } from '../../services/data.service';
 import { EspecialistasService } from '../../services/especialistas.service';
 import { EspecialidadesService } from '../../services/especialidades.service';
+import html2canvas from 'html2canvas';
 
 
 
@@ -22,6 +23,7 @@ import { EspecialidadesService } from '../../services/especialidades.service';
 })
 export class EstadisticasComponent {
   @ViewChild('content') content!: ElementRef;
+  @ViewChildren('canvasElement') canvasElements: QueryList<ElementRef<HTMLCanvasElement>>;
   especialistas:Especialista[] = [];
   especialistasNombres:string[] = [];
   logIngresos:LogIngreso[] = [];
@@ -444,20 +446,71 @@ export class EstadisticasComponent {
     XLSX.writeFile(wb, 'estadisticas.xlsx');
   }
 
-  imprimirPdf(){
-    const pdf = new PdfMakeWrapper();
+  async capturarGraficoComoImagen(chartId: string): Promise<string> {
+    const chartElement = document.getElementById(chartId);
 
-    // Obtener el contenido HTML del elemento
-    const contentHtml = this.content.nativeElement.innerHTML;
+    if (chartElement) {
+      const canvas = await html2canvas(chartElement);
+      return canvas.toDataURL('image/png');
+    }
 
-    // Agregar el contenido al PDF
-    pdf.add(
-      new Txt(contentHtml).alignment('left').fontSize(12),
-    );
-
-    // Opcional: Puedes agregar más configuraciones al PDF según tus necesidades
-
-    // Descargar el PDF
-    pdf.create().download('mi-archivo.pdf');
+    return '';
   }
+
+  async agregarGraficoAlPdf(pdf: PdfMakeWrapper, chartId: string, titulo: string): Promise<void> {
+    const imagenBase64 = await this.capturarGraficoComoImagen(chartId);
+    const logo = await new Img(imagenBase64).absolutePosition(30,20).fit([40,40]).build();
+    if (imagenBase64) {
+      pdf.add([
+        logo,
+        new Txt(titulo).fontSize(14).bold().margin([0, 0, 0, 10]),
+
+      ]
+      );
+    }
+  }
+  obtenerImagenesBase64DeCanvas(): Promise<string[]> {
+    const imagenesBase64: string[] = [];
+  
+    this.canvasElements.forEach(canvasElementRef => {
+      const canvasElement = canvasElementRef.nativeElement;
+      const imagenBase64 = canvasElement.toDataURL('image/png');
+      imagenesBase64.push(imagenBase64);
+    });
+  
+    return Promise.resolve(imagenesBase64);
+  }
+  async imprimirPdf() {
+    const pdf = new PdfMakeWrapper();
+    PdfMakeWrapper.setFonts(pdfFonts);
+    const logo = await new Img('../../../assets/logo.png').absolutePosition(30,20).fit([40,40]).build();
+    const imagenesBase64 = await this.obtenerImagenesBase64DeCanvas();
+    pdf.add([logo, new Txt('Clinica OnLine').color('gray').absolutePosition(73,35).fontSize(15).italics().end]);
+    pdf.add('\n');
+    pdf.add(new Txt('Estadisticas').decoration('underline').alignment('center').fontSize(20).bold().end);
+    let hoy = new Date();
+    pdf.add(new Txt(['', new Txt('Fecha: ').bold().end, ' ', hoy.getDate().toString(), '/', (hoy.getMonth() + 1).toString(), '/', hoy.getFullYear().toString()]).end);
+    const grafico1 = await new Img(imagenesBase64[0]).absolutePosition(170,120).fit([350, 350]).build();
+    pdf.add(new Txt('Historial ingresos').alignment('center').fontSize(15).bold().end);
+    pdf.add(grafico1);
+    pdf.add(new Txt('Cantidad de turnos por especialidad').absolutePosition(25,320).fontSize(15).bold().end);
+    const grafico2 = await new Img(imagenesBase64[1]).absolutePosition(25,350).fit([200, 200]).build();
+    pdf.add(grafico2);
+    pdf.add(new Txt('Cantidad de turnos por día').absolutePosition(350,320).fontSize(15).bold().end);
+    const grafico3 = await new Img(imagenesBase64[2]).absolutePosition(350,350).fit([200, 200]).build();
+    pdf.add(grafico3);
+    pdf.add(new Txt('Turnos Solicitados').absolutePosition(25,620).fontSize(15).bold().end);
+    const grafico4 = await new Img(imagenesBase64[3]).absolutePosition(25,650).fit([250, 250]).build();
+    pdf.add(grafico4);
+    pdf.add(new Txt('Turnos Finalizados').absolutePosition(350,620).fontSize(15).bold().end);
+    const grafico5 = await new Img(imagenesBase64[4]).absolutePosition(350,650).fit([250, 250]).build();
+    pdf.add(grafico5);
+  
+  
+    pdf.create().download('estadisticas.pdf');
+    pdf.create().open();
+  }
+  
+  
+  
 }
