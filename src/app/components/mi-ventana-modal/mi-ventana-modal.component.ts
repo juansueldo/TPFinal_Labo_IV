@@ -70,11 +70,12 @@ export class MiVentanaModalComponent implements OnInit {
  
         atenciones.forEach(atencion=>{
           pdf.add("Especialidad: " + atencion.especialidad);
-          pdf.add("Especialista: " + atencion.especialista);
+          const especialista = this.usuarioService.buscarUsuarioPorMail(atencion.especialista);
+          pdf.add(`Especialista: ${especialista.nombre} ${especialista.apellido}` );
           pdf.add("Estado: " + atencion.estado);
-          pdf.add(`Hora ${atencion.hora}`);
-          pdf.add(`Fecha: ${atencion.fecha} de ${atencion.mes} del ${atencion.anio}`);
-          
+          pdf.add(`Fecha del turno: ${atencion.dia} de ${atencion.mes} del ${atencion.anio} a las ${atencion.hora}hs`);
+          atencion.fecha !== "" ? pdf.add(`Finalizado: ${atencion.fecha}`) : "";
+          atencion.comentario !== "" ? pdf.add(`Observaciones: ${atencion.comentario}`) : "";
           pdf.add("\n");
         })
          
