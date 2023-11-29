@@ -6,44 +6,38 @@ import { Component, EventEmitter, Output } from '@angular/core';
   styleUrls: ['./calendario.component.scss']
 })
 export class CalendarioComponent {
-  now:Date = new Date();
-  dia:string = this.now.getDate().toString();
-  mes:number = (this.now.getMonth() +1);
-  anio:string = this.now.getFullYear().toString();
-  hora:number = this.now.getHours();
+  now: Date = new Date();
+  dia: string = this.now.getDate().toString();
+  mes: number = this.now.getMonth() + 1;
+  anio: number = this.now.getFullYear();
+  hora: number = this.now.getHours();
   restarDia = false;
   sumarDia = true;
-  mostrarCalendario:string[][] = [];
-  diaElegido:Date;
+  mostrarCalendario: string[][] = [];
+  diaElegido: Date;
 
-  @Output() diaEmitter:EventEmitter<Date> = new EventEmitter();
+  @Output() diaEmitter: EventEmitter<Date> = new EventEmitter();
 
   ngOnInit(): void {
-    this.cargarCalendario(this.mes);
+    this.cargarCalendario(this.mes, this.anio);
   }
 
-  cargarCalendario(mes:number){
+  cargarCalendario(mes: number, anioActual: number) {
     this.mostrarCalendario = [];
-    let fechaAux = new Date();
+    let fechaAux = new Date(anioActual, mes - 1, 1); 
     let fechaNumero = 1;
-    fechaAux.setMonth(mes-1);
-    fechaAux.setDate(fechaNumero);
-    for(let i=0 ; i<5 ; i++){
+
+    for (let i = 0; i < 5; i++) {
       let semana = [];
-      for(let j=0 ; j<7 ; j++){
-        if(i==0 && fechaAux.getDay() <= j){
+      for (let j = 0; j < 7; j++) {
+        if (i == 0 && fechaAux.getDay() <= j) {
           fechaAux.setDate(fechaNumero);
           semana.push(fechaAux.getDate());
           fechaNumero++;
-        }
-        else if(i==0){
+        } else if (i == 0) {
           semana.push(" ");
-        }
-        else if(i!=0){
+        } else if (i != 0 && fechaNumero <= this.diasEnMes(mes, anioActual)) {
           fechaAux.setDate(fechaNumero);
-          if(i==4 && fechaAux.getDate() < 20){
-            break;
-          }
           semana.push(fechaAux.getDate());
           fechaNumero++;
         }
@@ -52,24 +46,29 @@ export class CalendarioComponent {
     }
   }
 
-  elegirDia(dia:string){
-    this.diaElegido = this.now;
-    this.diaElegido.setMonth(this.mes-1);
-    this.diaElegido.setDate(Number(dia));
+  diasEnMes(mes: number, anio: number): number {
+    return new Date(anio, mes, 0).getDate();
+  }
+
+  elegirDia(dia: string) {
+    this.diaElegido = new Date(this.anio, this.mes - 1, Number(dia));
     this.diaEmitter.emit(this.diaElegido);
   }
 
-
-
-
-  cambiarMes(cuando:string){
-    if(cuando == "antes"){
+  cambiarMes(cuando: string) {
+    if (cuando == "antes") {
       this.mes--;
-    }
-    else{
+      if (this.mes < 1) {
+        this.mes = 12;
+        this.anio = (Number(this.anio) - 1);
+      }
+    } else {
       this.mes++;
+      if (this.mes > 12) {
+        this.mes = 1;
+        this.anio = (Number(this.anio) + 1);
+      }
     }
-    this.cargarCalendario(this.mes);
-  }  
-
+    this.cargarCalendario(this.mes, this.anio);
+  }
 }

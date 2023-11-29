@@ -6,14 +6,15 @@
 
 .custom-fab {
   position: relative;
-  width: 72px; /* Ajusta el tamaño del botón según tus necesidades */
-  height: 72px; /* Ajusta el tamaño del botón según tus necesidades */
+  width: 72px; 
+  height: 72px; 
   padding: 5px;
-  border-radius: 50%; /* Hace que el botón sea redondo */
-  margin-right: 10px; /* Espacio entre los botones, ajusta según tus preferencias */
+  border-radius: 50%; 
+  margin-right: 10px; 
   display: flex;
   justify-content: center;
-  align-items: center; /* Espacio entre los botones, ajusta según tus preferencias */
+  align-items: center; 
+  border: 3px solid #49a22b;
 }
 .table-container{
     background-color: #49a22b;
@@ -56,9 +57,11 @@
   opacity: 0.5;
 }
 .nombre {
-  color: #cfd6cd;
+  color: #000000;
+  background-color: #000000;
   z-index: 9;
-  margin-top: 28px;
+  font-size: 12px;
+  margin-top: 48px;
   text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.842);
   -webkit-text-fill-color: transparent; /* Relleno de texto transparente para permitir el uso de text-stroke */
   -webkit-text-stroke: 1px #004373; /* Ancho y color del borde del texto */

@@ -6,6 +6,7 @@ import { PacienteService } from 'src/app/services/paciente.service';
 import * as XLSX from 'xlsx';
 import { switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
+import { UsuariosService } from 'src/app/services/usuarios.service';
 @Component({
   selector: 'app-listado-pacientes',
   templateUrl: './listado-pacientes.component.html',
@@ -16,7 +17,7 @@ export class ListadoPacientesComponent {
  
   @Output() selectedPacienteEvent = new EventEmitter<Paciente>();
 
-  constructor(private pacienteService : PacienteService, private data: DataService) {
+  constructor(private pacienteService : PacienteService, private data: DataService,private usuarioSerice: UsuariosService) {
   }
   ngOnInit(): void {
     this.pacienteService.obtenerPacientes().subscribe(res=>{
@@ -42,7 +43,35 @@ export class ListadoPacientesComponent {
   handleExcelTurnosPaciente(paciente: any) {
     this.exportarDatosPaciente(paciente)
       .subscribe(turnosTomados => {
-        this.exportToExcel(turnosTomados, "turnosPaciente");
+          
+        const mesesNumeros = {
+          'Enero': 1,
+          'Febrero': 2,
+          'Marzo': 3,
+          'Abril': 4,
+          'Mayo': 5,
+          'Junio': 6,
+          'Julio': 7,
+          'Agosto': 8,
+          'Septiembre': 9,
+          'Octubre': 10,
+          'Noviembre': 11,
+          'Diciembre': 12
+        };
+        const turnosFormateados = turnosTomados.map(turno => {
+          const especialista = this.usuarioSerice.buscarUsuarioPorMail(turno.especialista);
+          return {
+            fechadelturno: `${turno.dia}/${mesesNumeros[turno.mes]}/${turno.anio} ${turno.hora}`,
+            especialista: `${especialista.nombre} ${especialista.apellido} `,
+            especialidad: turno.especialidad,
+            comentarios: turno.comentario,
+            estado: turno.estado,
+            resenia: turno.resenia,
+            calificacion: turno.calificacion,
+
+          };
+        });
+        this.exportToExcel(turnosFormateados, `turnos_${paciente.nombre}_${paciente.apellido}` );
       });
   }
   
