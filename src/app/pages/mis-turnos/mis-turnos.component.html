@@ -1,6 +1,9 @@
 <app-navbar [showButtons]="true" [usuario]="usuario"></app-navbar>
 <app-spinner [showSpinner]="loading"></app-spinner>
-<div class="container card mt-5" style="max-height: 1200px;">
+<div class="card-group">
+
+
+<div class="container card mt-5">
     <!-- Filtro -->
     <div style="text-align: center;" class="">
         <br>
@@ -90,6 +93,7 @@
         <!-- Detalles -->
 
     </div>
+</div>
 </div>
 <!-- PopUp -->
 <div class="modal fade" id="cancelarTurno" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -229,7 +233,7 @@
             <label for="fecha">¿Recomendarias nuestra clinica?</label>
             <input name="mail" [(ngModel)]="preguntas[2]" class="w-75 form-control" style="margin: 0 auto; float: none;"/>
             <br>
-            <button class="btn btn-secondary" style="margin: 0 auto; float: none;" (click)="cerrarPopUp()">Completar encuesta</button> 
+            <button class="btn btn-secondary" style="margin: 0 auto; float: none;" (click)="llenarEncuesta()">Completar encuesta</button> 
             <p style="color: red;">{{mensajeError}}</p>
             <br>
             <br>

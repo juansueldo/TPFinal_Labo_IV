@@ -2,7 +2,7 @@
 <!-- PopUp -->
 <div class="modal fade mt-lg-5" id="pdfModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content" style="text-align: center; background-color:rgb(19, 43, 71)">
+        <div class="modal-content" style="text-align: center; background-color:#49a22b">
             <app-calendario *ngIf="this.popUpMomento == 'inicio'" (diaEmitter)="recibiRespuesta($event, 'inicio')"></app-calendario>
             <app-calendario *ngIf="this.popUpMomento == 'fin'" (diaEmitter)="recibiRespuesta($event, 'fin')"></app-calendario>
         </div>
@@ -73,25 +73,30 @@
     </table>
 </div> 
 
-<div class="container" [hidden]="cargarPdf">
-    <div style="text-align: center;" class="card">
+<div class="container mt-lg-5" [hidden]="cargarPdf">
+    <div class="card-group">
+        <div style="text-align: center;" class="card mt-lg-5">
+            <br>
+            <h2>Estadisticas</h2>
+            <br>
+            <div style="margin: 0 auto; float: none;" class="w-75 row">
+                <div class="col-md-6 mb-3">
+                    <button class="btn btn-primary" (click)="abrirPopUp('inicio')">Elegir fecha de inicio</button>
+                    <p style="color: transparent; font-size: 1px;">ssssss</p>
+                    <input style="text-align: center;" value="{{diaInicio | diaString}} {{fechaInicioStr}}" name="fechaInicio" [readonly]="true" class="form-control"/>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <button class="btn btn-primary" (click)="abrirPopUp('fin')">Elegir fecha de fin</button>
+                    <p style="color: transparent; font-size: 1px;">ssssss</p>
+                    <input style="text-align: center;" value="{{diaFin | diaString}} {{fechaFinStr}}" name="fechaFin" [readonly]="true" class="form-control"/>
+                </div>
+                
+            <button style="margin: 0 auto; float: none;"  class="btn btn-primary" (click)="cambiar(true)">ver estadisticas</button>
+            <br>
+            <br>
+        </div>
         <br>
-        <h2>Estadisticas</h2>
-        <br>
-        <div style="margin: 0 auto; float: none;" class="w-75 row">
-            <div class="col-md-6 mb-3">
-                <button class="btn btn-primary" (click)="abrirPopUp('inicio')">Elegir fecha de inicio</button>
-                <input style="text-align: center;" value="{{diaInicio | diaString}} {{fechaInicioStr}}" name="fechaInicio" [readonly]="true" class="form-control"/>
-            </div>
-            <div class="col-md-6 mb-3">
-                <button class="btn btn-primary" (click)="abrirPopUp('fin')">Elegir fecha de fin</button>
-                <input style="text-align: center;" value="{{diaFin | diaString}} {{fechaFinStr}}" name="fechaFin" [readonly]="true" class="form-control"/>
-            </div>
-            
-        <button style="margin: 0 auto; float: none;"  class="btn btn-primary" (click)="cambiar(true)">ver estadisticas</button>
-        <br>
-        <br>
+        </div> 
     </div>
-    <br>
-    </div> 
+    
 </div> 

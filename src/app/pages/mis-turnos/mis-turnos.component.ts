@@ -282,6 +282,12 @@ export class MisTurnosComponent {
       this.cerrarPopUp();
     }
   }
+  llenarEncuesta(){
+      this.turnoElegido.encuesta = `${this.preguntas[0]}, ${this.preguntas[1]}, ${this.preguntas[2]}`;
+      this.data.updateTurnos(this.turnoElegido);
+      this.limpiarData();
+      this.cerrarPopUp();
+  }
 
   resetearMensajeError(){
     this.mensajeError = "";
