@@ -40,7 +40,7 @@ export class SeccionUsuariosComponent {
             pacientes.forEach(paciente => {
               const pacienteYaExiste = this.pacientesEspecialista.some(p => p.email === paciente.email);
   
-              if (!pacienteYaExiste && turno.paciente === paciente.email) {
+              if (!pacienteYaExiste && turno.paciente === paciente.email && turno.estado === 'finalizado') {
                 const ultimosTurnos = this.obtenerUltimosTresTurnos(paciente.email, turnos);
                 
                 
