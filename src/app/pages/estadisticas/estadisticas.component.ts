@@ -342,7 +342,13 @@ export class EstadisticasComponent {
         data: usuariosFormateados.map(usuario => usuario.count),
         fill: false,
         borderColor: 'rgb(75, 192, 192)',
-        tension: 0.1
+        tension: 0.1,
+        pointRadius: 5,
+        pointBackgroundColor: '#168ede', // Color del punto
+        pointBorderColor: '#fff', // Color del borde del punto
+        pointHoverRadius: 8, // Tamaño del punto al pasar el ratón
+        pointHoverBackgroundColor: '#168ede', // Color del punto al pasar el ratón
+        pointHoverBorderColor: '#fff' 
       }]
     };
 
