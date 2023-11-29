@@ -319,45 +319,41 @@ export class EstadisticasComponent {
     });
   }
   grafico1() {
-    const usuarios = this.logIngresos.map(item => item.usuario);
-    const fechasHorarios = this.logIngresos.map(item => `${item.dia} ${item.hora}`);
-    const usuariosSinFechas = usuarios.filter(item => {
-      // Usa una expresión regular para verificar si el elemento es un correo electrónico
-      const esCorreoElectronico = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(item);
-  
-      // Retorna true si el elemento parece ser un correo electrónico
-      return esCorreoElectronico;
+    const usuariosFormateados = this.logIngresos.map(log => {
+      return log.usuario;
+    });
+    const fechaHora = this.logIngresos.map(item => {
+      const fechaHoraString = `${item.dia} ${item.hora}`;
+
+      return fechaHoraString;
     });
     const ctx = new Chart("ingresos", {
-      type: 'bar',
+      type: 'line',
       data: {
-        labels: usuariosSinFechas,
+        labels: fechaHora,
         datasets: [{
           label: 'Horario de Ingresos',
-          data: fechasHorarios,
+          data: usuariosFormateados,
           borderWidth: 1,
-          backgroundColor: this.colores
+          backgroundColor: this.colores,
+          pointRadius: 5, // Tamaño del punto
+          pointBorderColor: '#fff', // Color del borde del punto
+          pointHoverRadius: 8, // Tamaño del punto al pasar el ratón
+          pointHoverBackgroundColor: '#168ede', // Color del punto al pasar el ratón
+          pointHoverBorderColor: '#fff' // Color del borde del punto al pasar el ratón
         }]
       },
       options: {
         scales: {
-          x: { 
+          x:{
             type: 'category', 
             position: 'bottom',
           },
-          y: { 
+          y:{
             type: 'category', 
             position: 'left',
-            ticks: {
-              callback: (value, index, values) => {
-                if (typeof value === 'string') {
-                  const parts = value.split(' ');
-                  return parts.length > 1 ? parts[1] : value;
-                }
-                return value.toString();
-              }
-            }
-          }
+          },
+         
         }
       }
     });
