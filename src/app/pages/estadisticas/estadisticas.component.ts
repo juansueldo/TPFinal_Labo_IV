@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import { Chart, registerables } from 'chart.js/auto';
+import { Chart, ChartType, ChartTypeRegistry, TooltipItem, registerables } from 'chart.js/auto';
 import { PdfMakeWrapper, Img, Txt } from 'pdfmake-wrapper';
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import * as XLSX from 'xlsx';
@@ -319,45 +319,52 @@ export class EstadisticasComponent {
     });
   }
   grafico1() {
-    const usuariosFormateados = this.logIngresos.map(log => {
-      return log.usuario;
+    const userStats: { [usuario: string]: { index: number; count: number } } = {};
+    const usuariosFormateados = this.logIngresos.map((log, index) => {
+      const usuarioInfo = userStats[log.usuario];
+      if (usuarioInfo) {
+        usuarioInfo.count += 1;
+      } else {
+        userStats[log.usuario] = { index: index + 1, count: 1 };
+      }
+      return { index: userStats[log.usuario].index, usuario: log.usuario, count: userStats[log.usuario].count };
     });
+  
     const fechaHora = this.logIngresos.map(item => {
       const fechaHoraString = `${item.dia} ${item.hora}`;
-
       return fechaHoraString;
     });
-    const ctx = new Chart("ingresos", {
-      type: 'line',
-      data: {
-        labels: fechaHora,
-        datasets: [{
-          label: 'Horario de Ingresos',
-          data: usuariosFormateados,
-          borderWidth: 1,
-          backgroundColor: this.colores,
-          pointRadius: 5, // Tamaño del punto
-          pointBorderColor: '#fff', // Color del borde del punto
-          pointHoverRadius: 8, // Tamaño del punto al pasar el ratón
-          pointHoverBackgroundColor: '#168ede', // Color del punto al pasar el ratón
-          pointHoverBorderColor: '#fff' // Color del borde del punto al pasar el ratón
-        }]
-      },
+  
+    const data = {
+      labels: fechaHora,
+      datasets: [{
+        label: 'Historial de ingresos',
+        data: usuariosFormateados.map(usuario => usuario.count),
+        fill: false,
+        borderColor: 'rgb(75, 192, 192)',
+        tension: 0.1
+      }]
+    };
+
+    const chart = new Chart("ingresos", {
+      type: 'line' as ChartType,
+      data: data,
       options: {
-        scales: {
-          x:{
-            type: 'category', 
-            position: 'bottom',
-          },
-          y:{
-            type: 'category', 
-            position: 'left',
-          },
-         
-        }
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: (tooltipItem: TooltipItem<keyof ChartTypeRegistry>) => {
+                const usuario = usuariosFormateados[tooltipItem.dataIndex];
+                return `Usuario: ${usuario.usuario}, Ingresos: ${usuario.count}`;
+              }
+            }
+          }
+        },
+        // ... otras opciones
       }
     });
   }
+  
   
   
   cambiar(pdf:boolean){
