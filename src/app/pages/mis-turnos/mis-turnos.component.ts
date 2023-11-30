@@ -219,14 +219,14 @@ export class MisTurnosComponent {
           nuevaHistoria = historia;
         }
       })
-      if(nuevaHistoria !== null){
+      if(nuevaHistoria !== null && this.turnoElegido.especialidad === nuevaHistoria.especialidad){
         nuevaHistoria.especialista = this.turnoElegido.especialista,
         nuevaHistoria.dinamicos = this.dinamicos,
         nuevaHistoria.altura=this.altura,
         nuevaHistoria.peso=this.peso,
         nuevaHistoria.temperatura=this.temperatura.toString(),
         nuevaHistoria.presion=this.presion.toString(),
-        nuevaHistoria.especialidad=`${nuevaHistoria.especialidad}, ${this.turnoElegido.especialidad}`,
+        nuevaHistoria.especialidad=this.turnoElegido.especialidad,
         this.data.updateHistoria(nuevaHistoria);
       }else{
         this.data.cargarHistoriasBD(new HistoriaClinica("",this.turnoElegido.paciente,this.turnoElegido.especialista,this.dinamicos,this.altura,
