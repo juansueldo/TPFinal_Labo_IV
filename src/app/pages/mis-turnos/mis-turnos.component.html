@@ -56,6 +56,10 @@
                     <input name="apellido" [(ngModel)]="especialidad" [readonly]="true" class="form-control"/>
                 </div>
             </div>
+            <div class="mb-3" *ngIf="estado == 'finalizado'">
+                <label for="apellido">Especialidad</label>
+                    <input name="apellido" [(ngModel)]="especialidad" [readonly]="true" class="form-control"/>
+            </div>
             <div class="mb-3">
                 <label for="fecha">Estado</label>
                 <br>

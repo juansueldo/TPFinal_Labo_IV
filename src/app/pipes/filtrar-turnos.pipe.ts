@@ -48,17 +48,48 @@ export class FiltrarTurnosPipe implements PipeTransform {
   
     turnosAux = turnos.filter(turno => {
       let retorno = false;
+      this.data.historias.forEach(historia => {
+          if ((historia.paciente == turno.paciente && historia.especialidad == turno.especialidad) && turno.estado == "finalizado") {
+              historia.dinamicos.forEach(dinamico => {
+                  console.log(dinamico);
+                  console.log(dinamico.clave.toLowerCase());
+                  console.log(filtro);
+                  // Check if any "clave" value matches the filter condition
+                  if (dinamico.clave.toLowerCase().substring(0, len) == filtro && turno.estado == "finalizado") {
+                      retorno = true;
+                      console.log(turno);
+                  }
+              });
+          }
+      });
+      return retorno;
+  });
+  
+  if (turnosAux.length > 0) {
+      return turnosAux;
+  }
+   //DATOS FIJOS
+    turnosAux = turnos.filter(turno => {
+      let retorno = false;
       this.data.historias.forEach(historia=>{
           if((historia.paciente == turno.paciente && historia.especialidad == turno.especialidad) && turno.estado =="finalizado"){
-            historia.dinamicos.forEach(dinamico=>{
-              console.log(dinamico);
-            console.log(dinamico.clave.toLowerCase());
-            console.log(filtro);
-            if(dinamico.clave.toLowerCase().substring(0, len) == filtro && turno.estado =="finalizado"){
+            if(historia.altura.toLowerCase().substring(0, len) == filtro && turno.estado =="finalizado"){
               retorno = true;
-              console.log(turno);
+          
             }
-           })
+            else if(historia.peso.toString().toLowerCase().substring(0, len) == filtro && turno.estado =="finalizado"){
+              retorno = true;
+              
+            }
+             else if(historia.presion.toString().toLowerCase().substring(0, len) == filtro && turno.estado =="finalizado"){
+              retorno = true;
+              
+            }
+             else if(historia.temperatura.toString().toLowerCase().substring(0, len) == filtro && turno.estado =="finalizado"){
+              retorno = true;
+             
+            }
+          
           }
       })
       return retorno;
@@ -66,10 +97,21 @@ export class FiltrarTurnosPipe implements PipeTransform {
     if(turnosAux.length > 0){
       return turnosAux;
     }
-   
     // ESPECIALIDAD
     turnosAux = turnos.filter(turno => {
       if(turno.especialidad.toLowerCase().substring(0, len) == filtro){
+        return true;
+      }
+      else if(turno.comentario.toLowerCase().substring(0, len) == filtro){
+        return true;
+      }
+      else if(turno.hora.toString().toLowerCase().substring(0, len) == filtro){
+        return true;
+      }
+      else if(turno.mes.toString().toLowerCase().substring(0, len) == filtro){
+        return true;
+      }
+      else if(turno.estado.toLowerCase().substring(0, len) == filtro){
         return true;
       }
       return false;
