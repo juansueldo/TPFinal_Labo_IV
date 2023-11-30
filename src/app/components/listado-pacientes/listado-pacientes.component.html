@@ -15,12 +15,12 @@
       </div>
     </div> 
   </div>
-  <div *ngIf="mostrarBotonContainer"  class="button-container center-container" style="text-align: center;">
+  <div *ngIf="mostrarBotonContainer" class="button-container center-container" style="text-align: center;">
     <ng-container *ngFor="let paciente of pacientes">
-        <button class="custom-fab btn-primary" color="primary" aria-label="Descargar paciente" (click)="handleExcelTurnosPaciente(paciente)">
-          <img class="foto" src="{{paciente.img_1}}" alt="">
-          <p class="nombre">{{paciente.nombre}}</p>
-        </button>
+      <button mat-fab class="custom-fab btn-primary" color="primary" aria-label="Descargar paciente" (click)="handleExcelTurnosPaciente(paciente)">
+        <img class="foto" src="{{paciente.img_1}}" alt="">
+        <p class="nombre">{{paciente.nombre}}</p>
+      </button>
     </ng-container>
   </div>
   <button class="btn btn-primary mt-3" (click)="exportarExcel()">Excel usuarios</button>
