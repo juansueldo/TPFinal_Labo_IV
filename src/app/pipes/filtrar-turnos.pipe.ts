@@ -51,6 +51,7 @@ export class FiltrarTurnosPipe implements PipeTransform {
       this.data.historias.forEach(historia=>{
           if((historia.paciente == turno.paciente && historia.especialidad == turno.especialidad) && turno.estado =="finalizado"){
             historia.dinamicos.forEach(dinamico=>{
+              console.log(dinamico);
             console.log(dinamico.clave.toLowerCase());
             console.log(filtro);
             if(dinamico.clave.toLowerCase().substring(0, len) == filtro && turno.estado =="finalizado"){

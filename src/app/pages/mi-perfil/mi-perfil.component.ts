@@ -44,6 +44,7 @@ export class MiPerfilComponent implements OnInit{
   horariosDisponibles = ["8:00","9:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00"];
   horariosEspecialista:HorarioEspecialista;
   historias:HistoriaClinica[] = [];
+  historiasDelPaciente:HistoriaClinica[] = [];
 
   constructor(private usuarioService:UsuariosService,
     private data:DataService, 
@@ -138,9 +139,17 @@ export class MiPerfilComponent implements OnInit{
   seleccionarEspecialidad(esp:string){
     this.especialidadPDFseleccionada = esp;
   }
-
+  obtenerHistoriasPaciente(){
+    this.data.getHistoriaDB().subscribe(historias => {
+      historias.forEach(historia=>{
+        if(historia.paciente === this.usuario.email){
+          this.historiasDelPaciente.push(historia);
+        }
+      })
+  });
+  }
   async imprimirPdf(){
-   // this.formModalPdf.hide();
+    this.obtenerHistoriasPaciente();
     PdfMakeWrapper.setFonts(pdfFonts);
     const pdf = new PdfMakeWrapper();
     const logo = await new Img('../../../assets/logo.png').absolutePosition(30,20).fit([40,40]).build();
@@ -156,16 +165,18 @@ export class MiPerfilComponent implements OnInit{
     
     pdf.add("\n\n");
 
-
-        pdf.add("Altura: " + this.historiaPaciente.altura);
-        pdf.add("Peso: " + this.historiaPaciente.peso);
-        pdf.add("Temperatura: " + this.historiaPaciente.temperatura);
-        pdf.add("Presion: " + this.historiaPaciente.presion);
-        pdf.add("Especialidad: " + this.historiaPaciente.especialidad);
-        this.historiaPaciente.dinamicos.forEach(dinamico => {
+      this.historiasDelPaciente.forEach(historiaPaciente=>{
+        pdf.add("Altura: " +  historiaPaciente.altura);
+        pdf.add("Peso: " +  historiaPaciente.peso);
+        pdf.add("Temperatura: " +   historiaPaciente.temperatura);
+        pdf.add("Presion: " +   historiaPaciente.presion);
+        pdf.add("Especialidad: " +  historiaPaciente.especialidad);
+        historiaPaciente.dinamicos.forEach(dinamico => {
           pdf.add(dinamico.clave + ": " + dinamico.valor);
         });
         pdf.add("\n");
+      })
+       
  
     pdf.create().download("historiaClinica");
     pdf.create().open();

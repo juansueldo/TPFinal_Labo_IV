@@ -56,7 +56,7 @@ export class MisTurnosComponent {
   dinamicos: {clave: string, valor: string}[] = [];
   cantidadDatos = 0;
   historiaPrevia: HistoriaClinica[]=[];
-
+  
   // ENCUESTA
   preguntas:string[] = ["","",""];
     
@@ -103,7 +103,6 @@ export class MisTurnosComponent {
     this.formModal = new window.bootstrap.Modal(
       document.getElementById('cancelarTurno')
     );
-    
   }
   cargarUsuario() {
     this.usuario = this.usuarioService.getUsuario();
@@ -169,7 +168,7 @@ export class MisTurnosComponent {
       }
     });
   }
-
+ 
   buscarPaciente(email:string){
     this.usuarioService.pacientes.forEach(esp => {
       if(esp.email == email){
@@ -177,6 +176,7 @@ export class MisTurnosComponent {
       }
     });
   }
+  
 
   ordernarListaTurnos(){
     this.turnos.sort((one, two) => {
@@ -215,12 +215,12 @@ export class MisTurnosComponent {
       this.presion == 0;
       let nuevaHistoria: HistoriaClinica = null;
       this.historiaPrevia.forEach(historia=>{
-        if(this.turnoElegido.paciente == historia.paciente){
+        if(this.turnoElegido.paciente == historia.paciente && this.turnoElegido.especialista == historia.especialista){
           nuevaHistoria = historia;
         }
       })
       if(nuevaHistoria !== null){
-        nuevaHistoria.especialista = `${nuevaHistoria.especialista}, ${this.turnoElegido.especialista}`,
+        nuevaHistoria.especialista = this.turnoElegido.especialista,
         nuevaHistoria.dinamicos = this.dinamicos,
         nuevaHistoria.altura=this.altura,
         nuevaHistoria.peso=this.peso,
