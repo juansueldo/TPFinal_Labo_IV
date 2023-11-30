@@ -33,6 +33,7 @@ export class SeccionUsuariosComponent {
     this.user = this.usuarioService.getUsuario();
   }
   cargarPacientesEspecialista() {
+    console.log(this.user.email);
     this.data.getTurnosDB().subscribe(turnos => {
       turnos.forEach(turno => {
         if (turno.especialista === this.user.email) {
@@ -64,7 +65,7 @@ export class SeccionUsuariosComponent {
   
   obtenerUltimosTresTurnos(pacienteEmail: string, turnos: any[]): any[] {
     const ultimosTurnos = turnos
-      .filter(turno => turno.paciente === pacienteEmail)
+      .filter(turno => turno.paciente === pacienteEmail && turno.especialista === this.user.email)
       .sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime())
       .slice(0, 3);
   

@@ -114,6 +114,9 @@ export class FiltrarTurnosPipe implements PipeTransform {
       else if(turno.estado.toLowerCase().substring(0, len) == filtro){
         return true;
       }
+      else if(turno.dia.toLowerCase().substring(0, len) == filtro){
+        return true;
+      }
       return false;
     });
     if(turnosAux.length > 0){
