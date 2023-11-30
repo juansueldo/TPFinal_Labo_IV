@@ -57,8 +57,27 @@
                 </div>
             </div>
             <div class="mb-3" *ngIf="estado == 'finalizado'">
-                <label for="apellido">Especialidad</label>
-                    <input name="apellido" [(ngModel)]="especialidad" [readonly]="true" class="form-control"/>
+                <label for="apellido">Turno</label>
+                    <div class="card" style="background-color: #fff;">
+                        <p>Diagnóstico: {{turnoElegido.comentario}}</p>
+                        <p *ngIf="usuario.tipo == 'especialista' && turnoElegido.calificacion !=='' ">Calificación: {{turnoElegido.calificacion}}</p>
+                    </div>
+                    <div *ngFor="let historia of historiaPrevia">
+                        <div class="mb-3" *ngIf="historia.paciente == turnoElegido.paciente && historia.especialista == turnoElegido.especialista">
+                            <label for="apellido">Historia Clínica</label>
+                            <div class="card" style="background-color: #fff;">
+                                <p>Altura: {{historia.altura}}</p>
+                                <p>Peso: {{historia.peso}}</p>
+                                <p>Presion: {{historia.presion}}</p>
+                                <p>Temperatura: {{historia.temperatura}}</p>
+                                <hr>
+                                <h5>Dinámicos</h5>
+                                <p *ngFor="let dinamico of historia.dinamicos">{{dinamico.clave}}: {{dinamico.valor}}</p>
+
+                            </div>
+                    </div>
+               
+                </div>
             </div>
             <div class="mb-3">
                 <label for="fecha">Estado</label>
