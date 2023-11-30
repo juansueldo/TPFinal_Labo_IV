@@ -1,7 +1,7 @@
 <ng-container>
-  
-  <div class="table-container overflow-y-auto">
-    <div class="flags-container">
+  <button class="btn btn-primary m-3" (click)="toggleContenedor()">{{mensajeBoton}}</button>
+  <div *ngIf="mostrarTabla" class="table-container overflow-y-auto">
+    <div class="flags-container mt-3">
       <div *ngFor="let paciente of pacientes" (click)="onClick(paciente)"
         class="d-flex flex-column m-3 justify-content-center align-items-center purple rounded">
         <div>
@@ -15,15 +15,13 @@
       </div>
     </div> 
   </div>
-  <div class="button-container">
-    <div *ngFor="let paciente of pacientes">
-      <div class="button-container">
+  <div *ngIf="mostrarBotonContainer"  class="button-container center-container" style="text-align: center;">
+    <ng-container *ngFor="let paciente of pacientes">
         <button class="custom-fab btn-primary" color="primary" aria-label="Descargar paciente" (click)="handleExcelTurnosPaciente(paciente)">
           <img class="foto" src="{{paciente.img_1}}" alt="">
           <p class="nombre">{{paciente.nombre}}</p>
         </button>
-      </div>
-    </div>
+    </ng-container>
   </div>
   <button class="btn btn-primary mt-3" (click)="exportarExcel()">Excel usuarios</button>
   

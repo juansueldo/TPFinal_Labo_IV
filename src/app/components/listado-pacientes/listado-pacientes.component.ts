@@ -14,7 +14,9 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 })
 export class ListadoPacientesComponent {
   pacientes : Array<Paciente> = [];
- 
+  mostrarTabla: boolean = false;
+  mostrarBotonContainer: boolean = true;
+  mensajeBoton: string = "Mostrar Listado";
   @Output() selectedPacienteEvent = new EventEmitter<Paciente>();
 
   constructor(private pacienteService : PacienteService, private data: DataService,private usuarioSerice: UsuariosService) {
@@ -25,7 +27,11 @@ export class ListadoPacientesComponent {
       this.pacientes = res;
     })
   } 
-
+  toggleContenedor() {
+    this.mostrarTabla = !this.mostrarTabla;
+    this.mostrarBotonContainer = !this.mostrarBotonContainer;
+    this.mensajeBoton = this.mostrarTabla ? "Mostrar Botones" : "Mostrar Listado";
+  }
   onClick(paciente: any) {
 
     this.selectedPacienteEvent.emit(paciente);    

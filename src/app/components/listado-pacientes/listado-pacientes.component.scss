@@ -6,8 +6,8 @@
 
 .custom-fab {
   position: relative;
-  width: 72px; 
-  height: 72px; 
+  width: 102px; 
+  height: 102px; 
   padding: 5px;
   border-radius: 50%; 
   margin-right: 10px; 
@@ -47,8 +47,8 @@
 }
 
 .foto {
-  height: 70px;
-  width: 70px;
+  height: 100px;
+  width: 100px;
   position: absolute;
   border-radius: 50%;
   object-fit: cover;
@@ -65,4 +65,18 @@
   text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.842);
   -webkit-text-fill-color: transparent; /* Relleno de texto transparente para permitir el uso de text-stroke */
   -webkit-text-stroke: 1px #004373; /* Ancho y color del borde del texto */
+}
+.button-container{
+  width: 70vw;
+  padding: 20px;
+  border-radius: 5px;
+  display: flex;
+  text-align: center;
+  background-color: #004373;
+}
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 95vw; /* Ajusta la altura según tus necesidades */
 }
